@@ -1,8 +1,8 @@
 import GalleryPage from '../../components/GalleryPage';
 
 export default function VoidXxxGallery() {
-  // Use image paths that match what the app is requesting
-  const images = Array.from({ length: 20 }, (_, i) => `/images/void-xxx/image-${i + 1}.jpg`);
+  // Use static numbered image paths for now, until actual images are available
+  const images = Array.from({ length: 20 }, (_, i) => `/images/void-xxx/IMG_${i + 1}.JPG`);
   
   return (
     <GalleryPage

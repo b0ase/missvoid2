@@ -13,13 +13,6 @@ const nextConfig = {
       },
     ],
   },
-  // Disable type checking during build to avoid issues
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   output: 'standalone', // Optimized for Vercel deployment
 };
 

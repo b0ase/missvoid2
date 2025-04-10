@@ -26,16 +26,10 @@ export default function Gallery() {
             <div className="overflow-hidden rounded-lg shadow-lg transition duration-300 ease-in-out transform group-hover:shadow-xl group-hover:-translate-y-1">
               <div className="aspect-square relative">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all z-10"></div>
-                <div className="relative w-full h-full">
-                  <Image 
-                    src={category.coverImage}
-                    alt={`${category.name} gallery cover`}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                  />
+                <div className="w-full h-full bg-gray-200 relative">
+                  {/* Placeholder div until actual images are available */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xl font-semibold text-white drop-shadow-lg">{category.name}</span>
+                    <span className="text-xl font-semibold">{category.name}</span>
                   </div>
                 </div>
               </div>

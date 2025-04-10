@@ -26,14 +26,11 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
             onClick={() => setSelectedImage(image)}
           >
             <div className="aspect-square relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all">
-              <div className="relative w-full h-full">
-                <Image 
-                  src={image}
-                  alt={`${title} image ${index + 1}`}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                />
+              <div className="w-full h-full bg-gray-200 relative">
+                {/* Placeholder div until actual images are available */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-sm">Image {index + 1}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -46,25 +43,16 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-4xl w-full max-h-[90vh]">
+          <div className="relative max-w-4xl w-full max-h-screen">
             <button
               className="absolute top-4 right-4 text-white text-2xl z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
+              onClick={() => setSelectedImage(null)}
             >
               &times;
             </button>
-            <div className="relative w-full h-full aspect-auto">
-              <Image 
-                src={selectedImage}
-                alt={`${title} image fullscreen view`}
-                fill
-                style={{ objectFit: 'contain' }}
-                sizes="90vw"
-                quality={90}
-              />
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              {/* Placeholder for actual image */}
+              <span className="text-gray-800">Image preview</span>
             </div>
           </div>
         </div>

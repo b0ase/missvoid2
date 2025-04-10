@@ -1,13 +1,13 @@
 import GalleryPage from '../../components/GalleryPage';
 import { getMockImagesForCategory } from '../../utils/images';
 
-export default function MissVoidGallery() {
+export default function VoidChicGallery() {
   // Use mock images instead of filesystem access
-  const images = getMockImagesForCategory('miss-void');
+  const images = getMockImagesForCategory('void-chic');
   
   return (
     <GalleryPage
-      title="MISS VOID"
+      title="VOID CHIC"
       images={images}
     />
   );

@@ -5,18 +5,36 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 
-type GalleryPageProps = {
-  title: string;
-  images: string[];
+type GalleryItem = {
+  src: string;
+  title?: string;
+  description?: string;
+  materials?: string;
+  price?: string;
 };
 
-export default function GalleryPage({ title, images }: GalleryPageProps) {
+type GalleryPageProps = {
+  title: string;
+  images: string[] | GalleryItem[];
+  description?: string;
+};
+
+export default function GalleryPage({ title, images, description }: GalleryPageProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   const [swiping, setSwiping] = useState<boolean>(false);
   const imageRef = useRef<HTMLDivElement>(null);
+
+  // Process images to ensure they're in the right format
+  const processedImages: GalleryItem[] = images.map(img => {
+    if (typeof img === 'string') {
+      return { src: img };
+    }
+    return img as GalleryItem;
+  });
 
   const handleImageError = (imagePath: string) => {
     setImageErrors({
@@ -26,15 +44,17 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
   };
 
   // Filter out images that failed to load
-  const validImages = images.filter(image => !imageErrors[image]);
+  const validImages = processedImages.filter(item => !imageErrors[item.src]);
 
-  const handleImageClick = (image: string, index: number) => {
-    setSelectedImage(image);
+  const handleImageClick = (item: GalleryItem, index: number) => {
+    setSelectedImage(item.src);
+    setSelectedItem(item);
     setCurrentIndex(index);
   };
 
   const handleCloseModal = () => {
     setSelectedImage(null);
+    setSelectedItem(null);
   };
 
   const handleNext = () => {
@@ -44,7 +64,9 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
       
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-        setSelectedImage(validImages[currentIndex + 1]);
+        const nextItem = validImages[currentIndex + 1];
+        setSelectedImage(nextItem.src);
+        setSelectedItem(nextItem);
         setSwiping(false);
         setSwipeDirection(null);
       }, 300);
@@ -58,7 +80,9 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
       
       setTimeout(() => {
         setCurrentIndex(currentIndex - 1);
-        setSelectedImage(validImages[currentIndex - 1]);
+        const prevItem = validImages[currentIndex - 1];
+        setSelectedImage(prevItem.src);
+        setSelectedItem(prevItem);
         setSwiping(false);
         setSwipeDirection(null);
       }, 300);
@@ -110,29 +134,40 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
       
       <h1 className="text-4xl font-bold mb-8">{title}</h1>
       
+      {description && (
+        <div className="mb-8 max-w-3xl">
+          <p className="text-lg">{description}</p>
+        </div>
+      )}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((image, index) => (
-          !imageErrors[image] && (
-            <div 
-              key={index}
-              className="relative aspect-square cursor-pointer overflow-hidden group"
-              onClick={() => handleImageClick(image, index)}
-            >
-              <Image
-                src={image}
-                alt={`Gallery image ${index + 1}`}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                onError={() => handleImageError(image)}
+        {validImages.map((item, index) => (
+          <div 
+            key={index}
+            className="relative aspect-square cursor-pointer overflow-hidden group"
+            onClick={() => handleImageClick(item, index)}
+          >
+            <div className="w-full h-full relative">
+              <img
+                src={item.src}
+                alt={item.title || `Gallery image ${index + 1}`}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                onError={() => handleImageError(item.src)}
               />
+              {item.title && (
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <span className="text-white font-semibold text-lg px-4 text-center">
+                    {item.title}
+                  </span>
+                </div>
+              )}
             </div>
-          )
+          </div>
         ))}
       </div>
 
       {/* Image Modal with Tinder-style swipe */}
-      {selectedImage && (
+      {selectedImage && selectedItem && (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 gallery-modal">
           <div className="relative w-full h-full flex items-center justify-center" {...swipeHandlers}>
             <button
@@ -152,17 +187,50 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
 
             <div 
               ref={imageRef}
-              className={`relative w-full h-full max-w-4xl max-h-[90vh] transition-transform duration-300 ease-out fade-in
+              className={`relative w-full h-full max-w-6xl max-h-[90vh] transition-transform duration-300 ease-out fade-in flex flex-col md:flex-row items-center
                 ${swiping && swipeDirection === 'left' ? 'swipe-left' : ''}
                 ${swiping && swipeDirection === 'right' ? 'swipe-right' : ''}
               `}
             >
-              <img
-                src={selectedImage}
-                alt="Selected gallery image"
-                className="w-full h-full object-contain"
-                onError={() => handleImageError(selectedImage)}
-              />
+              <div className="flex-1 relative w-full h-full md:max-h-[90vh] flex items-center justify-center">
+                <img
+                  src={selectedImage}
+                  alt={selectedItem.title || "Selected gallery image"}
+                  className="max-w-full max-h-full object-contain"
+                  onError={() => handleImageError(selectedImage)}
+                />
+              </div>
+              
+              {(selectedItem.title || selectedItem.description || selectedItem.materials || selectedItem.price) && (
+                <div className="md:w-1/3 p-6 text-white">
+                  {selectedItem.title && (
+                    <h3 className="text-xl font-bold mb-3">{selectedItem.title}</h3>
+                  )}
+                  
+                  {selectedItem.description && (
+                    <p className="mb-4">{selectedItem.description}</p>
+                  )}
+                  
+                  {selectedItem.materials && (
+                    <div className="mb-3">
+                      <span className="font-semibold">Materials:</span> {selectedItem.materials}
+                    </div>
+                  )}
+                  
+                  {selectedItem.price && (
+                    <div className="mb-4">
+                      <span className="font-semibold">Price:</span> {selectedItem.price}
+                    </div>
+                  )}
+                  
+                  <Link 
+                    href="/contact?interest=specific-piece" 
+                    className="inline-block bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition"
+                  >
+                    Inquire About This Piece
+                  </Link>
+                </div>
+              )}
               
               {/* Swipe indicators */}
               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none px-8">
@@ -176,11 +244,6 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
-              </div>
-              
-              {/* Swipe instruction hint */}
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-full text-sm opacity-70">
-                Swipe left or right to navigate
               </div>
             </div>
 

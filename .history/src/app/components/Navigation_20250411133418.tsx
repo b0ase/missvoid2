@@ -51,7 +51,7 @@ export default function Navigation() {
             rel="noopener noreferrer"
           >
             <Image 
-              src="/images/void-muscles/Pinterest-logo.png" 
+              src="/Pinterest-logo.png" 
               alt="Pinterest" 
               width={24} 
               height={24} 
@@ -113,7 +113,7 @@ export default function Navigation() {
             onClick={() => setMobileMenuOpen(false)}
           >
             <Image 
-              src="/images/void-muscles/Pinterest-logo.png" 
+              src="/Pinterest-logo.png" 
               alt="Pinterest" 
               width={24} 
               height={24} 

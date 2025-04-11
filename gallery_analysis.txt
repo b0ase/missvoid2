@@ -1,0 +1,253 @@
+MISS VOID COLLECTIONS ANALYSIS
+==============================
+
+Total Items: 267
+
+Collections Overview
+--------------------
+miss-void: 15 items
+void-boots: 51 items
+void-boudoir: 30 items
+void-chic: 16 items
+void-industry: 107 items
+void-ink: 16 items
+void-noire: 32 items
+
+Categories
+----------
+industry: 107 items (40.1%)
+boots: 52 items (19.5%)
+boudoir: 30 items (11.2%)
+chic: 16 items (6.0%)
+bodysuit: 11 items (4.1%)
+corset: 11 items (4.1%)
+gown: 9 items (3.4%)
+harness: 7 items (2.6%)
+top: 3 items (1.1%)
+bralette: 3 items (1.1%)
+leggings: 3 items (1.1%)
+collar: 2 items (0.7%)
+gloves: 2 items (0.7%)
+mask: 2 items (0.7%)
+cuffs: 2 items (0.7%)
+skirt: 2 items (0.7%)
+sleeves: 2 items (0.7%)
+hood: 2 items (0.7%)
+heels: 1 items (0.4%)
+
+Styles
+-------
+architectural: 194 items (72.7%)
+minimal: 47 items (17.6%)
+sculptural: 19 items (7.1%)
+flowing: 4 items (1.5%)
+elaborate: 3 items (1.1%)
+
+Luxury Levels
+-------------
+premium: 263 items (98.5%)
+bespoke: 4 items (1.5%)
+
+Use Cases
+---------
+special occasion: 201 items (75.3%)
+evening: 26 items (9.7%)
+performance: 19 items (7.1%)
+unknown: 15 items (5.6%)
+everyday: 6 items (2.2%)
+
+
+Detailed Collection Analysis
+=========================
+
+MISS-VOID
+---------
+
+Total Items: 15
+
+Categories:
+- corset: 2 items (13.3%)
+- harness: 2 items (13.3%)
+- gloves: 1 items (6.7%)
+- collar: 1 items (6.7%)
+- mask: 1 items (6.7%)
+- cuffs: 1 items (6.7%)
+- skirt: 1 items (6.7%)
+- sleeves: 1 items (6.7%)
+- bralette: 1 items (6.7%)
+- hood: 1 items (6.7%)
+- gown: 1 items (6.7%)
+- top: 1 items (6.7%)
+- leggings: 1 items (6.7%)
+
+Styles:
+- architectural: 5 items (33.3%)
+- elaborate: 3 items (20.0%)
+- minimal: 3 items (20.0%)
+- sculptural: 2 items (13.3%)
+- flowing: 2 items (13.3%)
+
+Luxury Levels:
+- premium: 12 items (80.0%)
+- bespoke: 3 items (20.0%)
+
+Highlight Pieces:
+- Void Corset (architectural, premium)
+- Ethereal Harness (sculptural, premium)
+- Phantom Gloves (elaborate, premium)
+- Void Collar (architectural, premium)
+- Oblivion Mask (minimal, premium)
+
+VOID-BOOTS
+----------
+
+Total Items: 51
+
+Categories:
+- boots: 51 items (100.0%)
+
+Styles:
+- architectural: 25 items (49.0%)
+- sculptural: 13 items (25.5%)
+- minimal: 13 items (25.5%)
+
+Luxury Levels:
+- premium: 51 items (100.0%)
+
+Highlight Pieces:
+- Noir Thigh-High Platform (architectural, premium)
+- Serpentine Lace-Up Thigh-High (sculptural, premium)
+- Eclipse Platform Boot (minimal, premium)
+- Shadow Platform Boot (architectural, premium)
+- Midnight Ankle Boot (minimal, premium)
+
+VOID-BOUDOIR
+------------
+
+Total Items: 30
+
+Categories:
+- boudoir: 30 items (100.0%)
+
+Styles:
+- architectural: 30 items (100.0%)
+
+Luxury Levels:
+- premium: 30 items (100.0%)
+
+Highlight Pieces:
+- Item 1 (architectural, premium)
+- Item 2 (architectural, premium)
+- Item 3 (architectural, premium)
+- Item 4 (architectural, premium)
+- Item 5 (architectural, premium)
+
+VOID-CHIC
+---------
+
+Total Items: 16
+
+Categories:
+- chic: 16 items (100.0%)
+
+Styles:
+- architectural: 16 items (100.0%)
+
+Luxury Levels:
+- premium: 16 items (100.0%)
+
+Highlight Pieces:
+- Item 1 (architectural, premium)
+- Item 2 (architectural, premium)
+- Item 3 (architectural, premium)
+- Item 4 (architectural, premium)
+- Item 5 (architectural, premium)
+
+VOID-INDUSTRY
+-------------
+
+Total Items: 107
+
+Categories:
+- industry: 107 items (100.0%)
+
+Styles:
+- architectural: 107 items (100.0%)
+
+Luxury Levels:
+- premium: 107 items (100.0%)
+
+Highlight Pieces:
+- Item 1 (architectural, premium)
+- Item 2 (architectural, premium)
+- Item 3 (architectural, premium)
+- Item 4 (architectural, premium)
+- Item 5 (architectural, premium)
+
+VOID-INK
+--------
+
+Total Items: 16
+
+Categories:
+- bodysuit: 1 items (6.2%)
+- corset: 1 items (6.2%)
+- harness: 1 items (6.2%)
+- collar: 1 items (6.2%)
+- gloves: 1 items (6.2%)
+- mask: 1 items (6.2%)
+- cuffs: 1 items (6.2%)
+- skirt: 1 items (6.2%)
+- sleeves: 1 items (6.2%)
+- hood: 1 items (6.2%)
+- gown: 1 items (6.2%)
+- top: 1 items (6.2%)
+- bralette: 1 items (6.2%)
+- boots: 1 items (6.2%)
+- heels: 1 items (6.2%)
+- leggings: 1 items (6.2%)
+
+Styles:
+- minimal: 5 items (31.2%)
+- architectural: 5 items (31.2%)
+- sculptural: 4 items (25.0%)
+- flowing: 2 items (12.5%)
+
+Luxury Levels:
+- premium: 15 items (93.8%)
+- bespoke: 1 items (6.2%)
+
+Highlight Pieces:
+- Ink Bodysuit (minimal, premium)
+- Ink Corset (architectural, premium)
+- Ink Harness (sculptural, premium)
+- Ink Collar (minimal, premium)
+- Ink Gloves (architectural, premium)
+
+VOID-NOIRE
+----------
+
+Total Items: 32
+
+Categories:
+- bodysuit: 10 items (31.2%)
+- corset: 8 items (25.0%)
+- gown: 7 items (21.9%)
+- harness: 4 items (12.5%)
+- leggings: 1 items (3.1%)
+- top: 1 items (3.1%)
+- bralette: 1 items (3.1%)
+
+Styles:
+- minimal: 26 items (81.2%)
+- architectural: 6 items (18.8%)
+
+Luxury Levels:
+- premium: 32 items (100.0%)
+
+Highlight Pieces:
+- Elegance in Monochrome (minimal, premium)
+- Timeless Portrait (minimal, premium)
+- Classic Beauty (minimal, premium)
+- Strength & Grace (architectural, premium)
+- Power in Motion (architectural, premium)

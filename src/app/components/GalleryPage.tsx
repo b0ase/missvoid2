@@ -62,7 +62,7 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-4xl w-full max-h-[90vh]">
+          <div className="relative max-w-5xl w-full max-h-[90vh]">
             <button
               className="absolute top-4 right-4 text-white text-2xl z-10"
               onClick={(e) => {
@@ -72,14 +72,12 @@ export default function GalleryPage({ title, images }: GalleryPageProps) {
             >
               &times;
             </button>
-            <div className="relative w-full h-full aspect-auto">
-              <Image 
+            <div className="relative w-full h-full flex items-center justify-center">
+              {/* Use regular img tag instead of Next.js Image for the modal */}
+              <img
                 src={selectedImage}
                 alt={`${title} image fullscreen view`}
-                fill
-                style={{ objectFit: 'contain' }}
-                sizes="90vw"
-                quality={90}
+                className="max-h-[85vh] max-w-full object-contain"
                 onError={() => handleImageError(selectedImage)}
               />
             </div>

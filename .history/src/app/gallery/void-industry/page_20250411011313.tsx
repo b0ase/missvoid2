@@ -20,7 +20,7 @@ export default function VoidIndustryGallery() {
     
     const extension = webpImages.includes(imageNum) ? '.WEBP' : '.JPG';
     return `/images/void-industry/IMG_${imageNum}${extension}`;
-  }).filter(Boolean) as string[]; // Remove null entries and cast as string[]
+  }).filter(Boolean); // Remove null entries
   
   return (
     <GalleryPage

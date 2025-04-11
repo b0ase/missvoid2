@@ -231,20 +231,6 @@ export default function GalleryPage({ title, images, description }: GalleryPageP
                   </Link>
                 </div>
               )}
-              
-              {/* Swipe indicators */}
-              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none px-8">
-                <div className="swipe-indicator bg-white text-black rounded-full p-2 shadow-lg transform -translate-x-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </div>
-                <div className="swipe-indicator bg-white text-black rounded-full p-2 shadow-lg transform translate-x-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
             </div>
 
             <button

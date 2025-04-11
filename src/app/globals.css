@@ -75,12 +75,4 @@ body {
   animation: fadeIn 0.2s ease-out forwards;
 }
 
-/* Swipe indicator styles */
-.swipe-indicator {
-  transition: all 0.3s ease;
-  opacity: 0;
-}
-
-.gallery-modal:hover .swipe-indicator {
-  opacity: 0.7;
-}
+/* Removing swipe indicator styles since they're no longer used */

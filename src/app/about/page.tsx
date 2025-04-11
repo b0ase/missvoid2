@@ -1,43 +1,74 @@
 "use client";
 
 import Image from 'next/image';
-import Navigation from '../components/Navigation';
 
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">About MISS VOID</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">About Miss Void</h1>
       
-      <div className="max-w-3xl mx-auto prose prose-lg">
-        <p>
-          MISS VOID is a London-based fashion house specializing in fetish and BDSM-inspired designs. 
-          With over two decades of experience, we have established ourselves as pioneers in the 
-          intersection of haute couture and alternative fashion.
-        </p>
-        
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Our Philosophy</h2>
-        <p>
-          At MISS VOID, we believe in the transformative power of clothing. Our pieces are designed 
-          to empower, to challenge conventional boundaries, and to celebrate the beauty of 
-          restriction and release. Each garment is meticulously crafted to provide both aesthetic 
-          impact and comfortable wearability.
-        </p>
-        
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Our Craft</h2>
-        <p>
-          We work with only the finest materials, sourced globally from ethical suppliers. 
-          Every piece is hand-crafted in our London atelier by skilled artisans who share our 
-          passion for precision and detail. From pattern-cutting to the final stitch, we maintain 
-          exacting standards throughout the process.
-        </p>
-        
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Our Legacy</h2>
-        <p>
-          Founded in the early 2000s, MISS VOID has grown from a small experimental studio into 
-          an influential name in alternative fashion. Our designs have appeared in major publications, 
-          on stages worldwide, and in private collections of discerning clients who value both 
-          our artistic vision and uncompromising quality.
-        </p>
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-12 flex flex-col md:flex-row gap-8 items-center">
+          <div className="md:w-1/2 relative aspect-square">
+            <Image 
+              src="/images/miss-void/cover.jpg" 
+              alt="Miss Void portrait" 
+              fill 
+              className="object-cover rounded-lg"
+            />
+          </div>
+          <div className="md:w-1/2">
+            <h2 className="text-2xl font-bold mb-4">Our Story</h2>
+            <p className="mb-4">
+              For over two decades, Miss Void has been at the forefront of avant-garde fashion, blending the worlds of high fashion and fetish wear into distinctive pieces that challenge conventional boundaries.
+            </p>
+            <p className="mb-4">
+              Founded in London in 2003 by designer Miss Void and her husband, our atelier has grown from a small workshop in East London to an internationally recognized brand catering to discerning clients across the globe.
+            </p>
+            <p>
+              Each piece is meticulously crafted, combining traditional techniques with innovative materials to create wearable art that empowers the wearer and celebrates the beauty of alternative aesthetics.
+            </p>
+          </div>
+        </div>
+
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-4">Philosophy & Approach</h2>
+          <p className="mb-4">
+            At Miss Void, we believe that fashion is a powerful form of self-expression. Our designs exist at the intersection of fashion, art, and identity, challenging mainstream conventions while maintaining the highest standards of craftsmanship.
+          </p>
+          <p className="mb-4">
+            We draw inspiration from BDSM culture, architectural forms, and historical costume, creating pieces that are both provocative and refined. Our work celebrates the beauty of contrast—strength and vulnerability, restriction and freedom, darkness and light.
+          </p>
+          <p>
+            Every garment is created with intention, designed to transform not just how the wearer appears, but how they feel and move through the world.
+          </p>
+        </div>
+
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-4">Global Presence</h2>
+          <p className="mb-4">
+            While we are proudly London-based, our clientele spans the globe. Miss Void regularly conducts fittings and consultations in Paris, New York, Dubai, and Shanghai, bringing our unique aesthetic to fashion-forward individuals worldwide.
+          </p>
+          <p className="mb-4">
+            Our pieces have been featured in international fashion publications, worn by celebrities and performers, and showcased in exhibitions celebrating the intersection of fashion and art.
+          </p>
+          <p>
+            Despite our growth, we remain committed to our core values: exceptional craftsmanship, ethical production, and designs that honor the individuality of each client.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold mb-4">The Founders</h2>
+          <p className="mb-4">
+            Miss Void began her career studying fashion design at Central Saint Martins, where she developed her distinctive aesthetic merging traditional tailoring with unconventional materials and fetish-inspired elements.
+          </p>
+          <p className="mb-4">
+            Her husband, with a background in fine art and leather craftsmanship, joined the venture in 2005, bringing technical expertise in working with leather, metal, and other specialized materials.
+          </p>
+          <p>
+            Together, they have built Miss Void into a respected name in both mainstream fashion circles and alternative communities, known for pushing boundaries while maintaining impeccable quality and fit.
+          </p>
+        </div>
       </div>
     </div>
   );

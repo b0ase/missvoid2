@@ -6,7 +6,7 @@ export const folderToPathMap = {
   'VOID FOOTWEAR': 'void-footwear',
   'VOID INDUSTRY': 'void-industry',
   'VOID INK': 'void-ink',
-  'VOID XXX': 'void-xxx',
+  'VOID MUSCLES': 'void-muscles',
   'VOID NOIRE': 'void-noire',
   'VOID ROYALE': 'void-royale'
 };

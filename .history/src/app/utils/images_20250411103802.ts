@@ -6,13 +6,11 @@ export const folderToPathMap = {
   'VOID FOOTWEAR': 'void-footwear',
   'VOID INDUSTRY': 'void-industry',
   'VOID INK': 'void-ink',
-  'VOID XXX': 'void-xxx',
+  'VOID MUSCLES': 'void-muscles',
   'VOID NOIRE': 'void-noire',
+  'VOID XXX': 'void-xxx',
   'VOID ROYALE': 'void-royale'
 };
-
-// Define featured gallery
-export const featuredGallery = 'MISS VOID';
 
 // Get all categories with their image paths
 export function getAllCategories() {
@@ -21,7 +19,6 @@ export function getAllCategories() {
       name,
       path: `/gallery/${pathStr}`,
       coverImage: `/images/${pathStr}/cover.jpg`,
-      isFeatured: name === featuredGallery
     };
   });
 }

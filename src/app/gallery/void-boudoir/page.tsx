@@ -149,11 +149,30 @@ export default function VoidBoudoirGallery() {
     })
   ];
   
+  // Filter out deleted images
+  const deletedImages = [
+    "/images/void-boudoir/IMG_8127.JPG", 
+    "/images/void-boudoir/IMG_8187.WEBP", 
+    "/images/void-boudoir/IMG_8186.WEBP", 
+    "/images/void-boudoir/IMG_8185.WEBP", 
+    "/images/void-boudoir/IMG_8184.JPG", 
+    "/images/void-boudoir/IMG_8183.JPG", 
+    "/images/void-boudoir/IMG_8180.JPG", 
+    "/images/void-boudoir/IMG_8179.JPG", 
+    "/images/void-boudoir/IMG_8166.JPG", 
+    "/images/void-boudoir/IMG_8163.JPG", 
+    "/images/void-boudoir/IMG_8159.JPG", 
+    "/images/void-boudoir/IMG_8131.JPG", 
+    "/images/void-boudoir/IMG_8146.JPG"
+  ];
+  const filteredItems = items.filter(item => !deletedImages.includes(item.src));
+  
   return (
     <GalleryPage
       title="VOID BOUDOIR"
-      images={items}
+      images={filteredItems}
       description="Our Boudoir collection celebrates intimate elegance through a curated selection of luxurious undergarments. Each piece is crafted with meticulous attention to detail, combining comfort with our signature dark aesthetic. From delicate lace to sumptuous silk, these pieces embody sophisticated sensuality."
+      galleryName="VOID BOUDOIR"
     />
   );
 } 

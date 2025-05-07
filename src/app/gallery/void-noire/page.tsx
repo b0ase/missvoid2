@@ -210,11 +210,27 @@ export default function VoidNoireGallery() {
     )
   ];
 
+  // Filter out deleted images
+  const deletedImages = [
+    "/images/void-noire/bw_miss-void_IMG_7803.WEBP", 
+    "/images/void-noire/bw_void-boudoir_IMG_8171.JPG", 
+    "/images/void-noire/bw_miss-void_IMG_7018.JPG", 
+    "/images/void-noire/bw_miss-void_IMG_7811.JPG", 
+    "/images/void-noire/bw_miss-void_IMG_7812.JPG", 
+    "/images/void-noire/bw_void-chic_IMG_8346.JPG", 
+    "/images/void-noire/bw_void-industry_IMG_8455.JPG", 
+    "/images/void-noire/bw_void-muscles_IMG_8270.JPG", 
+    "/images/void-noire/bw_void-industry_IMG_8442.JPG", 
+    "/images/void-noire/bw_miss-void_IMG_7805.JPG", 
+    "/images/void-noire/bw_miss-void_IMG_7011.JPG"
+  ];
+  const filteredItems = items.filter(item => !deletedImages.includes(item.src));
+
   return (
     <GalleryPage
       title="VOID NOIRE"
       description="Welcome to VOID NOIRE, a showcase of Void Studio Photography's masterful black and white portraiture. Each image captures the essence of elegance and artistry through the lens of our resident photographer. From fashion editorials to intimate portraits, this collection demonstrates our studio's commitment to creating timeless, sophisticated imagery. For inquiries about booking Void Studios for your own elegant black and white photography session, please contact us."
-      images={items}
+      images={filteredItems}
       galleryName="VOID NOIRE"
     />
   );

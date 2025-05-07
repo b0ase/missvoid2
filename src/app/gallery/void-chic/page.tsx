@@ -202,10 +202,38 @@ export default function VoidChicGallery() {
     )
   ];
 
+  // Filter out deleted images
+  const deletedImages = [
+    "/images/void-chic/IMG_8363.JPG", 
+    "/images/void-chic/IMG_8360.JPG", 
+    "/images/void-chic/IMG_8359.WEBP", 
+    "/images/void-chic/IMG_8355.JPG", 
+    "/images/void-chic/IMG_8357.WEBP", 
+    "/images/void-chic/IMG_8358.JPG", 
+    "/images/void-chic/IMG_8356.JPG", 
+    "/images/void-chic/IMG_8353.JPG", 
+    "/images/void-chic/IMG_8349.JPG", 
+    "/images/void-chic/IMG_8342.JPG", 
+    "/images/void-chic/IMG_8345.JPG", 
+    "/images/void-chic/IMG_8337.WEBP", 
+    "/images/void-chic/IMG_8330.JPG", 
+    "/images/void-chic/IMG_8327.JPG", 
+    "/images/void-chic/IMG_8324.JPG", 
+    "/images/void-chic/IMG_8315.JPG", 
+    "/images/void-chic/IMG_8312.JPG", 
+    "/images/void-chic/IMG_8311.JPG", 
+    "/images/void-chic/IMG_8310.JPG", 
+    "/images/void-chic/IMG_8319.JPG", 
+    "/images/void-chic/IMG_8317.JPG", 
+    "/images/void-chic/IMG_8305.JPG", 
+    "/images/void-chic/cover.JPG"
+  ];
+  const filteredItems = items.filter(item => !deletedImages.includes(item.src));
+
   return (
     <GalleryPage
       title="VOID CHIC"
-      images={items}
+      images={filteredItems}
       description="Welcome to VOID CHIC, a collection that embodies sophisticated minimalism and contemporary elegance. Each piece showcases our commitment to refined aesthetics and architectural silhouettes. From sleek bodysuits to sculptural corsets, this collection represents the intersection of luxury and avant-garde design. Every garment is meticulously crafted to create a perfect balance between modern simplicity and bold statement pieces."
       galleryName="VOID CHIC"
     />

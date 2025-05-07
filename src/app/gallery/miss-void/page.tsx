@@ -118,10 +118,20 @@ export default function MissVoidGallery() {
     )
   ];
 
+  // Filter out deleted images
+  const deletedImages = [
+    "/images/miss-void/IMG_6556.JPG",
+    "/images/miss-void/IMG_7831.JPG", 
+    "/images/miss-void/IMG_6954.JPG", 
+    "/images/miss-void/IMG_6589.JPG", 
+    "/images/miss-void/IMG_6574.JPG"
+  ];
+  const filteredItems = items.filter(item => !deletedImages.includes(item.src));
+
   return (
     <GalleryPage
       title="MISS VOID"
-      images={items}
+      images={filteredItems}
       description="The definitive MISS VOID collection, representing the pinnacle of our design philosophy. Each piece is a careful balance of light and shadow, structure and flow, restriction and freedom. From signature corsets to avant-garde accessories, this collection showcases our commitment to transforming the human silhouette through architectural fashion. Every garment is meticulously crafted to create a dialogue between the body and the void, resulting in a profound transformation of both the wearer's form and presence."
       galleryName="MISS VOID"
     />

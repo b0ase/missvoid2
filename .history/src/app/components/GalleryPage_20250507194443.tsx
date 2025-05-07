@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSwipeable } from 'react-swipeable';
 import { useDevMode } from '../context/DevModeContext';
-import { deleteImage, getDeletedImages } from '../services/galleryService';
+import { deleteImage } from '../services/galleryService';
 
 type GalleryItem = {
   src: string;
@@ -33,24 +33,16 @@ export default function GalleryPage({ title, images, description, galleryName }:
   const [displayedImages, setDisplayedImages] = useState<GalleryItem[]>([]);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  // Process images and filter out deleted ones
+  // Process images to ensure they're in the right format
   useEffect(() => {
-    // Get deleted images from localStorage
-    const deletedImages = getDeletedImages(galleryName);
-    
-    // Process images
     const processedImages: GalleryItem[] = images.map(img => {
       if (typeof img === 'string') {
         return { src: img };
       }
       return img as GalleryItem;
     });
-    
-    // Filter out deleted images
-    const filteredImages = processedImages.filter(img => !deletedImages.includes(img.src));
-    
-    setDisplayedImages(filteredImages);
-  }, [images, galleryName]);
+    setDisplayedImages(processedImages);
+  }, [images]);
 
   const handleImageError = (imagePath: string) => {
     setImageErrors({

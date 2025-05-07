@@ -181,7 +181,7 @@ export function createGalleryItem(
   return {
     src,
     title,
-    description: options.description || generateDescription(category, options),
+    description: generateDescription(category, options),
     materials: generateMaterials(category, options.luxuryLevel === 'premium'),
     price: generatePrice(category, options.luxuryLevel)
   };

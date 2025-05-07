@@ -8,7 +8,7 @@ export default function VoidChicGallery() {
       '/images/void-chic/cover.JPG',
       'VOID CHIC Collection',
       'portrait',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
 
     // Elegant Collection
@@ -16,37 +16,37 @@ export default function VoidChicGallery() {
       '/images/void-chic/IMG_8304.WEBP',
       'Chic Bodysuit',
       'bodysuit',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8305.JPG',
       'Elegant Corset',
       'corset',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8309.JPG',
       'Sophisticated Dress',
       'dress',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+avant-garde+dress+in+detail%2C+focusing+on+silhouette%2C+materials%2C+and+unique+design+features.'s edges, this dress births majestic chaos in Forged where chrome meets titanium featuring zippers that flow into embellishments At its core: a woman in a black leather outfit and mask.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8310.JPG',
       'Refined Harness',
       'harness',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+designer+harness+in+detail%2C+noting+the+strap+configuration%2C+hardware%2C+and+overall+design.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8311.JPG',
       'Luxe Bodysuit',
       'bodysuit',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8312.JPG',
       'Couture Gown',
       'gown',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
     ),
 
     // Contemporary Collection
@@ -54,37 +54,37 @@ export default function VoidChicGallery() {
       '/images/void-chic/IMG_8315.JPG',
       'Modern Corset',
       'corset',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8317.JPG',
       'Avant-Garde Dress',
       'dress',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+avant-garde+dress+in+detail%2C+focusing+on+silhouette%2C+materials%2C+and+unique+design+features.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8319.JPG',
       'Minimalist Harness',
       'harness',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+designer+harness+in+detail%2C+noting+the+strap+configuration%2C+hardware%2C+and+overall+design.', style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8321.JPG',
       'Contemporary Bodysuit',
       'bodysuit',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8322.JPG',
       'Sleek Dress',
       'dress',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+avant-garde+dress+in+detail%2C+focusing+on+silhouette%2C+materials%2C+and+unique+design+features.', style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8324.JPG',
       'Modern Gown',
       'gown',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'special occasion' }
     ),
 
     // Luxe Collection
@@ -92,37 +92,37 @@ export default function VoidChicGallery() {
       '/images/void-chic/IMG_8325.JPG',
       'Luxury Corset',
       'corset',
-      { style: 'elaborate', luxuryLevel: 'premium', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'elaborate', luxuryLevel: 'premium', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8327.JPG',
       'Haute Bodysuit',
       'bodysuit',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8330.JPG',
       'Deluxe Harness',
       'harness',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+designer+harness+in+detail%2C+noting+the+strap+configuration%2C+hardware%2C+and+overall+design.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8332.JPG',
       'Premium Dress',
       'dress',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+avant-garde+dress+in+detail%2C+focusing+on+silhouette%2C+materials%2C+and+unique+design+features.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8337.WEBP',
       'Elite Corset',
       'corset',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8342.JPG',
       'Exclusive Gown',
       'gown',
-      { style: 'elaborate', luxuryLevel: 'bespoke', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'elaborate', luxuryLevel: 'bespoke', useCase: 'evening' }
     ),
 
     // Signature Collection
@@ -130,37 +130,37 @@ export default function VoidChicGallery() {
       '/images/void-chic/IMG_8345.JPG',
       'Signature Bodysuit',
       'bodysuit',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8349.JPG',
       'Classic Corset',
       'corset',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8350.JPG',
       'Essential Harness',
       'harness',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+designer+harness+in+detail%2C+noting+the+strap+configuration%2C+hardware%2C+and+overall+design.', style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8353.JPG',
       'Timeless Dress',
       'dress',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+avant-garde+dress+in+detail%2C+focusing+on+silhouette%2C+materials%2C+and+unique+design+features.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8354.JPG',
       'Heritage Gown',
       'gown',
-      { style: 'elaborate', luxuryLevel: 'bespoke', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'elaborate', luxuryLevel: 'bespoke', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8355.JPG',
       'Icon Bodysuit',
       'bodysuit',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
 
     // Avant-Garde Collection
@@ -168,37 +168,37 @@ export default function VoidChicGallery() {
       '/images/void-chic/IMG_8356.JPG',
       'Artisan Corset',
       'corset',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8357.WEBP',
       'Experimental Dress',
       'dress',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+avant-garde+dress+in+detail%2C+focusing+on+silhouette%2C+materials%2C+and+unique+design+features.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8358.JPG',
       'Progressive Harness',
       'harness',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+designer+harness+in+detail%2C+noting+the+strap+configuration%2C+hardware%2C+and+overall+design.', style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8359.WEBP',
       'Innovative Bodysuit',
       'bodysuit',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'special occasion' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8360.JPG',
       'Forward Gown',
       'gown',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'evening' }
     ),
     createGalleryItem(
       '/images/void-chic/IMG_8363.JPG',
       'Visionary Corset',
       'corset',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.'s edges, this corset births post-apocalyptic chaos in Crafted from velvet fused with silver featuring chains that flow into grommets At its core: a woman in a black leather outfit and mask.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     )
   ];
 

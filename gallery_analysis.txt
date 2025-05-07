@@ -1,60 +1,65 @@
 MISS VOID COLLECTIONS ANALYSIS
 ==============================
 
-Total Items: 267
+Total Items: 343
 
 Collections Overview
 --------------------
-miss-void: 15 items
+miss-void: 61 items
 void-boots: 51 items
 void-boudoir: 30 items
-void-chic: 16 items
+void-chic: 31 items
 void-industry: 107 items
 void-ink: 16 items
 void-noire: 32 items
+void-royale: 15 items
 
 Categories
 ----------
-industry: 107 items (40.1%)
-boots: 52 items (19.5%)
-boudoir: 30 items (11.2%)
-chic: 16 items (6.0%)
-bodysuit: 11 items (4.1%)
-corset: 11 items (4.1%)
-gown: 9 items (3.4%)
-harness: 7 items (2.6%)
-top: 3 items (1.1%)
-bralette: 3 items (1.1%)
-leggings: 3 items (1.1%)
-collar: 2 items (0.7%)
-gloves: 2 items (0.7%)
-mask: 2 items (0.7%)
-cuffs: 2 items (0.7%)
-skirt: 2 items (0.7%)
-sleeves: 2 items (0.7%)
-hood: 2 items (0.7%)
-heels: 1 items (0.4%)
+industry: 107 items (31.2%)
+boots: 52 items (15.2%)
+boudoir: 30 items (8.7%)
+bodysuit: 22 items (6.4%)
+corset: 20 items (5.8%)
+gown: 16 items (4.7%)
+royale: 15 items (4.4%)
+harness: 14 items (4.1%)
+dress: 9 items (2.6%)
+collar: 5 items (1.5%)
+gloves: 5 items (1.5%)
+mask: 5 items (1.5%)
+top: 5 items (1.5%)
+bralette: 5 items (1.5%)
+leggings: 5 items (1.5%)
+cuffs: 4 items (1.2%)
+skirt: 4 items (1.2%)
+sleeves: 4 items (1.2%)
+hood: 4 items (1.2%)
+accessory: 3 items (0.9%)
+coat: 3 items (0.9%)
+jumpsuit: 3 items (0.9%)
+portrait: 2 items (0.6%)
+heels: 1 items (0.3%)
 
 Styles
 -------
-architectural: 194 items (72.7%)
-minimal: 47 items (17.6%)
-sculptural: 19 items (7.1%)
-flowing: 4 items (1.5%)
-elaborate: 3 items (1.1%)
+architectural: 211 items (61.5%)
+minimal: 67 items (19.5%)
+sculptural: 39 items (11.4%)
+flowing: 20 items (5.8%)
+elaborate: 6 items (1.7%)
 
 Luxury Levels
 -------------
-premium: 263 items (98.5%)
-bespoke: 4 items (1.5%)
+premium: 322 items (93.9%)
+bespoke: 21 items (6.1%)
 
 Use Cases
 ---------
-special occasion: 201 items (75.3%)
-evening: 26 items (9.7%)
-performance: 19 items (7.1%)
-unknown: 15 items (5.6%)
-everyday: 6 items (2.2%)
+special occasion: 233 items (67.9%)
+evening: 56 items (16.3%)
+performance: 48 items (14.0%)
+everyday: 6 items (1.7%)
 
 
 Detailed Collection Analysis
@@ -63,40 +68,51 @@ Detailed Collection Analysis
 MISS-VOID
 ---------
 
-Total Items: 15
+Total Items: 61
 
 Categories:
-- corset: 2 items (13.3%)
-- harness: 2 items (13.3%)
-- gloves: 1 items (6.7%)
-- collar: 1 items (6.7%)
-- mask: 1 items (6.7%)
-- cuffs: 1 items (6.7%)
-- skirt: 1 items (6.7%)
-- sleeves: 1 items (6.7%)
-- bralette: 1 items (6.7%)
-- hood: 1 items (6.7%)
-- gown: 1 items (6.7%)
-- top: 1 items (6.7%)
-- leggings: 1 items (6.7%)
+- harness: 4 items (6.6%)
+- corset: 4 items (6.6%)
+- bodysuit: 4 items (6.6%)
+- gloves: 4 items (6.6%)
+- collar: 4 items (6.6%)
+- mask: 4 items (6.6%)
+- cuffs: 3 items (4.9%)
+- skirt: 3 items (4.9%)
+- top: 3 items (4.9%)
+- hood: 3 items (4.9%)
+- gown: 3 items (4.9%)
+- bralette: 3 items (4.9%)
+- sleeves: 3 items (4.9%)
+- leggings: 3 items (4.9%)
+- dress: 3 items (4.9%)
+- accessory: 3 items (4.9%)
+- coat: 3 items (4.9%)
+- jumpsuit: 3 items (4.9%)
+- portrait: 1 items (1.6%)
 
 Styles:
-- architectural: 5 items (33.3%)
-- elaborate: 3 items (20.0%)
-- minimal: 3 items (20.0%)
-- sculptural: 2 items (13.3%)
-- flowing: 2 items (13.3%)
+- architectural: 16 items (26.2%)
+- minimal: 15 items (24.6%)
+- sculptural: 15 items (24.6%)
+- flowing: 12 items (19.7%)
+- elaborate: 3 items (4.9%)
 
 Luxury Levels:
-- premium: 12 items (80.0%)
-- bespoke: 3 items (20.0%)
+- premium: 49 items (80.3%)
+- bespoke: 12 items (19.7%)
 
 Highlight Pieces:
-- Void Corset (architectural, premium)
-- Ethereal Harness (sculptural, premium)
+- Void Essence (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Shadow Harness (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Void Corset (sculptural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Eclipse Bodysuit (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Phantom Gloves (elaborate, premium)
-- Void Collar (architectural, premium)
-- Oblivion Mask (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 
 VOID-BOOTS
 ----------
@@ -116,10 +132,15 @@ Luxury Levels:
 
 Highlight Pieces:
 - Noir Thigh-High Platform (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Serpentine Lace-Up Thigh-High (sculptural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Eclipse Platform Boot (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Shadow Platform Boot (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Midnight Ankle Boot (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 
 VOID-BOUDOIR
 ------------
@@ -145,23 +166,38 @@ Highlight Pieces:
 VOID-CHIC
 ---------
 
-Total Items: 16
+Total Items: 31
 
 Categories:
-- chic: 16 items (100.0%)
+- bodysuit: 7 items (22.6%)
+- corset: 7 items (22.6%)
+- dress: 6 items (19.4%)
+- harness: 5 items (16.1%)
+- gown: 5 items (16.1%)
+- portrait: 1 items (3.2%)
 
 Styles:
-- architectural: 16 items (100.0%)
+- minimal: 8 items (25.8%)
+- architectural: 7 items (22.6%)
+- sculptural: 7 items (22.6%)
+- flowing: 6 items (19.4%)
+- elaborate: 3 items (9.7%)
 
 Luxury Levels:
-- premium: 16 items (100.0%)
+- premium: 23 items (74.2%)
+- bespoke: 8 items (25.8%)
 
 Highlight Pieces:
-- Item 1 (architectural, premium)
-- Item 2 (architectural, premium)
-- Item 3 (architectural, premium)
-- Item 4 (architectural, premium)
-- Item 5 (architectural, premium)
+- VOID CHIC Collection (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Chic Bodysuit (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Elegant Corset (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Sophisticated Dress (flowing, bespoke)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+- Refined Harness (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 
 VOID-INDUSTRY
 -------------
@@ -219,10 +255,15 @@ Luxury Levels:
 
 Highlight Pieces:
 - Ink Bodysuit (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Ink Corset (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Ink Harness (sculptural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Ink Collar (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Ink Gloves (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 
 VOID-NOIRE
 ----------
@@ -247,7 +288,33 @@ Luxury Levels:
 
 Highlight Pieces:
 - Elegance in Monochrome (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Timeless Portrait (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Classic Beauty (minimal, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Strength & Grace (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
 - Power in Motion (architectural, premium)
+  AI Description: Error: Unable to create tensor, you should probably activate padding with 'padding=True' to have batched tensors with the same length.
+
+VOID-ROYALE
+-----------
+
+Total Items: 15
+
+Categories:
+- royale: 15 items (100.0%)
+
+Styles:
+- architectural: 15 items (100.0%)
+
+Luxury Levels:
+- premium: 15 items (100.0%)
+
+Highlight Pieces:
+- Item 1 (architectural, premium)
+- Item 2 (architectural, premium)
+- Item 3 (architectural, premium)
+- Item 4 (architectural, premium)
+- Item 5 (architectural, premium)

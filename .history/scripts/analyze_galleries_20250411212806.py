@@ -6,8 +6,7 @@ from collections import defaultdict
 from typing import Dict, List, Set
 from PIL import Image
 from dotenv import load_dotenv
-import torch
-from transformers import CLIPProcessor, CLIPModel
+import requests
 import io
 from pathlib import Path
 import time
@@ -17,9 +16,17 @@ import random
 # Load environment variables
 load_dotenv()
 
-# Initialize CLIP model and processor
-model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
-processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+# Get API key from environment variable
+REPLICATE_API_TOKEN = os.getenv('REPLICATE_API_TOKEN')
+if not REPLICATE_API_TOKEN:
+    raise ValueError("Please set REPLICATE_API_TOKEN environment variable")
+
+# Using Salesforce's CLIP model via Replicate
+API_URL = "https://api.replicate.com/v1/predictions"
+headers = {
+    "Authorization": f"Token {REPLICATE_API_TOKEN}",
+    "Content-Type": "application/json"
+}
 
 # Fashion-specific vocabulary for enhancing descriptions
 FASHION_ADJECTIVES = [
@@ -44,12 +51,12 @@ FASHION_ELEMENTS = [
 def generate_prompt(category: str) -> str:
     """Generate a detailed prompt based on the category."""
     prompts = {
-        "boots": "These luxury boots feature unique design elements with",
-        "corset": "This high-fashion corset showcases intricate construction with",
-        "dress": "This avant-garde dress presents a striking silhouette with",
-        "harness": "This designer harness demonstrates innovative strap configuration with",
-        "bodysuit": "This luxury bodysuit exhibits distinctive design elements with",
-        "default": "This high-fashion piece displays unique construction with"
+        "boots": "Describe these luxury boots in detail, focusing on height, materials, fastenings, and unique design elements.",
+        "corset": "Describe this high-fashion corset in detail, noting the construction, materials, boning, and decorative elements.",
+        "dress": "Describe this avant-garde dress in detail, focusing on silhouette, materials, and unique design features.",
+        "harness": "Describe this designer harness in detail, noting the strap configuration, hardware, and overall design.",
+        "bodysuit": "Describe this luxury bodysuit in detail, focusing on fit, materials, and distinctive design elements.",
+        "default": "Describe this high-fashion piece in detail, focusing on construction, materials, and unique design elements."
     }
     return prompts.get(category.lower(), prompts["default"])
 
@@ -64,6 +71,9 @@ class GalleryAnalyzer:
         
     def enhance_description(self, base_description: str, category: str) -> str:
         """Enhance a basic description with creative fashion-specific elements."""
+        # Extract key elements from base description
+        base_description = base_description.lower()
+        
         # Select multiple random elements for more variety
         adj1 = random.choice(FASHION_ADJECTIVES)
         adj2 = random.choice([adj for adj in FASHION_ADJECTIVES if adj != adj1])
@@ -122,60 +132,57 @@ class GalleryAnalyzer:
         ]
         
         return " ".join(parts) + "."
-
+        
     def generate_image_description(self, image_path: str, category: str) -> str:
-        """Generate a detailed description for an image using CLIP."""
+        """Generate a detailed description for an image using Replicate API."""
         try:
             if not os.path.exists(image_path):
                 print(f"Image file not found: {image_path}")
                 return "Image file not found"
 
+            # Read and encode image
+            with open(image_path, "rb") as image_file:
+                image_bytes = image_file.read()
+                import base64
+                image_base64 = base64.b64encode(image_bytes).decode()
+            
             print(f"\nProcessing image: {image_path}")
             
-            # Load and preprocess image
-            image = Image.open(image_path)
-            
-            # Generate candidate descriptions based on category
-            base_prompt = generate_prompt(category)
-            candidates = [
-                f"{base_prompt} elegant details",
-                f"{base_prompt} gothic elements",
-                f"{base_prompt} modern aesthetics",
-                f"{base_prompt} industrial accents",
-                f"{base_prompt} minimalist design",
-                f"{base_prompt} avant-garde features",
-                f"{base_prompt} architectural structure",
-                f"{base_prompt} cyberpunk influence",
-                f"{base_prompt} dark romantic style",
-                f"{base_prompt} futuristic elements"
-            ]
-            
-            # Process image and text with CLIP
-            inputs = processor(
-                images=image,
-                text=candidates,
-                return_tensors="pt",
-                padding=True
+            # Create prediction
+            response = requests.post(
+                API_URL,
+                headers=headers,
+                json={
+                    "version": "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
+                    "input": {
+                        "image": f"data:image/jpeg;base64,{image_base64}",
+                        "prompt": generate_prompt(category)
+                    }
+                }
             )
             
-            # Get image and text features
-            image_features = model.get_image_features(**{k: v for k, v in inputs.items() if k.startswith('pixel_values')})
-            text_features = model.get_text_features(**{k: v for k, v in inputs.items() if k.startswith('input_ids')})
+            response.raise_for_status()
+            prediction = response.json()
             
-            # Calculate similarity scores
-            similarity = torch.nn.functional.cosine_similarity(
-                image_features.unsqueeze(1),
-                text_features.unsqueeze(0),
-                dim=-1
-            )
+            # Get prediction result
+            while prediction["status"] != "succeeded":
+                time.sleep(1)
+                response = requests.get(
+                    f"{API_URL}/{prediction['id']}",
+                    headers=headers
+                )
+                response.raise_for_status()
+                prediction = response.json()
             
-            # Get the best matching description
-            best_match_idx = similarity.argmax().item()
-            base_description = candidates[best_match_idx]
-            
+            base_description = prediction["output"]
             # Enhance the base description with creative elements
             return self.enhance_description(base_description, category)
             
+        except requests.exceptions.RequestException as e:
+            print(f"API request error for {image_path}: {str(e)}")
+            if hasattr(e, 'response') and hasattr(e.response, 'text'):
+                print(f"Error response: {e.response.text}")
+            return f"Error: API request failed - {str(e)}"
         except Exception as e:
             print(f"Error generating description for {image_path}: {str(e)}")
             return f"Error: {str(e)}"

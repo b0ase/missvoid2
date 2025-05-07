@@ -6,8 +6,7 @@ from collections import defaultdict
 from typing import Dict, List, Set
 from PIL import Image
 from dotenv import load_dotenv
-import torch
-from transformers import CLIPProcessor, CLIPModel
+import requests
 import io
 from pathlib import Path
 import time
@@ -17,9 +16,17 @@ import random
 # Load environment variables
 load_dotenv()
 
-# Initialize CLIP model and processor
-model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
-processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+# Get API key from environment variable
+HUGGING_FACE_API_KEY = os.getenv('HUGGING_FACE_API_KEY')
+if not HUGGING_FACE_API_KEY:
+    raise ValueError("Please set HUGGING_FACE_API_KEY environment variable")
+
+# Using Salesforce's BLIP2 model for more detailed descriptions
+API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip2-opt-2.7b"
+headers = {
+    "Authorization": f"Bearer {HUGGING_FACE_API_KEY}",
+    "Content-Type": "application/json"
+}
 
 # Fashion-specific vocabulary for enhancing descriptions
 FASHION_ADJECTIVES = [
@@ -41,18 +48,6 @@ FASHION_ELEMENTS = [
     "embellishments", "hardware", "zippers", "clasps", "grommets"
 ]
 
-def generate_prompt(category: str) -> str:
-    """Generate a detailed prompt based on the category."""
-    prompts = {
-        "boots": "These luxury boots feature unique design elements with",
-        "corset": "This high-fashion corset showcases intricate construction with",
-        "dress": "This avant-garde dress presents a striking silhouette with",
-        "harness": "This designer harness demonstrates innovative strap configuration with",
-        "bodysuit": "This luxury bodysuit exhibits distinctive design elements with",
-        "default": "This high-fashion piece displays unique construction with"
-    }
-    return prompts.get(category.lower(), prompts["default"])
-
 class GalleryAnalyzer:
     def __init__(self):
         self.galleries = defaultdict(list)
@@ -64,118 +59,69 @@ class GalleryAnalyzer:
         
     def enhance_description(self, base_description: str, category: str) -> str:
         """Enhance a basic description with creative fashion-specific elements."""
-        # Select multiple random elements for more variety
+        # Extract key elements from base description
+        base_description = base_description.lower()
+        
+        # Select random elements from our fashion vocabularies
         adj1 = random.choice(FASHION_ADJECTIVES)
-        adj2 = random.choice([adj for adj in FASHION_ADJECTIVES if adj != adj1])
-        material1 = random.choice(FASHION_MATERIALS)
-        material2 = random.choice([mat for mat in FASHION_MATERIALS if mat != material1])
-        element1 = random.choice(FASHION_ELEMENTS)
-        element2 = random.choice([elem for elem in FASHION_ELEMENTS if elem != element1])
+        adj2 = random.choice(FASHION_ADJECTIVES)
+        material = random.choice(FASHION_MATERIALS)
+        element = random.choice(FASHION_ELEMENTS)
         
-        # More poetic and fashion-forward opening templates
-        openings = [
-            f"In the depths of design rebellion, this {category} shatters expectations with {adj1} audacity",
-            f"Where light fears to tread, this {category} emerges with {adj1} defiance",
-            f"Pushing the boundaries of {adj1} aesthetics, this {category} becomes a {adj2} manifesto",
-            f"From the convergence of {adj1} chaos and {adj2} order, this {category} rises",
-            f"A whisper of {adj1} darkness, this {category} speaks in {adj2} tongues",
-            f"Dancing on the edge of possibility, this {category} embodies {adj1} rebellion",
-            f"In the space between shadow and form, this {category} crafts {adj1} poetry",
-            f"Carved from the essence of night, this {category} wields {adj1} power",
-            f"Through the lens of {adj1} innovation, this {category} defies {adj2} constraints",
-            f"When darkness takes form, this {category} becomes {adj1} incarnate"
-        ]
+        # Create a more sophisticated description
+        enhanced = f"The {adj1} {category} embodies {adj2} elegance, featuring {material} "
+        enhanced += f"construction with intricate {element}. "
+        enhanced += f"Base features: {base_description}"
         
-        # More sophisticated material descriptions
-        material_desc = random.choice([
-            f"Forged in the union of {material1} and {material2}",
-            f"Where {material1} dissolves into {material2}",
-            f"Through layers of {material1} embracing {material2}",
-            f"{material1} and {material2} locked in eternal dialogue",
-            f"A forbidden marriage of {material1} to {material2}"
-        ])
+        return enhanced.capitalize()
         
-        # More dynamic element descriptions
-        element_desc = random.choice([
-            f"with {element1} cascading into {element2}",
-            f"through {element1} that metamorphose into {element2}",
-            f"as {element1} dance with {element2} in dark harmony",
-            f"where {element1} conspire with {element2}",
-            f"while {element1} seduce {element2} into submission"
-        ])
-        
-        # More evocative observation introductions
-        closings = [
-            f"Beneath the artistry lies truth: {base_description}",
-            f"The physical form whispers: {base_description}",
-            f"Reality bleeds through: {base_description}",
-            f"The void reveals: {base_description}",
-            f"Through mortal eyes: {base_description}"
-        ]
-        
-        # Construct the full description
-        parts = [
-            random.choice(openings),
-            material_desc,
-            element_desc,
-            random.choice(closings)
-        ]
-        
-        return " ".join(parts) + "."
-
     def generate_image_description(self, image_path: str, category: str) -> str:
-        """Generate a detailed description for an image using CLIP."""
+        """Generate a detailed description for an image using Hugging Face API."""
         try:
             if not os.path.exists(image_path):
                 print(f"Image file not found: {image_path}")
                 return "Image file not found"
 
+            with open(image_path, "rb") as image_file:
+                image_bytes = image_file.read()
+            
             print(f"\nProcessing image: {image_path}")
             
-            # Load and preprocess image
-            image = Image.open(image_path)
-            
-            # Generate candidate descriptions based on category
-            base_prompt = generate_prompt(category)
-            candidates = [
-                f"{base_prompt} elegant details",
-                f"{base_prompt} gothic elements",
-                f"{base_prompt} modern aesthetics",
-                f"{base_prompt} industrial accents",
-                f"{base_prompt} minimalist design",
-                f"{base_prompt} avant-garde features",
-                f"{base_prompt} architectural structure",
-                f"{base_prompt} cyberpunk influence",
-                f"{base_prompt} dark romantic style",
-                f"{base_prompt} futuristic elements"
-            ]
-            
-            # Process image and text with CLIP
-            inputs = processor(
-                images=image,
-                text=candidates,
-                return_tensors="pt",
-                padding=True
+            # Request a detailed description from the model
+            response = requests.post(
+                API_URL,
+                headers=headers,
+                data=image_bytes,
+                params={
+                    "task": "image_captioning",
+                    "prompt": "Describe this fashion piece in detail, focusing on materials, construction, and unique features."
+                }
             )
             
-            # Get image and text features
-            image_features = model.get_image_features(**{k: v for k, v in inputs.items() if k.startswith('pixel_values')})
-            text_features = model.get_text_features(**{k: v for k, v in inputs.items() if k.startswith('input_ids')})
+            print(f"Response status: {response.status_code}")
+            print(f"Response content: {response.content[:200]}...")
             
-            # Calculate similarity scores
-            similarity = torch.nn.functional.cosine_similarity(
-                image_features.unsqueeze(1),
-                text_features.unsqueeze(0),
-                dim=-1
-            )
+            if response.status_code == 503:
+                print("Model is loading. Waiting...")
+                time.sleep(20)
+                return self.generate_image_description(image_path, category)
             
-            # Get the best matching description
-            best_match_idx = similarity.argmax().item()
-            base_description = candidates[best_match_idx]
+            response.raise_for_status()
             
-            # Enhance the base description with creative elements
-            return self.enhance_description(base_description, category)
+            result = response.json()
+            if isinstance(result, list) and len(result) > 0:
+                base_description = result[0]["generated_text"]
+                # Enhance the base description with creative elements
+                return self.enhance_description(base_description, category)
+            else:
+                print(f"Unexpected response format: {result}")
+                return "Error: Unexpected response format"
             
+        except requests.exceptions.RequestException as e:
+            print(f"API request error for {image_path}: {str(e)}")
+            if hasattr(e, 'response') and hasattr(e.response, 'text'):
+                print(f"Error response: {e.response.text}")
+            return f"Error: API request failed - {str(e)}"
         except Exception as e:
             print(f"Error generating description for {image_path}: {str(e)}")
             return f"Error: {str(e)}"
@@ -251,17 +197,10 @@ class GalleryAnalyzer:
         # Get the full path to the image
         image_path = os.path.join('public', src.lstrip('/'))
         
-        print(f"\n{'='*50}")
-        print(f"Processing: {title}")
-        print(f"Category: {category}")
-        print(f"Image: {src}")
-        
         # Generate AI description if image exists
         ai_description = ""
         if os.path.exists(image_path):
             ai_description = self.generate_image_description(image_path, category)
-            print(f"\nGenerated Description:")
-            print(f"{ai_description}\n")
         
         # Parse options with more flexible patterns
         style = re.search(r"style:\s*['\"]([^'\"]+)['\"]", options)

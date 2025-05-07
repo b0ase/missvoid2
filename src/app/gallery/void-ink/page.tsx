@@ -8,49 +8,49 @@ export default function VoidInkGallery() {
       '/images/void-ink/IMG_8474.JPG',
       'Ink Bodysuit',
       'bodysuit',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+luxury+bodysuit+in+detail%2C+focusing+on+fit%2C+materials%2C+and+distinctive+design+elements.'s edges, this bodysuit births mystical chaos in A marriage of crystal and glass featuring harness that flow into spikes At its core: a woman with tattoos and leathers on her back.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8475.JPG',
       'Ink Corset',
       'corset',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+corset+in+detail%2C+noting+the+construction%2C+materials%2C+boning%2C+and+decorative+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8476.JPG',
       'Ink Harness',
       'harness',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+designer+harness+in+detail%2C+noting+the+strap+configuration%2C+hardware%2C+and+overall+design.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8477.JPG',
       'Ink Collar',
       'collar',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8478.JPG',
       'Ink Gloves',
       'gloves',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.'s edges, this gloves births enigmatic chaos in Layers of latex dancing with steel dominated by layers accented with panels At its core: a woman in a gas mask and leather gloves.', style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8479.JPG',
       'Ink Mask',
       'mask',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8480.JPG',
       'Ink Cuffs',
       'cuffs',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8481.JPG',
       'Ink Skirt',
       'skirt',
-      { style: 'flowing', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'flowing', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8482.JPG',
@@ -62,43 +62,43 @@ export default function VoidInkGallery() {
       '/images/void-ink/IMG_8483.JPG',
       'Ink Hood',
       'hood',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8484.JPG',
       'Ink Gown',
       'gown',
-      { style: 'flowing', luxuryLevel: 'bespoke', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'flowing', luxuryLevel: 'bespoke', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8485.JPG',
       'Ink Top',
       'top',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8486.JPG',
       'Ink Bralette',
       'bralette',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8487.JPG',
       'Ink Boots',
       'boots',
-      { style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+these+luxury+boots+in+detail%2C+focusing+on+height%2C+materials%2C+fastenings%2C+and+unique+design+elements.', style: 'architectural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8488.JPG',
       'Ink Heels',
       'heels',
-      { style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'sculptural', luxuryLevel: 'premium', useCase: 'performance' }
     ),
     createGalleryItem(
       '/images/void-ink/IMG_8489.JPG',
       'Ink Leggings',
       'leggings',
-      { style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
+      { description: 'Error: API request failed - 402 Client Error: Payment Required for url: https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base?task=image_captioning&prompt=Describe+this+high-fashion+piece+in+detail%2C+focusing+on+construction%2C+materials%2C+and+unique+design+elements.', style: 'minimal', luxuryLevel: 'premium', useCase: 'performance' }
     ),
   ];
   

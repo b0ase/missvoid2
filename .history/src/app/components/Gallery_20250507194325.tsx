@@ -1,10 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getAllCategories, type GalleryCategory } from '../utils/images';
 import { useDevMode } from '../context/DevModeContext';
-import { deleteGallery, getDeletedGalleries } from '../services/galleryService';
 
 // Get categories from our utility
 const initialCategories = getAllCategories();
@@ -17,12 +16,6 @@ export default function Gallery() {
   const [imageError, setImageError] = useState<Record<string, boolean>>({});
   const [categories, setCategories] = useState<GalleryCategory[]>(initialCategories);
   const [deletedCategories, setDeletedCategories] = useState<string[]>([]);
-  
-  // Load deleted galleries from localStorage on component mount
-  useEffect(() => {
-    const deleted = getDeletedGalleries();
-    setDeletedCategories(deleted);
-  }, []);
   
   // Filtered categories based on deleted state
   const featuredCategory = categories.find(category => category.isFeatured && !deletedCategories.includes(category.name));
@@ -38,11 +31,7 @@ export default function Gallery() {
   };
   
   const handleDeleteCategory = (categoryName: string) => {
-    // Update local state
     setDeletedCategories([...deletedCategories, categoryName]);
-    
-    // Store deletion in localStorage
-    deleteGallery(categoryName);
   };
 
   const GalleryCard = ({ category }: { category: GalleryCategory }) => (

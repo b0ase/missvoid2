@@ -102,18 +102,10 @@ export default function VoidInkGallery() {
     ),
   ];
   
-  // Filter out deleted images
-  const deletedImages = [
-    "/images/void-ink/IMG_8489.JPG",
-    "/images/void-ink/IMG_8488.JPG",
-    "/images/void-ink/IMG_8487.JPG",
-  ];
-  const filteredItems = items.filter(item => !deletedImages.includes(item.src));
-  
   return (
     <GalleryPage
       title="VOID INK"
-      images={filteredItems}
+      images={items}
       description="The Ink collection is inspired by the fluidity and permanence of ink. Each piece is designed to flow with the body, creating dynamic silhouettes that capture the essence of movement and expression. Perfect for performance, these designs offer a bold aesthetic with a focus on form and function."
       galleryName="VOID INK"
     />

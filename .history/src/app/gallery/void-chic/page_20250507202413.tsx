@@ -207,7 +207,6 @@ export default function VoidChicGallery() {
       title="VOID CHIC"
       images={items}
       description="Welcome to VOID CHIC, a collection that embodies sophisticated minimalism and contemporary elegance. Each piece showcases our commitment to refined aesthetics and architectural silhouettes. From sleek bodysuits to sculptural corsets, this collection represents the intersection of luxury and avant-garde design. Every garment is meticulously crafted to create a perfect balance between modern simplicity and bold statement pieces."
-      galleryName="VOID CHIC"
     />
   );
 } 

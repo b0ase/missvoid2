@@ -57,62 +57,50 @@ export default function AboutPage() {
         <div className="mb-12 bg-gray-900 p-6 rounded-lg border border-gray-800">
           <h2 className="text-2xl font-bold mb-6 text-white text-center">The MISS VOID Franchise System</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div className="bg-black p-4 rounded-lg flex flex-col">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div className="bg-black p-4 rounded-lg">
               <h3 className="text-xl font-bold text-white mb-3">For Designers</h3>
-              <ul className="text-gray-300 space-y-2 list-disc pl-5 mb-6 flex-grow">
+              <ul className="text-gray-300 space-y-2 list-disc pl-5">
                 <li>Create your own MISS VOID designs using our AI-powered design system</li>
                 <li>Manufacture and distribute your designs through the MISS VOID production network</li>
                 <li>Retain creative control while benefiting from established brand aesthetics</li>
                 <li>Build your own presence as a MISS VOID franchise designer</li>
               </ul>
-              <Link href="/design" className="inline-block bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full text-center font-medium">
-                Become a Franchise Designer
-              </Link>
             </div>
             
-            <div className="bg-black p-4 rounded-lg flex flex-col">
+            <div className="bg-black p-4 rounded-lg">
               <h3 className="text-xl font-bold text-white mb-3">For Retailers</h3>
-              <ul className="text-gray-300 space-y-2 list-disc pl-5 mb-6 flex-grow">
+              <ul className="text-gray-300 space-y-2 list-disc pl-5">
                 <li>Access a diverse range of MISS VOID designs from multiple franchise designers</li>
                 <li>Stock competing MISS VOID collections that appeal to different market segments</li>
                 <li>Benefit from the consistent MISS VOID aesthetic while offering variety</li>
                 <li>Participate in a distributed luxury fashion ecosystem</li>
               </ul>
-              <Link href="/contact" className="inline-block bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full text-center font-medium">
-                Become a Franchise Retailer
-              </Link>
             </div>
           </div>
           
-          <h3 className="text-lg font-bold text-white mb-4 text-center">Additional Partnership Opportunities</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-            <div className="bg-black p-4 rounded-lg flex flex-col">
-              <h3 className="text-xl font-bold text-white mb-3">For Manufacturers</h3>
-              <ul className="text-gray-300 space-y-2 list-disc pl-5 mb-6 flex-grow">
-                <li>Join our production network to create MISS VOID designs</li>
-                <li>Implement unique production techniques for franchise designers</li>
-                <li>Participate in a global manufacturing ecosystem</li>
-                <li>Access innovative design specifications and technical requirements</li>
-              </ul>
-              <Link href="/contact" className="inline-block bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full text-center font-medium">
-                Become a Franchise Manufacturer
+          <div className="text-center mt-6 space-y-4">
+            <div className="grid grid-cols-1 gap-4">
+              <Link href="/contact" className="inline-block bg-white text-black py-3 px-6 rounded hover:bg-gray-200 transition w-full md:w-2/3 mx-auto font-medium text-lg">
+                Become a Franchise Retailer
               </Link>
             </div>
             
-            <div className="bg-black p-4 rounded-lg flex flex-col">
-              <h3 className="text-xl font-bold text-white mb-3">For Distributors</h3>
-              <ul className="text-gray-300 space-y-2 list-disc pl-5 mb-6 flex-grow">
-                <li>Connect retailers with franchise designers' collections</li>
-                <li>Represent multiple MISS VOID franchise lines</li>
-                <li>Build regional distribution networks for luxury fashion</li>
-                <li>Facilitate global reach for MISS VOID franchise designs</li>
-              </ul>
-              <Link href="/contact" className="inline-block bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full text-center font-medium">
-                Become a Franchise Distributor
-              </Link>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-3">
+              <span className="text-gray-400 text-sm">Other opportunities:</span>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <Link href="/contact" className="text-sm inline-block bg-transparent border border-gray-700 text-gray-300 py-1.5 px-4 rounded hover:bg-gray-800 transition">
+                  Manufacturer
+                </Link>
+                <Link href="/contact" className="text-sm inline-block bg-transparent border border-gray-700 text-gray-300 py-1.5 px-4 rounded hover:bg-gray-800 transition">
+                  Distributor
+                </Link>
+              </div>
             </div>
+            
+            <Link href="/design" className="inline-block bg-white text-black py-3 px-6 rounded hover:bg-gray-200 transition mt-6 w-full md:w-2/3 mx-auto font-medium text-lg">
+              Become a Franchise Designer
+            </Link>
           </div>
         </div>
 

@@ -186,26 +186,26 @@ export default function VoidTokenPage() {
               </div>
               
               <div className="bg-gray-900 p-4 rounded border border-gray-700 mb-4">
-                <h3 className="text-lg font-medium text-white mb-3">Token Release Schedule (Planned)</h3>
+                <h3 className="text-lg font-medium text-white mb-3">Token Release Schedule</h3>
                 <p className="text-sm text-gray-300 mb-2">
-                  Our token release strategy is designed to ensure controlled distribution. Based on our projected model, the release schedule after launch would be as follows:
+                  Currently, only 1% (10M) of the total 1B $VOID token supply is in circulation, primarily from seed and early private funding rounds. The remaining tokens will be released gradually according to the following schedule:
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Initial Launch</span>
+                    <span className="text-gray-300">Initial Circulating Supply</span>
                     <span className="text-white">1% (10M tokens)</span>
                   </div>
                   <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Year 1 After Launch</span>
-                    <span className="text-white">Up to 10% (100M total)</span>
+                    <span className="text-gray-300">Year 1 Release</span>
+                    <span className="text-white">+9% (100M total)</span>
                   </div>
                   <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Year 2 After Launch</span>
-                    <span className="text-white">Up to 25% (250M total)</span>
+                    <span className="text-gray-300">Year 2 Release</span>
+                    <span className="text-white">+15% (250M total)</span>
                   </div>
                   <div className="flex justify-between items-center py-1">
-                    <span className="text-gray-300">Long-term Release</span>
-                    <span className="text-white">Based on company milestones</span>
+                    <span className="text-gray-300">Year 3+ Release</span>
+                    <span className="text-white">Remaining tokens based on company milestones</span>
                   </div>
                 </div>
               </div>

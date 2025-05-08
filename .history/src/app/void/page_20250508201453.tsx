@@ -39,28 +39,23 @@ export default function VoidTokenPage() {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-3 md:gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
             <div className="bg-gray-900 p-4 rounded border border-gray-700">
-              <p className="text-gray-400 text-sm">Projected Launch Price (2026)</p>
-              <p className="text-xl font-medium">$0.87 per token</p>
+              <p className="text-gray-400 text-sm">Market Cap</p>
+              <p className="text-xl font-medium">$8.7M</p>
             </div>
             <div className="bg-gray-900 p-4 rounded border border-gray-700">
-              <p className="text-gray-400 text-sm">Initial Token Allocation</p>
-              <p className="text-xl font-medium">10M of 1B total supply</p>
-              <p className="text-xs text-gray-500">1% of total supply at launch</p>
+              <p className="text-gray-400 text-sm">Circulating Shares</p>
+              <p className="text-xl font-medium">10M $VOID</p>
             </div>
-          </div>
-          
-          <div className="bg-gray-800 p-4 rounded border border-gray-700 mb-6">
-            <div className="flex items-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-amber-400 mr-2">
-                <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-              </svg>
-              <span className="text-amber-400 font-medium">Important Note on Projections</span>
+            <div className="bg-gray-900 p-4 rounded border border-gray-700">
+              <p className="text-gray-400 text-sm">Total Shares</p>
+              <p className="text-xl font-medium">1B $VOID</p>
             </div>
-            <p className="text-sm text-gray-300">
-              All financial metrics shown are projections for the 2026 launch. These figures are estimates based on our planned token economics and are subject to change. No real market cap or valuation exists as the token has not launched.
-            </p>
+            <div className="bg-gray-900 p-4 rounded border border-gray-700">
+              <p className="text-gray-400 text-sm">Fully Diluted Valuation</p>
+              <p className="text-xl font-medium">$870M</p>
+            </div>
           </div>
           
           <div className="mb-6 border-b border-gray-700 overflow-x-auto pb-1">
@@ -76,7 +71,6 @@ export default function VoidTokenPage() {
                 <option value="acquire">How to Acquire</option>
                 <option value="staking">Revenue Distribution</option>
                 <option value="roadmap">Launch Roadmap</option>
-                <option value="hiring">Hiring Plan</option>
               </select>
             </div>
             
@@ -142,18 +136,6 @@ export default function VoidTokenPage() {
                   Launch Roadmap
                 </button>
               </li>
-              <li>
-                <button 
-                  className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                    activeTab === 'hiring' 
-                      ? 'text-white border-white font-medium' 
-                      : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                  }`}
-                  onClick={() => setActiveTab('hiring')}
-                >
-                  Hiring Plan
-                </button>
-              </li>
             </ul>
           </div>
           
@@ -181,31 +163,6 @@ export default function VoidTokenPage() {
                   <div className="flex justify-between items-center py-1">
                     <span className="text-gray-300">Public Sale</span>
                     <span className="text-white">5%</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gray-900 p-4 rounded border border-gray-700 mb-4">
-                <h3 className="text-lg font-medium text-white mb-3">Token Release Schedule (Planned)</h3>
-                <p className="text-sm text-gray-300 mb-2">
-                  Our token release strategy is designed to ensure controlled distribution. Based on our projected model, the release schedule after launch would be as follows:
-                </p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Initial Launch</span>
-                    <span className="text-white">1% (10M tokens)</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Year 1 After Launch</span>
-                    <span className="text-white">Up to 10% (100M total)</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Year 2 After Launch</span>
-                    <span className="text-white">Up to 25% (250M total)</span>
-                  </div>
-                  <div className="flex justify-between items-center py-1">
-                    <span className="text-gray-300">Long-term Release</span>
-                    <span className="text-white">Based on company milestones</span>
                   </div>
                 </div>
               </div>
@@ -745,394 +702,6 @@ export default function VoidTokenPage() {
                     <p className="text-sm text-gray-400">Retail Partners</p>
                     <p className="text-xl font-medium text-white">75+</p>
                   </div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {activeTab === 'hiring' && (
-            <div className="space-y-6">
-              <p className="text-gray-300 mb-4">
-                The success of Miss Void LTD depends on assembling a world-class team of professionals who combine technical expertise, creative vision, and business acumen. This hiring plan outlines the key roles, compensation, responsibilities, and qualifications we seek as we build the company.
-              </p>
-              
-              <div className="bg-gray-900 p-4 rounded border border-gray-700 mb-6">
-                <h3 className="text-lg font-medium text-white mb-3">Executive Leadership</h3>
-                
-                <div className="space-y-4">
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Chief Executive Officer</h4>
-                      <span className="text-green-400 font-medium">$180,000 - $220,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Core Team</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                      <span className="bg-amber-900 text-xs text-amber-300 px-2 py-1 rounded">Priority Hire</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Develop and execute company vision and strategy</li>
-                          <li>Secure funding and manage investor relations</li>
-                          <li>Build and lead the executive team</li>
-                          <li>Ensure compliance with legal and regulatory requirements</li>
-                          <li>Drive company growth and oversee business operations</li>
-                          <li>Represent the company to stakeholders and the public</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>7+ years of leadership experience in fashion tech or related industries</li>
-                          <li>Proven track record of leading teams and driving business growth</li>
-                          <li>Strong understanding of AI technologies and blockchain</li>
-                          <li>Experience with fundraising and investor relations</li>
-                          <li>Excellent communication and strategic thinking skills</li>
-                          <li>Visionary mindset with practical execution abilities</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Chief Technology Officer</h4>
-                      <span className="text-green-400 font-medium">$160,000 - $200,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Core Team</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                      <span className="bg-amber-900 text-xs text-amber-300 px-2 py-1 rounded">Priority Hire</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Lead AI development and integration for design systems</li>
-                          <li>Oversee blockchain infrastructure and token mechanics</li>
-                          <li>Build and manage the technical team</li>
-                          <li>Develop technology roadmap aligned with business strategy</li>
-                          <li>Ensure platform security, scalability, and reliability</li>
-                          <li>Establish technical standards and best practices</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>10+ years of software development experience</li>
-                          <li>5+ years in technical leadership roles</li>
-                          <li>Deep expertise in AI/ML, preferably in generative models</li>
-                          <li>Experience with blockchain technology, preferably Solana</li>
-                          <li>Strong background in scalable web applications</li>
-                          <li>Track record of successful product development</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Creative Director</h4>
-                      <span className="text-green-400 font-medium">$140,000 - $180,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Core Team</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                      <span className="bg-amber-900 text-xs text-amber-300 px-2 py-1 rounded">Priority Hire</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Define and maintain MISS VOID's distinctive aesthetic</li>
-                          <li>Guide AI model training for design generation</li>
-                          <li>Oversee design quality across all product categories</li>
-                          <li>Develop seasonal design directions and concepts</li>
-                          <li>Collaborate with marketing on brand positioning</li>
-                          <li>Build and mentor the design team</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>8+ years in fashion design or related creative fields</li>
-                          <li>Portfolio demonstrating strong conceptual design skills</li>
-                          <li>Experience with digital design tools and processes</li>
-                          <li>Understanding of AI-assisted creative workflows</li>
-                          <li>Strong visual communication skills</li>
-                          <li>Experience leading creative teams</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gray-900 p-4 rounded border border-gray-700 mb-6">
-                <h3 className="text-lg font-medium text-white mb-3">Technical Team</h3>
-                
-                <div className="space-y-4">
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">AI Research Engineer</h4>
-                      <span className="text-green-400 font-medium">$130,000 - $170,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Technical</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Develop and fine-tune AI models for fashion design</li>
-                          <li>Research and implement cutting-edge generative algorithms</li>
-                          <li>Create systems for design parameter control and customization</li>
-                          <li>Optimize model performance and quality</li>
-                          <li>Collaborate with design team on creative direction</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>MS/PhD in Computer Science, AI, or related field</li>
-                          <li>3+ years experience with generative AI models</li>
-                          <li>Strong understanding of computer vision and image processing</li>
-                          <li>Experience with PyTorch, TensorFlow, or similar</li>
-                          <li>Publications or projects in generative image models</li>
-                          <li>Interest in fashion and design (preferred)</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Blockchain Developer</h4>
-                      <span className="text-green-400 font-medium">$120,000 - $160,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Technical</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Develop smart contracts for $VOID token economics</li>
-                          <li>Build staking and revenue distribution systems</li>
-                          <li>Create secure wallet integration for the platform</li>
-                          <li>Implement voting and governance mechanisms</li>
-                          <li>Ensure security and auditability of blockchain systems</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>4+ years experience in blockchain development</li>
-                          <li>Experience with Solana, Rust, and SPL tokens</li>
-                          <li>Strong understanding of cryptography and security</li>
-                          <li>Previous work on token economics or DeFi projects</li>
-                          <li>Experience with smart contract audits</li>
-                          <li>Familiarity with web3 frontend integration</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Full-Stack Developer</h4>
-                      <span className="text-green-400 font-medium">$110,000 - $150,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Technical</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded">2 Positions</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Develop and maintain the MISS VOID platform</li>
-                          <li>Build user interfaces for design generation and customization</li>
-                          <li>Implement manufacturing and distribution integrations</li>
-                          <li>Ensure platform performance, security, and scalability</li>
-                          <li>Collaborate with AI and blockchain teams on integration</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>5+ years of full-stack development experience</li>
-                          <li>Strong proficiency in React/Next.js and Node.js</li>
-                          <li>Experience with databases and API development</li>
-                          <li>Understanding of cloud infrastructure and deployment</li>
-                          <li>Familiarity with web3 technologies (preferred)</li>
-                          <li>Experience with e-commerce platforms (preferred)</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gray-900 p-4 rounded border border-gray-700 mb-6">
-                <h3 className="text-lg font-medium text-white mb-3">Business & Operations</h3>
-                
-                <div className="space-y-4">
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Chief Financial Officer</h4>
-                      <span className="text-green-400 font-medium">$150,000 - $190,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Core Team</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Manage company finances and financial planning</li>
-                          <li>Oversee token economics and revenue distribution</li>
-                          <li>Develop financial models and forecasts</li>
-                          <li>Ensure compliance with financial regulations</li>
-                          <li>Manage investor relations and fundraising</li>
-                          <li>Build and lead the finance team</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>CPA or MBA with 8+ years of financial management experience</li>
-                          <li>Experience in startups or high-growth companies</li>
-                          <li>Understanding of blockchain and token economics</li>
-                          <li>Knowledge of fashion industry economics (preferred)</li>
-                          <li>Experience with fundraising and investor management</li>
-                          <li>Strong analytical and strategic thinking skills</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Supply Chain Manager</h4>
-                      <span className="text-green-400 font-medium">$100,000 - $140,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Operations</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Develop manufacturing and distribution networks</li>
-                          <li>Manage relationships with production partners</li>
-                          <li>Optimize production costs and quality standards</li>
-                          <li>Implement quality control processes</li>
-                          <li>Ensure sustainable and ethical production practices</li>
-                          <li>Coordinate logistics and inventory management</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>5+ years in fashion supply chain management</li>
-                          <li>Experience with on-demand manufacturing models</li>
-                          <li>Knowledge of textiles and production techniques</li>
-                          <li>Understanding of international logistics</li>
-                          <li>Experience with digital production systems</li>
-                          <li>Track record of optimizing production efficiency</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-4 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between items-start mb-2">
-                      <h4 className="text-white font-medium">Marketing Director</h4>
-                      <span className="text-green-400 font-medium">$120,000 - $160,000/year</span>
-                    </div>
-                    <div className="mb-3">
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Marketing</span>
-                      <span className="bg-gray-700 text-xs text-gray-300 px-2 py-1 rounded mr-1">Full-time</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Responsibilities</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>Develop and execute marketing strategy</li>
-                          <li>Build brand awareness and positioning</li>
-                          <li>Manage social media and digital marketing campaigns</li>
-                          <li>Coordinate PR and influencer relationships</li>
-                          <li>Analyze market trends and consumer behavior</li>
-                          <li>Drive user acquisition and retention</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-300 mb-1">Qualifications</h5>
-                        <ul className="text-xs text-gray-400 list-disc pl-4 space-y-1">
-                          <li>8+ years in marketing, preferably in fashion</li>
-                          <li>Experience with luxury or high-end brand marketing</li>
-                          <li>Strong digital marketing and social media expertise</li>
-                          <li>Understanding of crypto/web3 marketing (preferred)</li>
-                          <li>Data-driven approach to campaign optimization</li>
-                          <li>Creative problem-solving and strategic thinking</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                <h3 className="text-lg font-medium text-white mb-4">Hiring Timeline & Budget</h3>
-                
-                <div className="overflow-x-auto">
-                  <table className="min-w-full bg-transparent">
-                    <thead>
-                      <tr>
-                        <th className="px-4 py-2 text-left text-gray-400">Phase</th>
-                        <th className="px-4 py-2 text-left text-gray-400">Timeline</th>
-                        <th className="px-4 py-2 text-left text-gray-400">Roles</th>
-                        <th className="px-4 py-2 text-left text-gray-400">Annual Budget</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-800">
-                      <tr>
-                        <td className="px-4 py-3 text-white">Phase 1: Founding Team</td>
-                        <td className="px-4 py-3 text-white">Q1-Q2 2025</td>
-                        <td className="px-4 py-3 text-gray-300 text-sm">CEO, CTO, Creative Director, AI Engineer, Blockchain Developer</td>
-                        <td className="px-4 py-3 text-white">$750,000</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-3 text-white">Phase 2: Core Team</td>
-                        <td className="px-4 py-3 text-white">Q3-Q4 2025</td>
-                        <td className="px-4 py-3 text-gray-300 text-sm">CFO, Full-Stack Developers (2), Marketing Director</td>
-                        <td className="px-4 py-3 text-white">$1.2M</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-3 text-white">Phase 3: Expansion</td>
-                        <td className="px-4 py-3 text-white">Q1-Q2 2026</td>
-                        <td className="px-4 py-3 text-gray-300 text-sm">Supply Chain Manager, UI/UX Designer, Community Manager, Content Creator</td>
-                        <td className="px-4 py-3 text-white">$2.1M</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                
-                <div className="mt-6 text-center">
-                  <button className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
-                    Apply for Open Positions
-                  </button>
-                  <p className="text-xs text-gray-400 mt-2">
-                    Miss Void LTD is committed to creating an inclusive workplace and encourages applications from diverse candidates.
-                  </p>
                 </div>
               </div>
             </div>

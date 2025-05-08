@@ -19,7 +19,7 @@ export default function Navigation() {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <div className="flex flex-col items-start">
           <Link href="/" className="text-xl font-bold">MISS VOID</Link>
-          <span className="text-xs text-gray-400">AI-First Fashion Concept</span>
+          <span className="text-xs text-gray-400">Concept Brand</span>
         </div>
         
         {/* Desktop Navigation */}
@@ -59,6 +59,12 @@ export default function Navigation() {
             className={`hover:text-gray-300 transition ${pathname === '/design' ? 'text-gray-300 underline' : ''}`}
           >
             Design
+          </Link>
+          <Link 
+            href="/custom" 
+            className={`hover:text-gray-300 transition ${pathname === '/custom' ? 'text-gray-300 underline' : ''}`}
+          >
+            Custom
           </Link>
           <Link 
             href="/contact" 
@@ -150,6 +156,13 @@ export default function Navigation() {
             onClick={() => setMobileMenuOpen(false)}
           >
             Design
+          </Link>
+          <Link 
+            href="/custom" 
+            className={`py-2 hover:text-gray-300 transition ${pathname === '/custom' ? 'text-gray-300 underline' : ''}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Custom
           </Link>
           <Link 
             href="/contact" 

@@ -85,32 +85,32 @@ export default function AboutPage() {
             </div>
           </div>
           
-          <h3 className="text-lg font-bold text-white mb-4 text-center">Additional Partnership Opportunities</h3>
+          <h3 className="text-sm font-medium text-gray-400 mb-4 text-center uppercase tracking-wide">Additional Partnership Opportunities</h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-            <div className="bg-black p-4 rounded-lg flex flex-col">
-              <h3 className="text-xl font-bold text-white mb-3">For Manufacturers</h3>
-              <ul className="text-gray-300 space-y-2 list-disc pl-5 mb-6 flex-grow">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-gray-900 p-4 rounded-lg border border-gray-800 flex flex-col">
+              <h3 className="text-lg font-medium text-gray-300 mb-3">For Manufacturers</h3>
+              <ul className="text-gray-400 space-y-2 list-disc pl-5 mb-4 flex-grow text-sm">
                 <li>Join our production network to create MISS VOID designs</li>
                 <li>Implement unique production techniques for franchise designers</li>
                 <li>Participate in a global manufacturing ecosystem</li>
                 <li>Access innovative design specifications and technical requirements</li>
               </ul>
-              <Link href="/contact" className="inline-block bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full text-center font-medium">
-                Become a Franchise Manufacturer
+              <Link href="/contact" className="inline-block bg-transparent border border-gray-700 text-gray-300 py-1.5 px-4 rounded hover:bg-gray-800 transition w-full text-center text-sm">
+                Manufacturer Inquiries
               </Link>
             </div>
             
-            <div className="bg-black p-4 rounded-lg flex flex-col">
-              <h3 className="text-xl font-bold text-white mb-3">For Distributors</h3>
-              <ul className="text-gray-300 space-y-2 list-disc pl-5 mb-6 flex-grow">
+            <div className="bg-gray-900 p-4 rounded-lg border border-gray-800 flex flex-col">
+              <h3 className="text-lg font-medium text-gray-300 mb-3">For Distributors</h3>
+              <ul className="text-gray-400 space-y-2 list-disc pl-5 mb-4 flex-grow text-sm">
                 <li>Connect retailers with franchise designers' collections</li>
                 <li>Represent multiple MISS VOID franchise lines</li>
                 <li>Build regional distribution networks for luxury fashion</li>
                 <li>Facilitate global reach for MISS VOID franchise designs</li>
               </ul>
-              <Link href="/contact" className="inline-block bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full text-center font-medium">
-                Become a Franchise Distributor
+              <Link href="/contact" className="inline-block bg-transparent border border-gray-700 text-gray-300 py-1.5 px-4 rounded hover:bg-gray-800 transition w-full text-center text-sm">
+                Distributor Inquiries
               </Link>
             </div>
           </div>

@@ -39,28 +39,23 @@ export default function VoidTokenPage() {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-3 md:gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
             <div className="bg-gray-900 p-4 rounded border border-gray-700">
-              <p className="text-gray-400 text-sm">Projected Launch Price (2026)</p>
-              <p className="text-xl font-medium">$0.87 per token</p>
+              <p className="text-gray-400 text-sm">Market Cap</p>
+              <p className="text-xl font-medium">$8.7M</p>
             </div>
             <div className="bg-gray-900 p-4 rounded border border-gray-700">
-              <p className="text-gray-400 text-sm">Initial Token Allocation</p>
-              <p className="text-xl font-medium">10M of 1B total supply</p>
-              <p className="text-xs text-gray-500">1% of total supply at launch</p>
+              <p className="text-gray-400 text-sm">Circulating Shares</p>
+              <p className="text-xl font-medium">10M $VOID</p>
             </div>
-          </div>
-          
-          <div className="bg-gray-800 p-4 rounded border border-gray-700 mb-6">
-            <div className="flex items-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-amber-400 mr-2">
-                <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-              </svg>
-              <span className="text-amber-400 font-medium">Important Note on Projections</span>
+            <div className="bg-gray-900 p-4 rounded border border-gray-700">
+              <p className="text-gray-400 text-sm">Total Shares</p>
+              <p className="text-xl font-medium">1B $VOID</p>
             </div>
-            <p className="text-sm text-gray-300">
-              All financial metrics shown are projections for the 2026 launch. These figures are estimates based on our planned token economics and are subject to change. No real market cap or valuation exists as the token has not launched.
-            </p>
+            <div className="bg-gray-900 p-4 rounded border border-gray-700">
+              <p className="text-gray-400 text-sm">Fully Diluted Valuation</p>
+              <p className="text-xl font-medium">$870M</p>
+            </div>
           </div>
           
           <div className="mb-6 border-b border-gray-700 overflow-x-auto pb-1">
@@ -186,26 +181,26 @@ export default function VoidTokenPage() {
               </div>
               
               <div className="bg-gray-900 p-4 rounded border border-gray-700 mb-4">
-                <h3 className="text-lg font-medium text-white mb-3">Token Release Schedule (Planned)</h3>
+                <h3 className="text-lg font-medium text-white mb-3">Token Release Schedule</h3>
                 <p className="text-sm text-gray-300 mb-2">
-                  Our token release strategy is designed to ensure controlled distribution. Based on our projected model, the release schedule after launch would be as follows:
+                  Currently, only 1% (10M) of the total 1B $VOID token supply is in circulation, primarily from seed and early private funding rounds. The remaining tokens will be released gradually according to the following schedule:
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Initial Launch</span>
+                    <span className="text-gray-300">Initial Circulating Supply</span>
                     <span className="text-white">1% (10M tokens)</span>
                   </div>
                   <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Year 1 After Launch</span>
-                    <span className="text-white">Up to 10% (100M total)</span>
+                    <span className="text-gray-300">Year 1 Release</span>
+                    <span className="text-white">+9% (100M total)</span>
                   </div>
                   <div className="flex justify-between items-center py-1 border-b border-gray-800">
-                    <span className="text-gray-300">Year 2 After Launch</span>
-                    <span className="text-white">Up to 25% (250M total)</span>
+                    <span className="text-gray-300">Year 2 Release</span>
+                    <span className="text-white">+15% (250M total)</span>
                   </div>
                   <div className="flex justify-between items-center py-1">
-                    <span className="text-gray-300">Long-term Release</span>
-                    <span className="text-white">Based on company milestones</span>
+                    <span className="text-gray-300">Year 3+ Release</span>
+                    <span className="text-white">Remaining tokens based on company milestones</span>
                   </div>
                 </div>
               </div>

@@ -19,7 +19,7 @@ export default function Navigation() {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <div className="flex flex-col items-start">
           <Link href="/" className="text-xl font-bold">MISS VOID</Link>
-          <span className="text-xs text-gray-400">AI-First Fashion Concept</span>
+          <span className="text-xs text-gray-400">Concept Brand</span>
         </div>
         
         {/* Desktop Navigation */}

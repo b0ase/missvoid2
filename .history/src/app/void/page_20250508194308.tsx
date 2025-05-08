@@ -50,7 +50,7 @@ export default function VoidTokenPage() {
             </div>
             <div className="bg-gray-900 p-4 rounded border border-gray-700">
               <p className="text-gray-400 text-sm">Total Shares</p>
-              <p className="text-xl font-medium">1B $VOID</p>
+              <p className="text-xl font-medium">25M $VOID</p>
             </div>
           </div>
           

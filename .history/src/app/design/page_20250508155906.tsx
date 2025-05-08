@@ -962,17 +962,10 @@ export default function DesignPage() {
   };
   
   const handleProceedTo3D = () => {
-    console.log("Proceed to 3D button clicked");
-    console.log("Current designImage:", designImage);
-    console.log("Current selectedDesignIndex:", selectedDesignIndex);
-    
-    // Set a brief loading state for visual feedback
-    setIs3DConverting(true);
-    setTimeout(() => setIs3DConverting(false), 1500);
-    
-    // Always proceed to 3D tab when button is clicked
-    setDesignStage('3d');
-    setActiveTab('3dVisualization');
+    if (selectedDesignIndex !== null || designImage) {
+      setDesignStage('3d');
+      setActiveTab('3dVisualization');
+    }
   };
   
   const handleProceedToPattern = () => {
@@ -1579,7 +1572,6 @@ export default function DesignPage() {
                         console.error("Image failed to load:", designImage);
                         e.currentTarget.src = "/images/image-error.png"; // Fallback image
                       }}
-                      onLoad={() => console.log("Design image loaded successfully:", designImage)}
                     />
                   </div>
                 </div>
@@ -1593,11 +1585,8 @@ export default function DesignPage() {
                   </button>
                   
                   <button
-                    className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
-                    onClick={() => {
-                      console.log("Proceeding to 3D view with image:", designImage);
-                      handleProceedTo3D();
-                    }}
+                    className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                    onClick={handleProceedTo3D}
                   >
                     Proceed to 3D Visualization
                   </button>
@@ -1618,25 +1607,14 @@ export default function DesignPage() {
                   <p className="text-gray-300 mb-2">
                     Your 2D design has been converted to a 3D model. Interact with it below to view from different angles.
                   </p>
-                  <p className="text-xs text-gray-500 mb-2">
-                    Debug info - Image URL: {designImage ? designImage.substring(0, 30) + '...' : 'none'}
-                  </p>
                 </div>
                 
                 <div className="aspect-square max-h-[600px] w-full bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
-                  {is3DConverting ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
-                      <div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin mb-4"></div>
-                      <p className="text-white font-medium">Converting to 3D Model...</p>
-                      <p className="text-gray-400 text-sm mt-2">Please wait while we process your design</p>
-                    </div>
-                  ) : (
-                    <ThreeDModelViewer 
-                      designImage={designImage}
-                      productType={productType}
-                      isLoading={is3DConverting}
-                    />
-                  )}
+                  <ThreeDModelViewer 
+                    designImage={designImage}
+                    productType={productType}
+                    isLoading={is3DConverting}
+                  />
                 </div>
                 
                 <div className="mt-4 flex justify-between">
@@ -1650,7 +1628,6 @@ export default function DesignPage() {
                   <button
                     className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
                     onClick={handleProceedToPattern}
-                    disabled={is3DConverting}
                   >
                     Proceed to Pattern Cutter
                   </button>
@@ -1659,7 +1636,6 @@ export default function DesignPage() {
             ) : (
               <div className="text-center py-10">
                 <p className="text-gray-400 mb-4">You need to generate a design first before visualizing it in 3D.</p>
-                <p className="text-sm text-gray-500 mb-4">Debug info - Design stage: {designStage}</p>
                 <button 
                   className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
                   onClick={() => setActiveTab('conceptDesign')}

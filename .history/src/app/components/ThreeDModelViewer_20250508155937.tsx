@@ -391,11 +391,6 @@ const SceneSetup: React.FC = () => {
         maxPolarAngle={Math.PI * 0.9}
         minPolarAngle={Math.PI * 0.1}
       />
-      {/* Create a simple environment instead of loading external resources */}
-      <mesh scale={100} receiveShadow>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial side={THREE.BackSide} color="#111111" />
-      </mesh>
     </>
   );
 };
@@ -504,6 +499,7 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({ productType, desi
       <Canvas shadows>
         <SceneSetup />
         <PerspectiveCamera makeDefault />
+        <Environment preset="studio" />
         {getModelComponent()}
       </Canvas>
     </div>

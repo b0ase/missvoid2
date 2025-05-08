@@ -610,6 +610,10 @@ export default function DesignPage() {
   
   const [is3DConverting, setIs3DConverting] = useState(false);
   const [animateTransition, setAnimateTransition] = useState(false);
+  const [meshyTaskId, setMeshyTaskId] = useState<string | null>(null);
+  const [meshyModel, setMeshyModel] = useState<any>(null);
+  const [meshyTaskStatus, setMeshyTaskStatus] = useState<string | null>(null);
+  const [meshyTaskProgress, setMeshyTaskProgress] = useState<number>(0);
   
   // Update measurements
   const handleMeasurementChange = (measurement: string, value: number) => {
@@ -966,13 +970,89 @@ export default function DesignPage() {
     console.log("Current designImage:", designImage);
     console.log("Current selectedDesignIndex:", selectedDesignIndex);
     
-    // Set a brief loading state for visual feedback
-    setIs3DConverting(true);
-    setTimeout(() => setIs3DConverting(false), 1500);
-    
     // Always proceed to 3D tab when button is clicked
     setDesignStage('3d');
     setActiveTab('3dVisualization');
+    
+    // Initiate 3D conversion using Meshy API if we have a design image
+    if (designImage && !meshyTaskId) {
+      setIs3DConverting(true);
+      startMeshyConversion(designImage);
+    }
+  };
+  
+  // Function to initiate Meshy 3D conversion
+  const startMeshyConversion = async (imageUrl: string) => {
+    try {
+      console.log("Starting Meshy conversion for image:", imageUrl);
+      
+      const response = await fetch('/api/convert-to-3d', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl,
+          productType
+        })
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to start 3D conversion");
+      }
+      
+      const data = await response.json();
+      const { taskId } = data;
+      
+      console.log("Meshy task created with ID:", taskId);
+      setMeshyTaskId(taskId);
+      
+      // Start polling for task status
+      pollMeshyTaskStatus(taskId);
+      
+    } catch (error) {
+      console.error("Error starting Meshy conversion:", error);
+      setApiError(error instanceof Error ? error.message : "Failed to start 3D conversion");
+      setIs3DConverting(false);
+    }
+  };
+  
+  // Function to poll Meshy task status
+  const pollMeshyTaskStatus = async (taskId: string) => {
+    try {
+      const response = await fetch(`/api/convert-to-3d?taskId=${taskId}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to check 3D conversion status");
+      }
+      
+      const data = await response.json();
+      
+      console.log("Meshy task status:", data.status);
+      console.log("Meshy task progress:", data.progress);
+      
+      setMeshyTaskStatus(data.status);
+      setMeshyTaskProgress(data.progress);
+      
+      if (data.status === 'SUCCEEDED') {
+        // Task completed successfully
+        setMeshyModel(data.model);
+        setIs3DConverting(false);
+      } else if (data.status === 'FAILED') {
+        // Task failed
+        throw new Error("3D conversion failed");
+      } else {
+        // Task still in progress, poll again after a delay
+        setTimeout(() => pollMeshyTaskStatus(taskId), 3000); // Poll every 3 seconds
+      }
+      
+    } catch (error) {
+      console.error("Error polling Meshy task status:", error);
+      setApiError(error instanceof Error ? error.message : "Failed to check 3D conversion status");
+      setIs3DConverting(false);
+    }
   };
   
   const handleProceedToPattern = () => {
@@ -1621,6 +1701,11 @@ export default function DesignPage() {
                   <p className="text-xs text-gray-500 mb-2">
                     Debug info - Image URL: {designImage ? designImage.substring(0, 30) + '...' : 'none'}
                   </p>
+                  {meshyTaskId && (
+                    <p className="text-xs text-gray-500 mb-2">
+                      Meshy Task ID: {meshyTaskId} | Status: {meshyTaskStatus} | Progress: {meshyTaskProgress}%
+                    </p>
+                  )}
                 </div>
                 
                 <div className="aspect-square max-h-[600px] w-full bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
@@ -1628,7 +1713,53 @@ export default function DesignPage() {
                     <div className="w-full h-full flex flex-col items-center justify-center">
                       <div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin mb-4"></div>
                       <p className="text-white font-medium">Converting to 3D Model...</p>
-                      <p className="text-gray-400 text-sm mt-2">Please wait while we process your design</p>
+                      <p className="text-gray-400 text-sm mt-2">This may take up to 2 minutes</p>
+                      {meshyTaskProgress > 0 && (
+                        <div className="w-64 bg-gray-700 h-2 rounded-full mt-4">
+                          <div 
+                            className="bg-white h-2 rounded-full transition-all duration-300 ease-in-out" 
+                            style={{ width: `${meshyTaskProgress}%` }}
+                          ></div>
+                        </div>
+                      )}
+                    </div>
+                  ) : meshyModel && meshyModel.glbUrl ? (
+                    <div className="w-full h-full relative">
+                      {/* Display the 3D model as an image preview since iframe may have CSP issues */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        {meshyModel.thumbnailUrl ? (
+                          <>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img 
+                              src={meshyModel.thumbnailUrl} 
+                              alt="3D model preview" 
+                              className="max-w-full max-h-full object-contain"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-2 text-center">
+                              <a 
+                                href={meshyModel.glbUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-white underline"
+                              >
+                                Download 3D Model (GLB)
+                              </a>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-white text-center p-4">
+                            <p>3D model generated successfully!</p>
+                            <a 
+                              href={meshyModel.glbUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="inline-block bg-white text-black py-2 px-4 rounded mt-2"
+                            >
+                              View/Download 3D Model
+                            </a>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ) : (
                     <ThreeDModelViewer 

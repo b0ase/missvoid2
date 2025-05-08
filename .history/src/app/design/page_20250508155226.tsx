@@ -962,17 +962,10 @@ export default function DesignPage() {
   };
   
   const handleProceedTo3D = () => {
-    console.log("Proceed to 3D button clicked");
-    console.log("Current designImage:", designImage);
-    console.log("Current selectedDesignIndex:", selectedDesignIndex);
-    
-    // Set a brief loading state for visual feedback
-    setIs3DConverting(true);
-    setTimeout(() => setIs3DConverting(false), 1500);
-    
-    // Always proceed to 3D tab when button is clicked
-    setDesignStage('3d');
-    setActiveTab('3dVisualization');
+    if (selectedDesignIndex !== null || designImage) {
+      setDesignStage('3d');
+      setActiveTab('3dVisualization');
+    }
   };
   
   const handleProceedToPattern = () => {
@@ -1001,45 +994,9 @@ export default function DesignPage() {
           </div>
         )}
         
-        {/* Main Navigation Tabs */}
+        {/* Design Tool Tabs */}
         <div className="mb-6 border-b border-gray-700">
           <ul className="flex flex-wrap -mb-px">
-            <li className="mr-2">
-              <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'about' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('about')}
-              >
-                About
-              </button>
-            </li>
-            <li className="mr-2">
-              <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'gallery' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('gallery')}
-              >
-                Gallery
-              </button>
-            </li>
-            <li className="mr-2">
-              <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'profile' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('profile')}
-              >
-                Profile
-              </button>
-            </li>
             <li className="mr-2">
               <button 
                 className={`inline-block p-4 border-b-2 rounded-t-lg ${
@@ -1091,178 +1048,6 @@ export default function DesignPage() {
           </ul>
         </div>
         
-        {/* Profile Tab */}
-        {activeTab === 'profile' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Your Profile</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-1 bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <div className="flex flex-col items-center">
-                  <div className="w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center mb-4 border-2 border-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-medium text-white">Guest User</h3>
-                  <p className="text-sm text-gray-400 mt-1">Member since May 2024</p>
-                  
-                  <button className="mt-4 w-full bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition">
-                    Edit Profile
-                  </button>
-                </div>
-                
-                <div className="mt-6">
-                  <h4 className="text-sm font-medium text-gray-300 mb-2">Account Information</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex justify-between">
-                      <span className="text-gray-400">Subscription</span>
-                      <span className="text-white">Free Tier</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-400">Designs Created</span>
-                      <span className="text-white">{savedDesigns.length}</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-400">Designs Manufactured</span>
-                      <span className="text-white">0</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="md:col-span-2 bg-gray-900 p-4 rounded-lg border border-gray-700">
-                <h3 className="text-lg font-medium text-white mb-4">Account Settings</h3>
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm text-gray-400 mb-1">Email Address</label>
-                    <input 
-                      type="email" 
-                      className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm text-gray-400 mb-1">Full Name</label>
-                    <input 
-                      type="text" 
-                      className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                      placeholder="Enter your name"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm text-gray-400 mb-1">Password</label>
-                    <input 
-                      type="password" 
-                      className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                  
-                  <div className="pt-2">
-                    <button className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
-                      Save Changes
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="mt-8">
-                  <h4 className="text-lg font-medium text-white mb-4">Subscription Plan</h4>
-                  <div className="p-4 border border-gray-700 rounded-lg bg-gray-800">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h5 className="text-white font-medium">Free Tier</h5>
-                        <p className="text-sm text-gray-400">5 designs per month</p>
-                      </div>
-                      <button className="bg-white text-black py-1 px-4 rounded hover:bg-gray-200 transition text-sm">
-                        Upgrade
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        {/* About Tab */}
-        {activeTab === 'about' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">About MISS VOID Design Studio</h2>
-            
-            <div className="text-gray-300 space-y-4">
-              <p>
-                The MISS VOID Design Studio combines cutting-edge AI technology with our distinctive aesthetic to give you the power to create your own MISS VOID pieces.
-              </p>
-              
-              <p>
-                Each design is exclusively branded with the MISS VOID name, while you retain ownership of your unique creation. Our system seamlessly converts your design concept into a 3D model and precise cutting patterns, which are then manufactured to our exacting standards.
-              </p>
-              
-              <p>
-                From single pieces to large production runs, we offer flexible manufacturing options to meet your needs. All designs are manufactured by our trusted partners in China, with direct drop-shipping to your business or marketplace.
-              </p>
-              
-              <div className="mt-6 font-semibold">
-                <p>To access your existing designs or create an account, please sign in.</p>
-                <button className="mt-2 bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
-                  Sign In / Create Account
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        {/* Gallery Tab */}
-        {activeTab === 'gallery' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Your Design Gallery</h2>
-            
-            {savedDesigns.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {savedDesigns.map((design, index) => (
-                  <div 
-                    key={index} 
-                    className={`relative bg-gray-900 rounded-lg overflow-hidden border-2 ${selectedDesignIndex === index ? 'border-white' : 'border-gray-800'}`}
-                    onClick={() => handleSelectDesign(index)}
-                  >
-                    <div className="aspect-square">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img 
-                        src={design.imageUrl} 
-                        alt={`MISS VOID ${design.productType} design`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-3">
-                      <h3 className="font-medium text-white">
-                        {design.productType.charAt(0).toUpperCase() + design.productType.slice(1)}
-                      </h3>
-                      <p className="text-xs text-gray-400 truncate">
-                        {design.prompt.substring(0, 60)}...
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">Your gallery is empty. Generate and save designs to display them here.</p>
-                <button 
-                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                  onClick={() => setActiveTab('conceptDesign')}
-                >
-                  Create Your First Design
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* Concept Design Tab */}
         {activeTab === 'conceptDesign' && (
           <>
             <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
@@ -1507,7 +1292,7 @@ export default function DesignPage() {
                       <label className="block text-xs text-gray-400 mb-1">Additional Description</label>
                       <textarea 
                         className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white text-sm"
-                        rows={4}
+                        rows={2}
                         value={structuredPrompt.description}
                         onChange={(e) => setStructuredPrompt({...structuredPrompt, description: e.target.value})}
                       />
@@ -1518,7 +1303,10 @@ export default function DesignPage() {
                         className="bg-white text-black px-3 py-1 rounded hover:bg-gray-200 transition text-sm"
                         onClick={() => {
                           // Combine all fields into a coherent prompt
-                          const combinedPrompt = `MISS VOID ${productType} "${structuredPrompt.name}"\n\n${structuredPrompt.description}\n\n${structuredPrompt.serialNumber} ${structuredPrompt.salt}`;
+                          const combinedPrompt = `MISS VOID ${productType} "${structuredPrompt.name}" ${structuredPrompt.description}. 
+The design incorporates ${structuredPrompt.primaryMaterial}${structuredPrompt.secondaryMaterial ? ', ' + structuredPrompt.secondaryMaterial : ''}, ${structuredPrompt.silhouette}, ${structuredPrompt.tailoring}${structuredPrompt.hardware ? ', with ' + structuredPrompt.hardware : ''}, showcasing the brand's signature brutalist aesthetic.
+${structuredPrompt.influence ? structuredPrompt.influence + ', ' : ''}This piece exemplifies high-end alternative fashion.
+Photograph presents ${structuredPrompt.photography}. ${structuredPrompt.serialNumber} ${structuredPrompt.salt}`;
                           setPromptText(combinedPrompt);
                         }}
                       >
@@ -1563,405 +1351,68 @@ export default function DesignPage() {
                 </div>
               )}
             </div>
-            
-            {/* Display design image if available */}
-            {designImage && (
-              <div className="mt-6 bg-gray-900 p-4 rounded border border-gray-700">
-                <h3 className="text-white text-lg font-semibold mb-3">Generated Design</h3>
-                <div className="flex justify-center">
-                  <div className="relative w-full max-w-md h-96 bg-black border border-gray-700 rounded overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      src={designImage} 
-                      alt={`MISS VOID ${productType} design`}
-                      className="w-full h-full object-contain"
-                      onError={(e) => {
-                        console.error("Image failed to load:", designImage);
-                        e.currentTarget.src = "/images/image-error.png"; // Fallback image
-                      }}
-                      onLoad={() => console.log("Design image loaded successfully:", designImage)}
-                    />
-                  </div>
-                </div>
-                
-                <div className="mt-4 flex items-center space-x-4">
-                  <button
-                    className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
-                    onClick={handleSaveDesign}
-                  >
-                    Save to Gallery
-                  </button>
-                  
-                  <button
-                    className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
-                    onClick={() => {
-                      console.log("Proceeding to 3D view with image:", designImage);
-                      handleProceedTo3D();
-                    }}
-                  >
-                    Proceed to 3D Visualization
-                  </button>
-                </div>
-              </div>
-            )}
           </>
         )}
         
-        {/* 3D Visualization Tab */}
-        {activeTab === '3dVisualization' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">3D Visualization</h2>
+        <div className="bg-black p-6 rounded-lg border border-gray-800">
+          <h2 className="text-xl font-semibold mb-4 text-white">About MISS VOID Design Studio</h2>
+          
+          <div className="text-gray-300 space-y-4">
+            <p>
+              The MISS VOID Design Studio combines cutting-edge AI technology with our distinctive aesthetic to give you the power to create your own MISS VOID pieces.
+            </p>
             
-            {designImage ? (
-              <div>
-                <div className="mb-4">
-                  <p className="text-gray-300 mb-2">
-                    Your 2D design has been converted to a 3D model. Interact with it below to view from different angles.
-                  </p>
-                  <p className="text-xs text-gray-500 mb-2">
-                    Debug info - Image URL: {designImage ? designImage.substring(0, 30) + '...' : 'none'}
-                  </p>
-                </div>
-                
-                <div className="aspect-square max-h-[600px] w-full bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
-                  {is3DConverting ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
-                      <div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin mb-4"></div>
-                      <p className="text-white font-medium">Converting to 3D Model...</p>
-                      <p className="text-gray-400 text-sm mt-2">Please wait while we process your design</p>
-                    </div>
-                  ) : (
-                    <ThreeDModelViewer 
-                      designImage={designImage}
-                      productType={productType}
-                      isLoading={is3DConverting}
-                    />
-                  )}
-                </div>
-                
-                <div className="mt-4 flex justify-between">
-                  <button
-                    className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
-                    onClick={() => setActiveTab('conceptDesign')}
-                  >
-                    Back to Design
-                  </button>
-                  
-                  <button
-                    className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
-                    onClick={handleProceedToPattern}
-                    disabled={is3DConverting}
-                  >
-                    Proceed to Pattern Cutter
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">You need to generate a design first before visualizing it in 3D.</p>
-                <p className="text-sm text-gray-500 mb-4">Debug info - Design stage: {designStage}</p>
-                <button 
-                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                  onClick={() => setActiveTab('conceptDesign')}
-                >
-                  Create a Design
-                </button>
-              </div>
-            )}
+            <p>
+              Each design is exclusively branded with the MISS VOID name, while you retain ownership of your unique creation. Our system seamlessly converts your design concept into a 3D model and precise cutting patterns, which are then manufactured to our exacting standards.
+            </p>
+            
+            <p>
+              From single pieces to large production runs, we offer flexible manufacturing options to meet your needs. All designs are manufactured by our trusted partners in China, with direct drop-shipping to your business or marketplace.
+            </p>
+            
+            <div className="mt-6 font-semibold">
+              <p>To access your existing designs or create an account, please sign in.</p>
+              <button className="mt-2 bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
+                Sign In / Create Account
+              </button>
+            </div>
           </div>
-        )}
-        
-        {/* Pattern Cutter Tab */}
-        {activeTab === 'patternCutter' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Pattern Cutter</h2>
+        </div>
+
+        {/* Display design image if available */}
+        {designImage && (
+          <div className="mt-6 bg-gray-900 p-4 rounded border border-gray-700">
+            <h3 className="text-white text-lg font-semibold mb-3">Generated Design</h3>
+            <div className="flex justify-center">
+              <div className="relative w-full max-w-md h-96 bg-black border border-gray-700 rounded overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src={designImage} 
+                  alt={`MISS VOID ${productType} design`}
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    console.error("Image failed to load:", designImage);
+                    e.currentTarget.src = "/images/image-error.png"; // Fallback image
+                  }}
+                />
+              </div>
+            </div>
             
-            {designImage ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-3">Measurements</h3>
-                  <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Bust (cm)</label>
-                        <input 
-                          type="number" 
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={measurements.bust}
-                          onChange={(e) => handleMeasurementChange('bust', parseFloat(e.target.value))}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Waist (cm)</label>
-                        <input 
-                          type="number" 
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={measurements.waist}
-                          onChange={(e) => handleMeasurementChange('waist', parseFloat(e.target.value))}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Hips (cm)</label>
-                        <input 
-                          type="number" 
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={measurements.hips}
-                          onChange={(e) => handleMeasurementChange('hips', parseFloat(e.target.value))}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Shoulder Width (cm)</label>
-                        <input 
-                          type="number" 
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={measurements.shoulderWidth}
-                          onChange={(e) => handleMeasurementChange('shoulderWidth', parseFloat(e.target.value))}
-                        />
-                      </div>
-                    </div>
-                    
-                    <h4 className="text-white text-sm font-medium mt-4 mb-2">Customizations</h4>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Boning</label>
-                        <select
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={patternCustomizations.boning}
-                          onChange={(e) => handleCustomizationChange('boning', e.target.value)}
-                        >
-                          <option value="light">Light</option>
-                          <option value="standard">Standard</option>
-                          <option value="heavy">Heavy</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Cut Style</label>
-                        <select
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={patternCustomizations.cutStyle}
-                          onChange={(e) => handleCustomizationChange('cutStyle', e.target.value)}
-                        >
-                          <option value="classic">Classic</option>
-                          <option value="modern">Modern</option>
-                          <option value="extreme">Extreme</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Panel Count</label>
-                        <select
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={patternCustomizations.panelCount}
-                          onChange={(e) => handleCustomizationChange('panelCount', e.target.value)}
-                        >
-                          <option value="4">4 Panels</option>
-                          <option value="6">6 Panels</option>
-                          <option value="8">8 Panels</option>
-                          <option value="10">10 Panels</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-1">Closure Type</label>
-                        <select
-                          className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                          value={patternCustomizations.closureType}
-                          onChange={(e) => handleCustomizationChange('closureType', e.target.value)}
-                        >
-                          <option value="back">Back</option>
-                          <option value="front">Front</option>
-                          <option value="side">Side</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 flex justify-between">
-                    <button
-                      className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
-                      onClick={() => setActiveTab('3dVisualization')}
-                    >
-                      Back to 3D View
-                    </button>
-                    
-                    <button
-                      className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
-                      onClick={handleProceedToManufacturing}
-                    >
-                      Proceed to Manufacturing
-                    </button>
-                  </div>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-medium text-white mb-3">Pattern Preview</h3>
-                  <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                    <div className="bg-white rounded">
-                      <canvas 
-                        ref={canvasRef} 
-                        width={500} 
-                        height={600} 
-                        className="w-full h-auto"
-                      />
-                    </div>
-                    
-                    <div className="mt-4">
-                      <button className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition w-full">
-                        Download Pattern PDF
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">You need to generate a design first before creating a pattern.</p>
-                <button 
-                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                  onClick={() => setActiveTab('conceptDesign')}
-                >
-                  Create a Design
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* Manufacturing Tab */}
-        {activeTab === 'manufacturing' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Manufacturing</h2>
-            
-            {designImage ? (
-              <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h3 className="text-lg font-medium text-white mb-3">Order Details</h3>
-                    <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                      <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Quantity</label>
-                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
-                            <option value="1">1 Piece (Sample)</option>
-                            <option value="5">5 Pieces</option>
-                            <option value="10">10 Pieces</option>
-                            <option value="25">25 Pieces</option>
-                            <option value="50">50 Pieces</option>
-                            <option value="100">100 Pieces</option>
-                            <option value="custom">Custom Quantity</option>
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Size Range</label>
-                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
-                            <option value="single">Single Size (Based on Measurements)</option>
-                            <option value="standard">Standard Size Range (XS-XL)</option>
-                            <option value="extended">Extended Size Range (XS-3XL)</option>
-                            <option value="custom">Custom Size Specification</option>
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Production Speed</label>
-                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
-                            <option value="standard">Standard (4-6 weeks)</option>
-                            <option value="express">Express (2-3 weeks, +25%)</option>
-                            <option value="rush">Rush (7-10 days, +50%)</option>
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Shipping</label>
-                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
-                            <option value="standard">Standard Shipping</option>
-                            <option value="express">Express Shipping</option>
-                            <option value="priority">Priority Shipping</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-medium text-white mb-3">Order Summary</h3>
-                    <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Product</span>
-                          <span className="text-white">MISS VOID {productType}</span>
-                        </div>
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Base Price (per item)</span>
-                          <span className="text-white">$150.00</span>
-                        </div>
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Quantity</span>
-                          <span className="text-white">1</span>
-                        </div>
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Production</span>
-                          <span className="text-white">Standard</span>
-                        </div>
-                        
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-400">Shipping</span>
-                          <span className="text-white">$25.00</span>
-                        </div>
-                        
-                        <div className="border-t border-gray-700 pt-3 flex justify-between items-center font-semibold">
-                          <span className="text-gray-300">Total</span>
-                          <span className="text-white">$175.00</span>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-4">
-                        <button className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition w-full">
-                          Submit Production Request
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                  <h3 className="text-lg font-medium text-white mb-3">Production Notes</h3>
-                  
-                  <textarea
-                    rows={4}
-                    className="w-full p-3 border border-gray-700 rounded bg-gray-800 text-white"
-                    placeholder="Add any special instructions or notes for production..."
-                  />
-                  
-                  <div className="mt-4 flex justify-between">
-                    <button
-                      className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
-                      onClick={() => setActiveTab('patternCutter')}
-                    >
-                      Back to Pattern Cutter
-                    </button>
-                    
-                    <button
-                      className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
-                    >
-                      Save Production Setup
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">You need to generate a design first before accessing manufacturing options.</p>
-                <button 
-                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                  onClick={() => setActiveTab('conceptDesign')}
-                >
-                  Create a Design
-                </button>
-              </div>
-            )}
+            <div className="mt-4 flex items-center space-x-4">
+              <button
+                className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                onClick={handleSaveDesign}
+              >
+                Save to Gallery
+              </button>
+              
+              <button
+                className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                onClick={handleProceedTo3D}
+              >
+                Proceed to 3D Visualization
+              </button>
+            </div>
           </div>
         )}
       </div>

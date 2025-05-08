@@ -83,6 +83,146 @@ const PRODUCT_DESCRIPTORS: Record<string, string[]> = {
     "dramatic silhouette", 
     "geometric design", 
     "precision tailoring"
+  ],
+  "jacket": [
+    "structured shoulders",
+    "architectural silhouette",
+    "precision cut panels",
+    "hardware closures",
+    "leather craftsmanship"
+  ],
+  "blazer": [
+    "tailored fit",
+    "sharp lapels",
+    "structured shoulders",
+    "minimalist design",
+    "architectural shape"
+  ],
+  "gloves": [
+    "form-fitting design",
+    "wrist hardware details",
+    "textured leather",
+    "precision seaming",
+    "elegant elongation"
+  ],
+  "leggings": [
+    "second-skin fit",
+    "high-waisted design",
+    "seam details",
+    "ankle zippers",
+    "textured panels"
+  ],
+  "top": [
+    "architectural cutting",
+    "hardware accents",
+    "structured silhouette",
+    "minimalist design",
+    "leather panel details"
+  ],
+  "bustier": [
+    "structured design",
+    "shaped cups",
+    "precision boning",
+    "architectural shaping",
+    "contouring fit"
+  ],
+  "collar": [
+    "high-neck design",
+    "hardware detailing",
+    "structural silhouette",
+    "architectural shape",
+    "boned structure"
+  ],
+  "choker": [
+    "architectural hardware",
+    "structured design",
+    "neck-framing",
+    "leather craftsmanship",
+    "minimalist accent"
+  ],
+  "boots": [
+    "knee-high silhouette",
+    "structured shaft",
+    "architectural heel",
+    "hardware detailing",
+    "precision craftsmanship"
+  ],
+  "belt": [
+    "wide silhouette",
+    "hardware closure",
+    "waist defining",
+    "architectural buckle",
+    "structured shape"
+  ],
+  "cape": [
+    "dramatic draping",
+    "architectural silhouette",
+    "hardware closures",
+    "structured shoulders",
+    "flowing movement"
+  ],
+  "catsuit": [
+    "second-skin fit",
+    "full-body silhouette",
+    "zipper details",
+    "paneled construction",
+    "architectural seaming"
+  ],
+  "gown": [
+    "floor-length silhouette",
+    "architectural structure",
+    "dramatic design",
+    "sculpted bodice",
+    "statement presence"
+  ],
+  "jumpsuit": [
+    "tailored silhouette",
+    "structured bodice",
+    "hardware details",
+    "precision fit",
+    "architectural cut"
+  ],
+  "shorts": [
+    "high-waisted design",
+    "structured panels",
+    "hardware details",
+    "precision tailoring",
+    "architectural shape"
+  ],
+  "coat": [
+    "dramatic silhouette",
+    "structured shoulders",
+    "architectural lapels",
+    "minimalist closure",
+    "tailored precision"
+  ],
+  "lingerie": [
+    "architectural strapping",
+    "minimal coverage",
+    "hardware details",
+    "structured design",
+    "body framing"
+  ],
+  "bra": [
+    "structured cups",
+    "architectural strapping",
+    "minimalist design",
+    "hardware accents",
+    "precision fit"
+  ],
+  "suspenders": [
+    "body-framing straps",
+    "hardware attachments",
+    "geometric design",
+    "architectural layout",
+    "minimalist aesthetic"
+  ],
+  "headpiece": [
+    "sculptural design",
+    "face-framing structure",
+    "architectural elements",
+    "statement presence",
+    "avant-garde silhouette"
   ]
 };
 
@@ -96,7 +236,7 @@ export default function DesignPage() {
   const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [productType, setProductType] = useState('corset');
-  const [promptCounter, setPromptCounter] = useState(1); // Counter for the prompt serial number
+  const [promptCounter, setPromptCounter] = useState(1); // Counter for prompt serial number
   
   // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
@@ -672,6 +812,26 @@ Photograph presents ${photographyElements}. ${salt}`;
                   <option value="dress">Dress</option>
                   <option value="mask">Mask</option>
                   <option value="skirt">Skirt</option>
+                  <option value="jacket">Jacket</option>
+                  <option value="blazer">Blazer</option>
+                  <option value="gloves">Gloves</option>
+                  <option value="leggings">Leggings</option>
+                  <option value="top">Top</option>
+                  <option value="bustier">Bustier</option>
+                  <option value="collar">Collar</option>
+                  <option value="choker">Choker</option>
+                  <option value="boots">Boots</option>
+                  <option value="belt">Belt</option>
+                  <option value="cape">Cape</option>
+                  <option value="catsuit">Catsuit</option>
+                  <option value="gown">Gown</option>
+                  <option value="jumpsuit">Jumpsuit</option>
+                  <option value="shorts">Shorts</option>
+                  <option value="coat">Coat</option>
+                  <option value="lingerie">Lingerie</option>
+                  <option value="bra">Bra</option>
+                  <option value="suspenders">Suspenders</option>
+                  <option value="headpiece">Headpiece</option>
                 </select>
                 <p className="mt-2 text-sm text-gray-400">
                   Select the type of product you want to generate. This will optimize your design and ensure accurate pattern creation.
@@ -951,9 +1111,29 @@ Photograph presents ${photographyElements}. ${salt}`;
                     <option value="corset">Corset</option>
                     <option value="harness">Harness</option>
                     <option value="bodysuit">Bodysuit</option>
+                    <option value="dress">Dress</option>
                     <option value="mask">Mask</option>
-                    <option value="top">Top</option>
                     <option value="skirt">Skirt</option>
+                    <option value="jacket">Jacket</option>
+                    <option value="blazer">Blazer</option>
+                    <option value="gloves">Gloves</option>
+                    <option value="leggings">Leggings</option>
+                    <option value="top">Top</option>
+                    <option value="bustier">Bustier</option>
+                    <option value="collar">Collar</option>
+                    <option value="choker">Choker</option>
+                    <option value="boots">Boots</option>
+                    <option value="belt">Belt</option>
+                    <option value="cape">Cape</option>
+                    <option value="catsuit">Catsuit</option>
+                    <option value="gown">Gown</option>
+                    <option value="jumpsuit">Jumpsuit</option>
+                    <option value="shorts">Shorts</option>
+                    <option value="coat">Coat</option>
+                    <option value="lingerie">Lingerie</option>
+                    <option value="bra">Bra</option>
+                    <option value="suspenders">Suspenders</option>
+                    <option value="headpiece">Headpiece</option>
                   </select>
                 </div>
                 

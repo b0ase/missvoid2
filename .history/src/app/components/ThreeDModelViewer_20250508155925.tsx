@@ -391,11 +391,6 @@ const SceneSetup: React.FC = () => {
         maxPolarAngle={Math.PI * 0.9}
         minPolarAngle={Math.PI * 0.1}
       />
-      {/* Create a simple environment instead of loading external resources */}
-      <mesh scale={100} receiveShadow>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial side={THREE.BackSide} color="#111111" />
-      </mesh>
     </>
   );
 };
@@ -490,20 +485,17 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({ productType, desi
   
   return (
     <div className="w-full h-[400px] bg-gray-900 rounded">
-      {(isAnalyzing || isLoading) && (
+      {isAnalyzing && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-10 rounded">
           <div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin"></div>
-          <p className="mt-4 text-white font-semibold">
-            {isLoading ? 'Converting to 3D model...' : 'Analyzing image...'}
-          </p>
-          <p className="text-sm text-gray-400 mt-2">
-            {isLoading ? 'Please wait while we process your design' : 'Extracting garment shape'}
-          </p>
+          <p className="mt-4 text-white font-semibold">Analyzing image...</p>
+          <p className="text-sm text-gray-400 mt-2">Extracting garment shape</p>
         </div>
       )}
       <Canvas shadows>
         <SceneSetup />
         <PerspectiveCamera makeDefault />
+        <Environment preset="studio" />
         {getModelComponent()}
       </Canvas>
     </div>

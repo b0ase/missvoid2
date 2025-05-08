@@ -966,11 +966,7 @@ export default function DesignPage() {
     console.log("Current designImage:", designImage);
     console.log("Current selectedDesignIndex:", selectedDesignIndex);
     
-    // Set a brief loading state for visual feedback
-    setIs3DConverting(true);
-    setTimeout(() => setIs3DConverting(false), 1500);
-    
-    // Always proceed to 3D tab when button is clicked
+    // No conditions - always proceed to 3D tab when button is clicked
     setDesignStage('3d');
     setActiveTab('3dVisualization');
   };
@@ -1593,7 +1589,7 @@ export default function DesignPage() {
                   </button>
                   
                   <button
-                    className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
+                    className="bg-white text-black py-2 px-4 rounded hover:bg-gray-700 transition"
                     onClick={() => {
                       console.log("Proceeding to 3D view with image:", designImage);
                       handleProceedTo3D();
@@ -1624,19 +1620,11 @@ export default function DesignPage() {
                 </div>
                 
                 <div className="aspect-square max-h-[600px] w-full bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
-                  {is3DConverting ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
-                      <div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin mb-4"></div>
-                      <p className="text-white font-medium">Converting to 3D Model...</p>
-                      <p className="text-gray-400 text-sm mt-2">Please wait while we process your design</p>
-                    </div>
-                  ) : (
-                    <ThreeDModelViewer 
-                      designImage={designImage}
-                      productType={productType}
-                      isLoading={is3DConverting}
-                    />
-                  )}
+                  <ThreeDModelViewer 
+                    designImage={designImage}
+                    productType={productType}
+                    isLoading={is3DConverting}
+                  />
                 </div>
                 
                 <div className="mt-4 flex justify-between">
@@ -1650,7 +1638,6 @@ export default function DesignPage() {
                   <button
                     className="bg-white text-black py-2 px-4 rounded hover:bg-gray-200 transition"
                     onClick={handleProceedToPattern}
-                    disabled={is3DConverting}
                   >
                     Proceed to Pattern Cutter
                   </button>

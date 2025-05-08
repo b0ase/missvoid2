@@ -1015,79 +1015,39 @@ export default function DesignPage() {
       
       // Make the API call to Stability
       console.log("Making API call to generate design...");
+      const response = await fetch('/api/generate-design', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: enhancedPrompt,
+          productType
+        })
+      });
       
-      // Use a more resilient fetch with timeout and retry logic
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      console.log("API response status:", response.status);
       
-      try {
-        const response = await fetch('/api/generate-design', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: enhancedPrompt,
-            productType
-          }),
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        
-        console.log("API response status:", response.status);
-        
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({ error: `HTTP error ${response.status}` }));
-          console.error("API error response:", errorData);
-          throw new Error(errorData.error || "Failed to generate image");
-        }
-        
-        const data = await response.json();
-        console.log("API success response:", data);
-        
-        // Set the generated image
-        if (data.imageUrl) {
-          console.log("Setting image URL:", data.imageUrl);
-          setDesignImage(data.imageUrl);
-          setDesignStage('2d');
-          
-          // For testing, let's add a mock design to populate the tabs
-          if (!data.imageUrl.startsWith('data:') && !data.imageUrl.startsWith('/')) {
-            // If we got a weird URL, use a fallback for testing
-            setDesignImage("https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=1287&auto=format&fit=crop");
-          }
-        } else {
-          throw new Error("No image URL in response");
-        }
-      } catch (fetchError: unknown) {
-        if (fetchError instanceof Error && fetchError.name === 'AbortError') {
-          // Handle timeout specifically
-          console.error("Request timed out");
-          throw new Error("API request timed out. Please try again.");
-        }
-        throw fetchError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API error response:", errorData);
+        throw new Error(errorData.error || "Failed to generate image");
+      }
+      
+      const data = await response.json();
+      console.log("API success response:", data);
+      
+      // Set the generated image
+      if (data.imageUrl) {
+        console.log("Setting image URL:", data.imageUrl);
+        setDesignImage(data.imageUrl);
+        setDesignStage('2d');
+      } else {
+        throw new Error("No image URL in response");
       }
     } catch (error) {
       console.error("Error generating design:", error);
       setApiError(error instanceof Error ? error.message : "An unknown error occurred");
-
-      // For development purposes, add a mock design so we can still test the rest of the workflow
-      const mockImage = "https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=1287&auto=format&fit=crop";
-      setDesignImage(mockImage);
-      setDesignStage('2d');
-      
-      // Add a mock design to the portfolio for testing
-      if (savedDesigns && Array.isArray(savedDesigns)) {
-        setSavedDesigns([
-          ...savedDesigns,
-          {
-            imageUrl: mockImage,
-            productType,
-            prompt: promptText
-          }
-        ]);
-      }
     } finally {
       setIsGenerating(false);
     }

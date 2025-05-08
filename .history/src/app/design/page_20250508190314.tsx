@@ -1060,8 +1060,8 @@ export default function DesignPage() {
         } else {
           throw new Error("No image URL in response");
         }
-      } catch (fetchError: unknown) {
-        if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+      } catch (fetchError) {
+        if (fetchError.name === 'AbortError') {
           // Handle timeout specifically
           console.error("Request timed out");
           throw new Error("API request timed out. Please try again.");
@@ -1078,16 +1078,14 @@ export default function DesignPage() {
       setDesignStage('2d');
       
       // Add a mock design to the portfolio for testing
-      if (savedDesigns && Array.isArray(savedDesigns)) {
-        setSavedDesigns([
-          ...savedDesigns,
-          {
-            imageUrl: mockImage,
-            productType,
-            prompt: promptText
-          }
-        ]);
-      }
+      setSavedDesigns([
+        ...savedDesigns,
+        {
+          imageUrl: mockImage,
+          productType,
+          prompt: promptText
+        }
+      ]);
     } finally {
       setIsGenerating(false);
     }

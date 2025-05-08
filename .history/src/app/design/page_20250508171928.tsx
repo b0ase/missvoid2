@@ -2018,50 +2018,27 @@ export default function DesignPage() {
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Base Price (per item)</span>
-                          <span className="text-white">${
-                            manufacturingDetails.quantity === "1" ? "150.00" :
-                            manufacturingDetails.quantity === "5" ? "120.00" :
-                            manufacturingDetails.quantity === "10" ? "90.00" :
-                            manufacturingDetails.quantity === "50" ? "70.00" :
-                            manufacturingDetails.quantity === "100" ? "55.00" :
-                            "45.00"
-                          }</span>
+                          <span className="text-white">$150.00</span>
                         </div>
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Quantity</span>
-                          <span className="text-white">{
-                            manufacturingDetails.quantity === "1" ? "1" :
-                            manufacturingDetails.quantity === "5" ? "5" :
-                            manufacturingDetails.quantity === "10" ? "10" :
-                            manufacturingDetails.quantity === "50" ? "50" :
-                            manufacturingDetails.quantity === "100" ? "100" :
-                            "500"
-                          }</span>
+                          <span className="text-white">1</span>
                         </div>
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Production</span>
-                          <span className="text-white">{
-                            manufacturingDetails.productionSpeed === "standard" ? "Standard" :
-                            manufacturingDetails.productionSpeed === "express" ? "Express (+25%)" :
-                            "Rush (+50%)"
-                          }</span>
+                          <span className="text-white">Standard</span>
                         </div>
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Shipping</span>
-                          <span className="text-white">${
-                            manufacturingDetails.shippingMethod === "standard" ? "25.00" :
-                            manufacturingDetails.shippingMethod === "express" ? "45.00" :
-                            manufacturingDetails.shippingMethod === "priority" ? "75.00" :
-                            "25.00"
-                          }</span>
+                          <span className="text-white">$25.00</span>
                         </div>
                         
                         <div className="border-t border-gray-700 pt-3 flex justify-between items-center font-semibold">
                           <span className="text-gray-300">Total</span>
-                          <span className="text-white">${orderTotal.toFixed(2)}</span>
+                          <span className="text-white">$175.00</span>
                         </div>
                       </div>
                       

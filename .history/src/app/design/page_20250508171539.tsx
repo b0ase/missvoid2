@@ -586,16 +586,6 @@ export default function DesignPage() {
   const [showStructuredForm, setShowStructuredForm] = useState(false);
   const [saltCounter, setSaltCounter] = useState(1); // Counter for incremental salt
   
-  // Manufacturing state
-  const [manufacturingDetails, setManufacturingDetails] = useState({
-    quantity: "1",
-    sizeRange: "single",
-    productionSpeed: "standard",
-    shippingMethod: "standard",
-    marketplaceIntegration: "none"
-  });
-  const [orderTotal, setOrderTotal] = useState(175.00);
-  
   // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
   const [measurements, setMeasurements] = useState({
@@ -992,57 +982,6 @@ export default function DesignPage() {
   
   const handleProceedToManufacturing = () => {
     setActiveTab('manufacturing');
-    // Reset calculation when entering manufacturing tab
-    calculateOrderTotal(manufacturingDetails);
-  };
-  
-  // Calculate order total based on selections
-  const calculateOrderTotal = (details: any) => {
-    // Base prices by quantity
-    const pricesByQuantity: {[key: string]: number} = {
-      "1": 150.00,
-      "5": 120.00,
-      "10": 90.00,
-      "50": 70.00,
-      "100": 55.00,
-      "500": 45.00
-    };
-    
-    // Get base price per unit
-    const basePrice = pricesByQuantity[details.quantity] || 150.00;
-    
-    // Calculate quantity total (using actual quantity minimum for tier)
-    const quantityMap: {[key: string]: number} = {
-      "1": 1,
-      "5": 5,
-      "10": 10,
-      "50": 50,
-      "100": 100,
-      "500": 500
-    };
-    const quantity = quantityMap[details.quantity] || 1;
-    const subtotal = basePrice * quantity;
-    
-    // Apply production speed multiplier
-    const productionMultiplier = details.productionSpeed === "express" ? 1.25 :
-                                details.productionSpeed === "rush" ? 1.5 : 1;
-    
-    // Calculate shipping cost (simplified)
-    const shippingCost = details.shippingMethod === "express" ? 45.00 :
-                        details.shippingMethod === "priority" ? 75.00 : 25.00;
-    
-    // Calculate final total
-    const calculatedTotal = (subtotal * productionMultiplier) + shippingCost;
-    setOrderTotal(calculatedTotal);
-    
-    return calculatedTotal;
-  };
-  
-  // Handle manufacturing detail changes
-  const handleManufacturingChange = (field: string, value: string) => {
-    const updatedDetails = { ...manufacturingDetails, [field]: value };
-    setManufacturingDetails(updatedDetails);
-    calculateOrderTotal(updatedDetails);
   };
   
   return (
@@ -1901,11 +1840,7 @@ export default function DesignPage() {
                       <div className="space-y-4">
                         <div>
                           <label className="block text-sm text-gray-400 mb-1">Quantity</label>
-                          <select 
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            value={manufacturingDetails.quantity}
-                            onChange={(e) => handleManufacturingChange('quantity', e.target.value)}
-                          >
+                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
                             <option value="1">1 Piece (Premium Sample)</option>
                             <option value="5">5-9 Pieces</option>
                             <option value="10">10-49 Pieces</option>
@@ -1918,11 +1853,7 @@ export default function DesignPage() {
                         
                         <div>
                           <label className="block text-sm text-gray-400 mb-1">Size Range</label>
-                          <select
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            value={manufacturingDetails.sizeRange}
-                            onChange={(e) => handleManufacturingChange('sizeRange', e.target.value)}
-                          >
+                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
                             <option value="single">Single Size (Based on Measurements)</option>
                             <option value="standard">Standard Size Range (XS-XL)</option>
                             <option value="extended">Extended Size Range (XS-3XL)</option>
@@ -1932,11 +1863,7 @@ export default function DesignPage() {
                         
                         <div>
                           <label className="block text-sm text-gray-400 mb-1">Production Speed</label>
-                          <select
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            value={manufacturingDetails.productionSpeed}
-                            onChange={(e) => handleManufacturingChange('productionSpeed', e.target.value)}
-                          >
+                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
                             <option value="standard">Standard (4-6 weeks)</option>
                             <option value="express">Express (2-3 weeks, +25%)</option>
                             <option value="rush">Rush (7-10 days, +50%)</option>
@@ -1945,11 +1872,7 @@ export default function DesignPage() {
                         
                         <div>
                           <label className="block text-sm text-gray-400 mb-1">Shipping Method</label>
-                          <select
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            value={manufacturingDetails.shippingMethod}
-                            onChange={(e) => handleManufacturingChange('shippingMethod', e.target.value)}
-                          >
+                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
                             <option value="standard">Standard International Shipping</option>
                             <option value="express">Express International Shipping</option>
                             <option value="priority">Priority International Shipping</option>
@@ -1959,11 +1882,7 @@ export default function DesignPage() {
                         
                         <div>
                           <label className="block text-sm text-gray-400 mb-1">Marketplace Integration</label>
-                          <select
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            value={manufacturingDetails.marketplaceIntegration}
-                            onChange={(e) => handleManufacturingChange('marketplaceIntegration', e.target.value)}
-                          >
+                          <select className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white">
                             <option value="none">No Integration (Ship to Me)</option>
                             <option value="alibaba">Alibaba Wholesale</option>
                             <option value="ebay">eBay Dropshipping</option>
@@ -2018,50 +1937,27 @@ export default function DesignPage() {
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Base Price (per item)</span>
-                          <span className="text-white">${
-                            manufacturingDetails.quantity === "1" ? "150.00" :
-                            manufacturingDetails.quantity === "5" ? "120.00" :
-                            manufacturingDetails.quantity === "10" ? "90.00" :
-                            manufacturingDetails.quantity === "50" ? "70.00" :
-                            manufacturingDetails.quantity === "100" ? "55.00" :
-                            "45.00"
-                          }</span>
+                          <span className="text-white">$150.00</span>
                         </div>
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Quantity</span>
-                          <span className="text-white">{
-                            manufacturingDetails.quantity === "1" ? "1" :
-                            manufacturingDetails.quantity === "5" ? "5" :
-                            manufacturingDetails.quantity === "10" ? "10" :
-                            manufacturingDetails.quantity === "50" ? "50" :
-                            manufacturingDetails.quantity === "100" ? "100" :
-                            "500"
-                          }</span>
+                          <span className="text-white">1</span>
                         </div>
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Production</span>
-                          <span className="text-white">{
-                            manufacturingDetails.productionSpeed === "standard" ? "Standard" :
-                            manufacturingDetails.productionSpeed === "express" ? "Express (+25%)" :
-                            "Rush (+50%)"
-                          }</span>
+                          <span className="text-white">Standard</span>
                         </div>
                         
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Shipping</span>
-                          <span className="text-white">${
-                            manufacturingDetails.shippingMethod === "standard" ? "25.00" :
-                            manufacturingDetails.shippingMethod === "express" ? "45.00" :
-                            manufacturingDetails.shippingMethod === "priority" ? "75.00" :
-                            "25.00"
-                          }</span>
+                          <span className="text-white">$25.00</span>
                         </div>
                         
                         <div className="border-t border-gray-700 pt-3 flex justify-between items-center font-semibold">
                           <span className="text-gray-300">Total</span>
-                          <span className="text-white">${orderTotal.toFixed(2)}</span>
+                          <span className="text-white">$175.00</span>
                         </div>
                       </div>
                       

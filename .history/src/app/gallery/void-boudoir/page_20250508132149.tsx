@@ -179,7 +179,52 @@ export default function VoidBoudoirGallery() {
         luxuryLevel: 'premium', 
         useCase: 'evening' 
       }
-    )
+    ),
+    createGalleryItem(
+      '/images/void-boudoir/IMG_8157.JPG',
+      'Whisper Touch Thong',
+      'bodysuit',
+      { style: 'flowing', luxuryLevel: 'premium', useCase: 'evening' }
+    ),
+    createGalleryItem(
+      '/images/void-boudoir/IMG_8156.JPG',
+      'Midnight Lace Brief',
+      'bodysuit',
+      { style: 'minimal', luxuryLevel: 'premium', useCase: 'evening' }
+    ),
+    createGalleryItem(
+      '/images/void-boudoir/IMG_8151.JPG',
+      'Shadow Silk G-String',
+      'bodysuit',
+      { style: 'flowing', luxuryLevel: 'premium', useCase: 'evening' }
+    ),
+
+    // Add all remaining images with unique descriptions
+    ...Array.from({ length: 30 }, (_, i) => {
+      const styles = ['minimal', 'flowing', 'elaborate'];
+      const types = ['Thong', 'G-String', 'Brief', 'Brazilian'];
+      const materials = ['Lace', 'Silk', 'Velvet', 'Mesh', 'Satin'];
+      const collections = ['Midnight', 'Shadow', 'Noir', 'Whisper', 'Dark'];
+      
+      const style = styles[i % styles.length];
+      const type = types[i % types.length];
+      const material = materials[Math.floor(i / 6) % materials.length];
+      const collection = collections[Math.floor(i / 5) % collections.length];
+      
+      const imageNumber = 8150 - i;
+      const extension = i % 3 === 0 ? 'WEBP' : 'JPG';
+      
+      return createGalleryItem(
+        `/images/void-boudoir/IMG_${imageNumber}.${extension}`,
+        `${collection} ${material} ${type}`,
+        'bodysuit',
+        { 
+          style: style as any, 
+          luxuryLevel: i % 5 === 0 ? 'bespoke' : 'premium', 
+          useCase: 'evening' 
+        }
+      );
+    })
   ];
   
   // Filter out deleted images

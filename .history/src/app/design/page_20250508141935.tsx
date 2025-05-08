@@ -416,9 +416,21 @@ export default function DesignPage() {
       // Transfer product type to pattern cutter
       setPatternType(productType);
       
-      // No longer automatically switch to pattern cutter tab
-      // User can now view the 3D model and then choose to go to the pattern cutter
-    }, 2000);
+      // Switch to pattern cutter tab
+      setActiveTab('patternCutter');
+      
+      // When 3D conversion is complete, initialize pattern based on the design
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d');
+        if (ctx) {
+          // Clear canvas
+          ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          
+          // Draw pattern based on productType and measurements
+          drawPattern(ctx, productType, measurements, patternCustomizations);
+        }
+      }
+    }, 3000);
   };
   
   const handleCreatePattern = () => {
@@ -538,7 +550,7 @@ export default function DesignPage() {
                 
                 <div className="mb-6 flex justify-center">
                   {designImage && designStage === '2d' && (
-                    <div className={`relative h-96 w-full transition-opacity duration-1000 ${animateTransition ? 'opacity-30' : 'opacity-100'}`}>
+                    <div className="relative h-96 w-full">
                       <Image 
                         src={designImage}
                         alt="Generated design"
@@ -546,13 +558,6 @@ export default function DesignPage() {
                         style={{ objectFit: 'contain' }}
                         className="rounded"
                       />
-                      {is3DConverting && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <div className="w-16 h-16 border-t-4 border-white rounded-full animate-spin"></div>
-                          <p className="mt-4 text-white font-semibold">Converting to 3D...</p>
-                          <p className="text-sm text-gray-400 mt-2">Generating mesh topology</p>
-                        </div>
-                      )}
                     </div>
                   )}
                   
@@ -565,7 +570,6 @@ export default function DesignPage() {
                       <ThreeDModelViewer 
                         productType={productType} 
                         measurements={measurements}
-                        designImage={designImage}
                       />
                     </div>
                   )}

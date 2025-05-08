@@ -10,10 +10,14 @@
     "generate-sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
+    "@react-three/drei": "^10.0.7",
+    "@react-three/fiber": "^9.1.2",
+    "@types/three": "^0.176.0",
     "next": "15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-swipeable": "^7.0.2"
+    "react-swipeable": "^7.0.2",
+    "three": "^0.176.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

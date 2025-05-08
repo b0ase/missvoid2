@@ -416,9 +416,21 @@ export default function DesignPage() {
       // Transfer product type to pattern cutter
       setPatternType(productType);
       
-      // No longer automatically switch to pattern cutter tab
-      // User can now view the 3D model and then choose to go to the pattern cutter
-    }, 2000);
+      // Switch to pattern cutter tab
+      setActiveTab('patternCutter');
+      
+      // When 3D conversion is complete, initialize pattern based on the design
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d');
+        if (ctx) {
+          // Clear canvas
+          ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          
+          // Draw pattern based on productType and measurements
+          drawPattern(ctx, productType, measurements, patternCustomizations);
+        }
+      }
+    }, 3000);
   };
   
   const handleCreatePattern = () => {
@@ -565,7 +577,6 @@ export default function DesignPage() {
                       <ThreeDModelViewer 
                         productType={productType} 
                         measurements={measurements}
-                        designImage={designImage}
                       />
                     </div>
                   )}

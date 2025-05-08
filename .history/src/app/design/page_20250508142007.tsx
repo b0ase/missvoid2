@@ -565,7 +565,6 @@ export default function DesignPage() {
                       <ThreeDModelViewer 
                         productType={productType} 
                         measurements={measurements}
-                        designImage={designImage}
                       />
                     </div>
                   )}

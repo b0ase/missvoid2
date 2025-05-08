@@ -3,96 +3,12 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
-// Stability AI API endpoint
-const STABILITY_API_ENDPOINT = "https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image";
-
-// MISS VOID style elements for prompt enhancement
-const STYLE_ELEMENTS = [
-  "architectural silhouette",
-  "dark minimal aesthetic",
-  "sleek black leather",
-  "brutalist design",
-  "sharp contrasting lines",
-  "industrial hardware accents",
-  "sculptural form",
-  "geometric patterns",
-  "dramatic shadows",
-  "high fashion couture",
-  "avant-garde",
-  "structured tailoring",
-  "gothic elements",
-  "monochromatic palette",
-  "striking black textures"
-];
-
-// Miss Void aesthetic descriptions
-const AESTHETIC_DESCRIPTORS = [
-  "Miss Void signature style",
-  "high-end fashion design",
-  "luxury avant-garde piece",
-  "architectural fashion",
-  "premium quality craftsmanship",
-  "bold statement piece",
-  "structured silhouette",
-  "dramatic dark aesthetic",
-  "elegant yet edgy design",
-  "sculptural silhouette"
-];
-
-// Product types and their specific descriptors
-const PRODUCT_DESCRIPTORS: Record<string, string[]> = {
-  "corset": [
-    "structured boning", 
-    "waist cinching", 
-    "laced back closure", 
-    "precision tailoring", 
-    "fitted panels"
-  ],
-  "harness": [
-    "adjustable straps", 
-    "body-contouring", 
-    "hardware accents", 
-    "leather strapping", 
-    "architectural design"
-  ],
-  "dress": [
-    "flowing silhouette", 
-    "structured bodice", 
-    "dramatic draping", 
-    "architectural cut", 
-    "statement piece"
-  ],
-  "bodysuit": [
-    "second-skin fit", 
-    "sleek silhouette", 
-    "precise tailoring", 
-    "hardware details", 
-    "sculptural cutouts"
-  ],
-  "mask": [
-    "face-framing", 
-    "architectural design", 
-    "striking silhouette", 
-    "avant-garde accessory", 
-    "sculptural form"
-  ],
-  "skirt": [
-    "structured panels", 
-    "architectural pleating", 
-    "dramatic silhouette", 
-    "geometric design", 
-    "precision tailoring"
-  ]
-};
-
 export default function DesignPage() {
   const [promptText, setPromptText] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [designImage, setDesignImage] = useState('');
   const [designStage, setDesignStage] = useState('initial'); // initial, 2d, 3d, pattern, manufacturing
   const [activeTab, setActiveTab] = useState('generator'); // generator, patternCutter
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [productType, setProductType] = useState('corset');
   
   // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
@@ -276,102 +192,17 @@ export default function DesignPage() {
     // Save pattern image
     setPatternCanvas(ctx.canvas.toDataURL());
   };
-
-  // Detect product type from the prompt
-  const detectProductType = (prompt: string): string => {
-    const lowerPrompt = prompt.toLowerCase();
-    
-    for (const type of Object.keys(PRODUCT_DESCRIPTORS)) {
-      if (lowerPrompt.includes(type)) {
-        return type;
-      }
-    }
-    
-    // Default to corset if no specific type detected
-    return 'corset';
-  };
   
-  // Craft optimized prompt for Stability AI
-  const craftOptimizedPrompt = (userPrompt: string): string => {
-    // Extract the detected product type
-    const detectedType = detectProductType(userPrompt);
-    setProductType(detectedType);
-    
-    // Get random style elements (3-5)
-    const styleCount = Math.floor(Math.random() * 3) + 3;
-    const selectedStyles = [...STYLE_ELEMENTS].sort(() => 0.5 - Math.random()).slice(0, styleCount);
-    
-    // Get random aesthetic descriptors (2-3)
-    const aestheticCount = Math.floor(Math.random() * 2) + 2;
-    const selectedAesthetics = [...AESTHETIC_DESCRIPTORS].sort(() => 0.5 - Math.random()).slice(0, aestheticCount);
-    
-    // Get product-specific descriptors (2-3)
-    const productDescriptors = PRODUCT_DESCRIPTORS[detectedType] || [];
-    const descriptorCount = Math.min(Math.floor(Math.random() * 2) + 2, productDescriptors.length);
-    const selectedDescriptors = [...productDescriptors].sort(() => 0.5 - Math.random()).slice(0, descriptorCount);
-    
-    // Combine everything into an optimized prompt
-    const enhancedPrompt = [
-      // Core user prompt
-      userPrompt,
-      
-      // Product-specific details
-      `${detectedType} design`,
-      ...selectedDescriptors,
-      
-      // MISS VOID aesthetics
-      ...selectedAesthetics,
-      
-      // Style elements
-      ...selectedStyles,
-      
-      // Photography style for better image generation
-      "studio photography, professional lighting, fashion editorial, high-end fashion photography",
-      
-      // Negative prompts to avoid
-      "NOT colorful, NOT bright colors, NOT casual wear"
-    ].join(", ");
-    
-    return enhancedPrompt;
-  };
-  
-  const handleGenerate = async () => {
+  const handleGenerate = () => {
+    // Placeholder for AI generation functionality
     setIsGenerating(true);
-    setApiError(null);
     
-    try {
-      // Craft an optimized prompt for the API
-      const enhancedPrompt = craftOptimizedPrompt(promptText);
-      console.log("Enhanced prompt:", enhancedPrompt);
-      
-      // Make the API call to Stability
-      const response = await fetch('/api/generate-design', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: enhancedPrompt,
-          productType
-        })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate image");
-      }
-      
-      const data = await response.json();
-      
-      // Set the generated image
-      setDesignImage(data.imageUrl);
+    // Simulate generation delay
+    setTimeout(() => {
+      setDesignImage('/images/miss-void/cover.jpg'); // Placeholder image
       setDesignStage('2d');
-    } catch (error) {
-      console.error("Error generating design:", error);
-      setApiError(error instanceof Error ? error.message : "An unknown error occurred");
-    } finally {
       setIsGenerating(false);
-    }
+    }, 2000);
   };
   
   const handleConvertTo3D = () => {
@@ -387,8 +218,6 @@ export default function DesignPage() {
   
   const handleCreatePattern = () => {
     setDesignStage('pattern');
-    // Set pattern type based on product type
-    setPatternType(productType);
   };
   
   const handleManufacture = () => {
@@ -396,7 +225,7 @@ export default function DesignPage() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8 text-white">
+    <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6 text-center">MISS VOID DESIGN STUDIO</h1>
       
       <div className="max-w-6xl mx-auto">
@@ -406,15 +235,11 @@ export default function DesignPage() {
         </p>
         
         {/* Design Tool Tabs */}
-        <div className="mb-6 border-b border-gray-700">
+        <div className="mb-6 border-b border-gray-200">
           <ul className="flex flex-wrap -mb-px">
             <li className="mr-2">
               <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'generator' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
+                className={`inline-block p-4 border-b-2 rounded-t-lg ${activeTab === 'generator' ? 'border-black text-black' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
                 onClick={() => setActiveTab('generator')}
               >
                 AI Design Generator
@@ -422,11 +247,7 @@ export default function DesignPage() {
             </li>
             <li className="mr-2">
               <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'patternCutter' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
+                className={`inline-block p-4 border-b-2 rounded-t-lg ${activeTab === 'patternCutter' ? 'border-black text-black' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
                 onClick={() => setActiveTab('patternCutter')}
               >
                 Pattern Cutter
@@ -437,7 +258,7 @@ export default function DesignPage() {
         
         {activeTab === 'generator' && (
           <>
-            <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
+            <div className="bg-black p-6 rounded-lg mb-8">
               <h2 className="text-xl font-semibold mb-4 text-white">Design Generator</h2>
               
               <div className="mb-4">
@@ -452,10 +273,6 @@ export default function DesignPage() {
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
                 />
-                <p className="mt-2 text-sm text-gray-400">
-                  Add specific details about the garment type (corset, harness, dress, etc.), 
-                  materials, and design features for best results.
-                </p>
               </div>
               
               <button
@@ -465,17 +282,10 @@ export default function DesignPage() {
               >
                 {isGenerating ? 'Generating...' : 'Generate Design'}
               </button>
-              
-              {apiError && (
-                <div className="mt-4 p-3 bg-red-900 text-white rounded">
-                  <p className="font-semibold">Error:</p>
-                  <p>{apiError}</p>
-                </div>
-              )}
             </div>
             
             {designStage !== 'initial' && (
-              <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
+              <div className="bg-black p-6 rounded-lg mb-8">
                 <h2 className="text-xl font-semibold mb-4 text-white">Your Design</h2>
                 
                 <div className="mb-6 flex justify-center">
@@ -564,12 +374,12 @@ export default function DesignPage() {
         )}
         
         {activeTab === 'patternCutter' && (
-          <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
+          <div className="bg-black p-6 rounded-lg mb-8">
             <h2 className="text-xl font-semibold mb-4 text-white">Pattern Cutter Studio</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Controls Panel */}
-              <div className="md:col-span-1 bg-gray-900 p-4 rounded border border-gray-700">
+              <div className="md:col-span-1 bg-gray-900 p-4 rounded">
                 <div className="mb-4">
                   <label className="block mb-2 text-gray-300">Pattern Type</label>
                   <select 
@@ -751,7 +561,7 @@ export default function DesignPage() {
           </div>
         )}
         
-        <div className="bg-black p-6 rounded-lg border border-gray-800">
+        <div className="bg-black p-6 rounded-lg">
           <h2 className="text-xl font-semibold mb-4 text-white">About MISS VOID Design Studio</h2>
           
           <div className="text-gray-300 space-y-4">

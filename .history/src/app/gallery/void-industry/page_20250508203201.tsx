@@ -9,7 +9,7 @@ export default function VoidIndustryGallery() {
       title="VOID INDUSTRY" 
       description="An avant-garde collection highlighting industrial aesthetics and utilitarian design. Features innovative materials and structural elements inspired by industrial architecture and urban environments."
       images={images}
-      galleryName="VOID INDUSTRY"
+      metaDescription="MISS VOID's avant-garde industrial fashion collection featuring utilitarian designs with architectural elements."
     />
   );
 } 

@@ -1215,27 +1215,7 @@ export default function DesignPage() {
         
         {/* Main Navigation Tabs */}
         <div className="mb-6 border-b border-gray-700 overflow-x-auto pb-1">
-          {/* Mobile Tab Selector (visible on small screens only) */}
-          <div className="block sm:hidden px-2 py-2">
-            <select 
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded text-white"
-              value={activeTab}
-              onChange={(e) => setActiveTab(e.target.value)}
-            >
-              <option value="about">About</option>
-              <option value="profile">Profile</option>
-              <option value="portfolio">Portfolio</option>
-              <option value="conceptDesign">Concept Design</option>
-              <option value="3dVisualization">3D Visualization</option>
-              <option value="patternCutter">Pattern Cutter</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="distribution">Distribution</option>
-              <option value="payment">Payment</option>
-            </select>
-          </div>
-          
-          {/* Standard Tabs (hidden on very small screens) */}
-          <ul className="hidden sm:flex whitespace-nowrap space-x-2 min-w-full">
+          <ul className="flex whitespace-nowrap space-x-2 min-w-full">
             <li>
               <button 
                 className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${

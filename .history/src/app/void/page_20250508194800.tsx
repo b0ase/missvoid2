@@ -23,23 +23,23 @@ export default function VoidTokenPage() {
         </div>
       
         <div className="bg-black p-6 rounded-lg border border-gray-800 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-            <div className="flex items-center mb-4 md:mb-0">
-              <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center mr-3 md:mr-4">
-                <span className="text-black text-xl md:text-2xl font-bold">$V</span>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mr-4">
+                <span className="text-black text-2xl font-bold">$V</span>
               </div>
               <div>
-                <h2 className="text-xl md:text-2xl font-bold">$VOID</h2>
+                <h2 className="text-2xl font-bold">$VOID</h2>
                 <p className="text-gray-400">Company Shares in Miss Void LTD</p>
               </div>
             </div>
-            <div className="text-left md:text-right">
+            <div className="text-right">
               <p className="text-xl font-bold">$0.87 USD <span className="text-xs text-gray-400">(projected)</span></p>
               <p className="text-green-500">+12.4% (24h) <span className="text-xs text-gray-400">(simulated)</span></p>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-gray-900 p-4 rounded border border-gray-700">
               <p className="text-gray-400 text-sm">Market Cap</p>
               <p className="text-xl font-medium">$8.7M</p>
@@ -55,23 +55,7 @@ export default function VoidTokenPage() {
           </div>
           
           <div className="mb-6 border-b border-gray-700 overflow-x-auto pb-1">
-            {/* Mobile Tab Selector (visible on small screens only) */}
-            <div className="block sm:hidden px-2 py-2">
-              <select 
-                className="w-full p-2 bg-gray-800 border border-gray-700 rounded text-white"
-                value={activeTab}
-                onChange={(e) => setActiveTab(e.target.value)}
-              >
-                <option value="overview">Overview</option>
-                <option value="benefits">Shareholder Benefits</option>
-                <option value="acquire">How to Acquire</option>
-                <option value="staking">Revenue Distribution</option>
-                <option value="roadmap">Launch Roadmap</option>
-              </select>
-            </div>
-            
-            {/* Standard Tabs (hidden on very small screens) */}
-            <ul className="hidden sm:flex whitespace-nowrap space-x-2 min-w-full">
+            <ul className="flex whitespace-nowrap space-x-2 min-w-full">
               <li>
                 <button 
                   className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
@@ -324,28 +308,28 @@ export default function VoidTokenPage() {
                 </p>
                 <div className="space-y-2 mb-2">
                   <div className="bg-gray-800 p-3 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between">
+                    <div className="flex justify-between">
                       <span className="text-white">Seed Round</span>
                       <span className="text-amber-300">Completed</span>
                     </div>
                     <p className="text-xs text-gray-400 mt-1">Price: $0.35 USD per token</p>
                   </div>
                   <div className="bg-gray-800 p-3 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between">
+                    <div className="flex justify-between">
                       <span className="text-white">Private Sale</span>
                       <span className="text-green-400">Current</span>
                     </div>
                     <p className="text-xs text-gray-400 mt-1">Price: $0.55 USD per token</p>
                   </div>
                   <div className="bg-gray-800 p-3 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between">
+                    <div className="flex justify-between">
                       <span className="text-white">Strategic Round</span>
                       <span className="text-gray-400">Q3 2025</span>
                     </div>
                     <p className="text-xs text-gray-400 mt-1">Price: $0.70 USD per token</p>
                   </div>
                   <div className="bg-gray-800 p-3 rounded border border-gray-700">
-                    <div className="flex flex-wrap justify-between">
+                    <div className="flex justify-between">
                       <span className="text-white">Public Sale</span>
                       <span className="text-gray-400">March 2026</span>
                     </div>
@@ -354,12 +338,12 @@ export default function VoidTokenPage() {
                 </div>
               </div>
               
-              <div className="bg-gray-900 p-4 rounded border border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="bg-gray-900 p-4 rounded border border-gray-700 flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-medium text-white">Interested in pre-launch investment?</h3>
                   <p className="text-sm text-gray-400">Contact our investor relations team for private round opportunities</p>
                 </div>
-                <button className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full sm:w-auto">
+                <button className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
                   Contact Team
                 </button>
               </div>
@@ -378,36 +362,36 @@ export default function VoidTokenPage() {
                   <table className="min-w-full bg-transparent">
                     <thead>
                       <tr>
-                        <th className="px-2 md:px-4 py-2 text-left text-gray-400">Tier</th>
-                        <th className="px-2 md:px-4 py-2 text-left text-gray-400">$VOID Required</th>
-                        <th className="px-2 md:px-4 py-2 text-left text-gray-400">Distribution %</th>
-                        <th className="px-2 md:px-4 py-2 text-left text-gray-400">Benefits</th>
+                        <th className="px-4 py-2 text-left text-gray-400">Tier</th>
+                        <th className="px-4 py-2 text-left text-gray-400">$VOID Required</th>
+                        <th className="px-4 py-2 text-left text-gray-400">Distribution %</th>
+                        <th className="px-4 py-2 text-left text-gray-400">Benefits</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-800">
                       <tr>
-                        <td className="px-2 md:px-4 py-3 text-white">Basic Shareholder</td>
-                        <td className="px-2 md:px-4 py-3 text-white">500</td>
-                        <td className="px-2 md:px-4 py-3 text-white">Base rate</td>
-                        <td className="px-2 md:px-4 py-3 text-gray-400 text-xs md:text-sm">Standard revenue share, basic voting rights</td>
+                        <td className="px-4 py-3 text-white">Basic Shareholder</td>
+                        <td className="px-4 py-3 text-white">500</td>
+                        <td className="px-4 py-3 text-white">Base rate</td>
+                        <td className="px-4 py-3 text-gray-400 text-sm">Standard revenue share, basic voting rights</td>
                       </tr>
                       <tr>
-                        <td className="px-2 md:px-4 py-3 text-white">Premium Shareholder</td>
-                        <td className="px-2 md:px-4 py-3 text-white">2,500</td>
-                        <td className="px-2 md:px-4 py-3 text-white">Base + 5%</td>
-                        <td className="px-2 md:px-4 py-3 text-gray-400 text-xs md:text-sm">Enhanced revenue share, design discounts</td>
+                        <td className="px-4 py-3 text-white">Premium Shareholder</td>
+                        <td className="px-4 py-3 text-white">2,500</td>
+                        <td className="px-4 py-3 text-white">Base + 5%</td>
+                        <td className="px-4 py-3 text-gray-400 text-sm">Enhanced revenue share, design discounts</td>
                       </tr>
                       <tr>
-                        <td className="px-2 md:px-4 py-3 text-white">Executive Shareholder</td>
-                        <td className="px-2 md:px-4 py-3 text-white">10,000</td>
-                        <td className="px-2 md:px-4 py-3 text-white">Base + 10%</td>
-                        <td className="px-2 md:px-4 py-3 text-gray-400 text-xs md:text-sm">Priority revenue share, exclusive designs</td>
+                        <td className="px-4 py-3 text-white">Executive Shareholder</td>
+                        <td className="px-4 py-3 text-white">10,000</td>
+                        <td className="px-4 py-3 text-white">Base + 10%</td>
+                        <td className="px-4 py-3 text-gray-400 text-sm">Priority revenue share, exclusive designs</td>
                       </tr>
                       <tr>
-                        <td className="px-2 md:px-4 py-3 text-white">Board Member</td>
-                        <td className="px-2 md:px-4 py-3 text-white">50,000</td>
-                        <td className="px-2 md:px-4 py-3 text-white">Base + 15%</td>
-                        <td className="px-2 md:px-4 py-3 text-gray-400 text-xs md:text-sm">Premium revenue share, strategic voting</td>
+                        <td className="px-4 py-3 text-white">Board Member</td>
+                        <td className="px-4 py-3 text-white">50,000</td>
+                        <td className="px-4 py-3 text-white">Base + 15%</td>
+                        <td className="px-4 py-3 text-gray-400 text-sm">Premium revenue share, strategic voting</td>
                       </tr>
                     </tbody>
                   </table>

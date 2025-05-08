@@ -55,23 +55,7 @@ export default function VoidTokenPage() {
           </div>
           
           <div className="mb-6 border-b border-gray-700 overflow-x-auto pb-1">
-            {/* Mobile Tab Selector (visible on small screens only) */}
-            <div className="block sm:hidden px-2 py-2">
-              <select 
-                className="w-full p-2 bg-gray-800 border border-gray-700 rounded text-white"
-                value={activeTab}
-                onChange={(e) => setActiveTab(e.target.value)}
-              >
-                <option value="overview">Overview</option>
-                <option value="benefits">Shareholder Benefits</option>
-                <option value="acquire">How to Acquire</option>
-                <option value="staking">Revenue Distribution</option>
-                <option value="roadmap">Launch Roadmap</option>
-              </select>
-            </div>
-            
-            {/* Standard Tabs (hidden on very small screens) */}
-            <ul className="hidden sm:flex whitespace-nowrap space-x-2 min-w-full">
+            <ul className="flex whitespace-nowrap space-x-2 min-w-full">
               <li>
                 <button 
                   className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${

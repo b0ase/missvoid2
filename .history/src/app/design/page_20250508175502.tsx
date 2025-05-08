@@ -679,7 +679,7 @@ export default function DesignPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [designImage, setDesignImage] = useState('');
   const [designStage, setDesignStage] = useState('initial'); // initial, 2d, 3d, pattern, manufacturing
-  const [activeTab, setActiveTab] = useState('conceptDesign'); // conceptDesign, 3dVisualization, patternCutter, manufacturing, distribution, payment
+  const [activeTab, setActiveTab] = useState('conceptDesign'); // conceptDesign, 3dVisualization, patternCutter, manufacturing, distribution
   const [savedDesigns, setSavedDesigns] = useState<Array<{imageUrl: string, productType: string, prompt: string}>>([]);
   const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -1102,10 +1102,6 @@ export default function DesignPage() {
     setActiveTab('distribution');
   };
   
-  const handleProceedToPayment = () => {
-    setActiveTab('payment');
-  };
-  
   // Calculate order total based on selections
   const calculateOrderTotal = (details: any) => {
     // Base prices by quantity
@@ -1190,6 +1186,18 @@ export default function DesignPage() {
             <li className="mr-2">
               <button 
                 className={`inline-block p-4 border-b-2 rounded-t-lg ${
+                  activeTab === 'gallery' 
+                    ? 'text-white border-white font-medium' 
+                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
+                }`}
+                onClick={() => setActiveTab('gallery')}
+              >
+                Gallery
+              </button>
+            </li>
+            <li className="mr-2">
+              <button 
+                className={`inline-block p-4 border-b-2 rounded-t-lg ${
                   activeTab === 'profile' 
                     ? 'text-white border-white font-medium' 
                     : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
@@ -1197,18 +1205,6 @@ export default function DesignPage() {
                 onClick={() => setActiveTab('profile')}
               >
                 Profile
-              </button>
-            </li>
-            <li className="mr-2">
-              <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'portfolio' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('portfolio')}
-              >
-                Portfolio
               </button>
             </li>
             <li className="mr-2">
@@ -1269,18 +1265,6 @@ export default function DesignPage() {
                 onClick={() => setActiveTab('distribution')}
               >
                 Distribution
-              </button>
-            </li>
-            <li className="mr-2">
-              <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'payment' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('payment')}
-              >
-                Payment
               </button>
             </li>
           </ul>
@@ -1411,10 +1395,10 @@ export default function DesignPage() {
           </div>
         )}
         
-        {/* Portfolio Tab (renamed from Gallery) */}
-        {activeTab === 'portfolio' && (
+        {/* Gallery Tab */}
+        {activeTab === 'gallery' && (
           <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Your Design Portfolio</h2>
+            <h2 className="text-xl font-semibold mb-4 text-white">Your Design Gallery</h2>
             
             {savedDesigns.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1445,7 +1429,7 @@ export default function DesignPage() {
               </div>
             ) : (
               <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">Your portfolio is empty. Generate and save designs to display them here.</p>
+                <p className="text-gray-400 mb-4">Your gallery is empty. Generate and save designs to display them here.</p>
                 <button 
                   className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
                   onClick={() => setActiveTab('conceptDesign')}
@@ -2770,325 +2754,6 @@ export default function DesignPage() {
             ) : (
               <div className="text-center py-10">
                 <p className="text-gray-400 mb-4">You need to generate a design first before accessing distribution options.</p>
-                <button 
-                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                  onClick={() => setActiveTab('conceptDesign')}
-                >
-                  Create a Design
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* Payment Tab */}
-        {activeTab === 'payment' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Payment & Financing</h2>
-            
-            {designImage ? (
-              <div>
-                <div className="mb-6">
-                  <p className="text-gray-300 mb-4">
-                    Complete your MISS VOID design journey with secure payment processing. Your payment covers manufacturing, 
-                    distribution setup, and global retail partnerships. All transactions are encrypted and processed securely.
-                  </p>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h3 className="text-lg font-medium text-white mb-3">Payment Method</h3>
-                    <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                      {/* Payment method selection */}
-                      <div className="space-y-3">
-                        <label className="flex items-center space-x-3 p-3 bg-gray-800 border border-gray-700 rounded cursor-pointer">
-                          <input type="radio" name="paymentMethod" className="h-4 w-4 accent-white" defaultChecked />
-                          <div className="flex items-center space-x-2">
-                            <div className="h-8 w-12 bg-white bg-opacity-20 rounded flex items-center justify-center">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                              </svg>
-                            </div>
-                            <span className="text-white">Credit Card</span>
-                          </div>
-                        </label>
-                        
-                        <label className="flex items-center space-x-3 p-3 bg-gray-800 border border-gray-700 rounded cursor-pointer">
-                          <input type="radio" name="paymentMethod" className="h-4 w-4 accent-white" />
-                          <div className="flex items-center space-x-2">
-                            <div className="h-8 w-12 bg-white bg-opacity-20 rounded flex items-center justify-center">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                              </svg>
-                            </div>
-                            <span className="text-white">Wire Transfer</span>
-                          </div>
-                        </label>
-                        
-                        <label className="flex items-center space-x-3 p-3 bg-gray-800 border border-gray-700 rounded cursor-pointer">
-                          <input type="radio" name="paymentMethod" className="h-4 w-4 accent-white" />
-                          <div className="flex items-center space-x-2">
-                            <div className="h-8 w-12 bg-white bg-opacity-20 rounded flex items-center justify-center">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                              </svg>
-                            </div>
-                            <span className="text-white">Cryptocurrency</span>
-                          </div>
-                        </label>
-                      </div>
-                      
-                      {/* Credit Card Form */}
-                      <div className="mt-6 space-y-4">
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Cardholder Name</label>
-                          <input 
-                            type="text" 
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            placeholder="Name as it appears on card"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Card Number</label>
-                          <input 
-                            type="text" 
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                            placeholder="•••• •••• •••• ••••"
-                          />
-                        </div>
-                        
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm text-gray-400 mb-1">Expiration Date</label>
-                            <input 
-                              type="text" 
-                              className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                              placeholder="MM/YY"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm text-gray-400 mb-1">CVC</label>
-                            <input 
-                              type="text" 
-                              className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                              placeholder="•••"
-                            />
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm text-gray-400 mb-1">Billing Address</label>
-                          <input 
-                            type="text" 
-                            className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white mb-2"
-                            placeholder="Street Address"
-                          />
-                          <div className="grid grid-cols-2 gap-4">
-                            <input 
-                              type="text" 
-                              className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                              placeholder="City"
-                            />
-                            <input 
-                              type="text" 
-                              className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white"
-                              placeholder="Postal Code"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-4 bg-gray-900 p-4 rounded border border-gray-700">
-                      <h4 className="text-white text-sm font-semibold mb-3">Financing Options</h4>
-                      <div className="space-y-2">
-                        <label className="flex items-center space-x-3 p-2 bg-gray-800 border border-gray-700 rounded cursor-pointer">
-                          <input type="radio" name="financingOption" className="h-4 w-4 accent-white" defaultChecked />
-                          <div>
-                            <p className="text-white text-sm">Full Payment</p>
-                            <p className="text-xs text-gray-400">Pay the entire amount upfront</p>
-                          </div>
-                        </label>
-                        
-                        <label className="flex items-center space-x-3 p-2 bg-gray-800 border border-gray-700 rounded cursor-pointer">
-                          <input type="radio" name="financingOption" className="h-4 w-4 accent-white" />
-                          <div>
-                            <p className="text-white text-sm">Installment Plan</p>
-                            <p className="text-xs text-gray-400">Split into 3 monthly payments</p>
-                          </div>
-                        </label>
-                        
-                        <label className="flex items-center space-x-3 p-2 bg-gray-800 border border-gray-700 rounded cursor-pointer">
-                          <input type="radio" name="financingOption" className="h-4 w-4 accent-white" />
-                          <div>
-                            <p className="text-white text-sm">Production Financing</p>
-                            <p className="text-xs text-gray-400">Pay 30% now, 70% after production</p>
-                          </div>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-medium text-white mb-3">Order Summary</h3>
-                    <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                      <div className="space-y-3">
-                        <div className="flex justify-between border-b border-gray-800 pb-3">
-                          <span className="text-white font-medium">Design</span>
-                          <span className="text-white">{productType.charAt(0).toUpperCase() + productType.slice(1)}</span>
-                        </div>
-                        
-                        <div className="space-y-2 py-3 border-b border-gray-800">
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Manufacturing (x1)</span>
-                            <span className="text-white">$150.00</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Distribution Setup</span>
-                            <span className="text-white">$350.00</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Retail Partnerships</span>
-                            <span className="text-white">$500.00</span>
-                          </div>
-                        </div>
-                        
-                        <div className="space-y-2 py-3 border-b border-gray-800">
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Subtotal</span>
-                            <span className="text-white">$1,000.00</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Tax</span>
-                            <span className="text-white">$90.00</span>
-                          </div>
-                        </div>
-                        
-                        <div className="flex justify-between pt-3">
-                          <span className="text-white font-medium">Total</span>
-                          <span className="text-white font-bold text-lg">$1,090.00</span>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-6 space-y-3">
-                        <p className="text-xs text-gray-400">
-                          By proceeding, you agree to the MISS VOID terms of service, manufacturing agreement, and distribution policies.
-                        </p>
-                        
-                        <button className="bg-white text-black py-3 px-4 rounded hover:bg-gray-200 transition w-full font-medium">
-                          Complete Payment
-                        </button>
-                        
-                        <div className="flex items-center justify-center space-x-2 mt-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                          </svg>
-                          <span className="text-xs text-gray-500">Secure Payment Processing</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-4 bg-gray-900 p-4 rounded border border-gray-700">
-                      <h4 className="text-white text-sm font-semibold mb-3">Revenue Projection</h4>
-                      <div className="space-y-3">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-400">Estimated Retail Price</span>
-                          <span className="text-white">€650 per unit</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-400">Projected Wholesale Orders</span>
-                          <span className="text-white">60-120 units</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-400">Designer Royalty</span>
-                          <span className="text-white">15% of wholesale</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-400">Projected Annual Revenue</span>
-                          <span className="text-white font-medium">€35,000 - €70,000</span>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-3 rounded-lg bg-gray-800 p-3 border border-gray-700">
-                        <p className="text-xs text-gray-300">
-                          Your design will be produced and distributed under the MISS VOID brand. 
-                          You retain creator credit and earn royalties on all sales, while we handle 
-                          manufacturing, quality control, distribution, and retail relationships.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-900 p-4 rounded border border-gray-700">
-                  <h3 className="text-lg font-medium text-white mb-3">Production & Distribution Timeline</h3>
-                  
-                  <div className="relative">
-                    <div className="absolute left-6 top-0 bottom-0 w-px bg-gray-700"></div>
-                    
-                    <div className="space-y-8">
-                      <div className="flex">
-                        <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-gray-800 rounded-full border-2 border-white">
-                          <span className="text-white font-medium">1</span>
-                        </div>
-                        <div className="ml-4">
-                          <h4 className="text-white font-medium">Payment Processing</h4>
-                          <p className="text-sm text-gray-400">48 hours for payment verification and order setup</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex">
-                        <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-gray-800 rounded-full border border-white">
-                          <span className="text-white font-medium">2</span>
-                        </div>
-                        <div className="ml-4">
-                          <h4 className="text-white font-medium">Manufacturing</h4>
-                          <p className="text-sm text-gray-400">4-6 weeks for production with quality control</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex">
-                        <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-gray-800 rounded-full border border-white">
-                          <span className="text-white font-medium">3</span>
-                        </div>
-                        <div className="ml-4">
-                          <h4 className="text-white font-medium">Retail Distribution</h4>
-                          <p className="text-sm text-gray-400">2-4 weeks for store onboarding and catalog integration</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex">
-                        <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-gray-800 rounded-full border border-white">
-                          <span className="text-white font-medium">4</span>
-                        </div>
-                        <div className="ml-4">
-                          <h4 className="text-white font-medium">Global Availability</h4>
-                          <p className="text-sm text-gray-400">Your design available in selected luxury retailers worldwide</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-6 flex justify-between">
-                    <button
-                      className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
-                      onClick={() => setActiveTab('distribution')}
-                    >
-                      Back to Distribution
-                    </button>
-                    
-                    <button
-                      className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition font-medium"
-                    >
-                      Complete MISS VOID Process
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">You need to generate a design first before proceeding to payment.</p>
                 <button 
                   className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
                   onClick={() => setActiveTab('conceptDesign')}

@@ -1190,6 +1190,18 @@ export default function DesignPage() {
             <li className="mr-2">
               <button 
                 className={`inline-block p-4 border-b-2 rounded-t-lg ${
+                  activeTab === 'gallery' 
+                    ? 'text-white border-white font-medium' 
+                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
+                }`}
+                onClick={() => setActiveTab('gallery')}
+              >
+                Gallery
+              </button>
+            </li>
+            <li className="mr-2">
+              <button 
+                className={`inline-block p-4 border-b-2 rounded-t-lg ${
                   activeTab === 'profile' 
                     ? 'text-white border-white font-medium' 
                     : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
@@ -1197,18 +1209,6 @@ export default function DesignPage() {
                 onClick={() => setActiveTab('profile')}
               >
                 Profile
-              </button>
-            </li>
-            <li className="mr-2">
-              <button 
-                className={`inline-block p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'portfolio' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('portfolio')}
-              >
-                Portfolio
               </button>
             </li>
             <li className="mr-2">
@@ -1411,10 +1411,10 @@ export default function DesignPage() {
           </div>
         )}
         
-        {/* Portfolio Tab (renamed from Gallery) */}
-        {activeTab === 'portfolio' && (
+        {/* Gallery Tab */}
+        {activeTab === 'gallery' && (
           <div className="bg-black p-6 rounded-lg border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Your Design Portfolio</h2>
+            <h2 className="text-xl font-semibold mb-4 text-white">Your Design Gallery</h2>
             
             {savedDesigns.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1445,7 +1445,7 @@ export default function DesignPage() {
               </div>
             ) : (
               <div className="text-center py-10">
-                <p className="text-gray-400 mb-4">Your portfolio is empty. Generate and save designs to display them here.</p>
+                <p className="text-gray-400 mb-4">Your gallery is empty. Generate and save designs to display them here.</p>
                 <button 
                   className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
                   onClick={() => setActiveTab('conceptDesign')}

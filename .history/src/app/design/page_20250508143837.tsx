@@ -96,7 +96,6 @@ export default function DesignPage() {
   const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [productType, setProductType] = useState('corset');
-  const [promptCounter, setPromptCounter] = useState(1); // Counter for the prompt serial number
   
   // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
@@ -321,153 +320,6 @@ export default function DesignPage() {
     setPatternCanvas(ctx.canvas.toDataURL());
   };
 
-  // Function to generate a serial number salt string
-  const generateSalt = () => {
-    // Format the counter as a 3-digit number with leading zeros
-    const serialNumber = String(promptCounter).padStart(3, '0');
-    setPromptCounter(prevCounter => prevCounter + 1); // Increment counter for next use
-    return `#${serialNumber}`;
-  };
-  
-  // Generate a detailed MISS VOID prompt based on product type
-  const generateDetailedPrompt = () => {
-    // Base common elements for all MISS VOID designs
-    const commonElements = [
-      "premium black leather",
-      "architectural silhouette",
-      "hardware details",
-      "high contrast",
-      "dramatic shadows",
-      "minimalist aesthetic",
-      "luxury craftsmanship",
-      "avant-garde design",
-      "structural elements"
-    ];
-    
-    // Select 3-4 random common elements
-    const selectedCommon = [...commonElements]
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3 + Math.floor(Math.random() * 2))
-      .join(", ");
-    
-    // Product-specific details
-    let specificDetails = "";
-    switch (productType) {
-      case 'corset':
-        specificDetails = [
-          "dramatic waist cinching",
-          "structured boning channels",
-          "precision-cut panels",
-          "sleek steel busk closure",
-          "laced back detail",
-          "contoured bust cups",
-          "smooth transition from bust to hip",
-          "architectural seam lines"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'harness':
-        specificDetails = [
-          "body-contouring straps",
-          "geometric strap placement",
-          "silver o-ring connectors",
-          "adjustable buckle details",
-          "chest cage design",
-          "shoulder to waist connection",
-          "minimalist line work",
-          "sculptural body framing"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'bodysuit':
-        specificDetails = [
-          "second-skin fit",
-          "strategic cutout placement",
-          "seamless construction",
-          "hardware accent details",
-          "high-cut hip line",
-          "structured supportive cups",
-          "plunging neckline",
-          "smooth leather panels"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'dress':
-        specificDetails = [
-          "structured bodice",
-          "architectural silhouette",
-          "precision cut leather panels",
-          "minimalist hardware details",
-          "dramatic high neckline",
-          "sculpted waistline",
-          "floor-length design",
-          "modern cut with classical influences"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'mask':
-        specificDetails = [
-          "face-framing design",
-          "architectural structure",
-          "sleek contoured fit",
-          "precise eye openings",
-          "sculpted leather panels",
-          "minimalist strap detail",
-          "hardware accent points",
-          "ergonomic design"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'skirt':
-        specificDetails = [
-          "high-waisted design",
-          "structured leather panels",
-          "architectural pleating",
-          "asymmetrical hemline",
-          "hardware accent details",
-          "body-contouring silhouette",
-          "precision-cut seam lines",
-          "minimalist back closure"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-    }
-    
-    // Photography and composition elements
-    const photographyElements = [
-      "studio lighting",
-      "high-end fashion photography",
-      "editorial composition",
-      "dramatic shadows",
-      "minimalist background",
-      "professional lighting setup",
-      "high contrast",
-      "clean lines"
-    ].sort(() => 0.5 - Math.random()).slice(0, 3).join(", ");
-    
-    // Designer influences
-    const designerInfluences = [
-      "inspired by Alexander McQueen",
-      "reminiscent of Rick Owens",
-      "taking cues from Gareth Pugh",
-      "with Iris van Herpen influences",
-      "in the tradition of Thierry Mugler",
-      "with nods to Yohji Yamamoto",
-      "influenced by Azzedine Alaïa",
-      "with Comme des Garçons sensibilities"
-    ].sort(() => 0.5 - Math.random()).slice(0, 1).join(", ");
-    
-    // Generate salt for uniqueness
-    const salt = generateSalt();
-    
-    // Construct the detailed prompt
-    const detailedPrompt = `A meticulously crafted MISS VOID ${productType} featuring ${specificDetails}. 
-The design incorporates ${selectedCommon}, showcasing the brand's signature brutalist aesthetic. 
-${designerInfluences}, this piece exemplifies high-end alternative fashion. 
-Photograph presents ${photographyElements}. ${salt}`;
-    
-    return detailedPrompt;
-  };
-
   // Craft optimized prompt for Stability AI
   const craftOptimizedPrompt = (userPrompt: string): string => {
     // Use the selected product type instead of detecting it
@@ -679,20 +531,9 @@ Photograph presents ${photographyElements}. ${salt}`;
               </div>
               
               <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="designPrompt" className="text-gray-300">
-                    Describe your MISS VOID design
-                  </label>
-                  <button 
-                    className="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 hover:bg-gray-600 transition text-sm flex items-center"
-                    onClick={() => setPromptText(generateDetailedPrompt())}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    Auto Generate Description
-                  </button>
-                </div>
+                <label htmlFor="designPrompt" className="block mb-2 text-gray-300">
+                  Describe your MISS VOID design
+                </label>
                 <textarea
                   id="designPrompt"
                   rows={4}
@@ -703,7 +544,6 @@ Photograph presents ${photographyElements}. ${salt}`;
                 />
                 <p className="mt-2 text-sm text-gray-400">
                   Add specific details about design features, textures, and inspiration sources for best results.
-                  Each generated prompt includes a serial number (e.g., #001) that you can manually edit to create variations.
                 </p>
               </div>
               

@@ -96,7 +96,6 @@ export default function DesignPage() {
   const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [productType, setProductType] = useState('corset');
-  const [promptCounter, setPromptCounter] = useState(1); // Counter for the prompt serial number
   
   // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
@@ -321,153 +320,6 @@ export default function DesignPage() {
     setPatternCanvas(ctx.canvas.toDataURL());
   };
 
-  // Function to generate a serial number salt string
-  const generateSalt = () => {
-    // Format the counter as a 3-digit number with leading zeros
-    const serialNumber = String(promptCounter).padStart(3, '0');
-    setPromptCounter(prevCounter => prevCounter + 1); // Increment counter for next use
-    return `#${serialNumber}`;
-  };
-  
-  // Generate a detailed MISS VOID prompt based on product type
-  const generateDetailedPrompt = () => {
-    // Base common elements for all MISS VOID designs
-    const commonElements = [
-      "premium black leather",
-      "architectural silhouette",
-      "hardware details",
-      "high contrast",
-      "dramatic shadows",
-      "minimalist aesthetic",
-      "luxury craftsmanship",
-      "avant-garde design",
-      "structural elements"
-    ];
-    
-    // Select 3-4 random common elements
-    const selectedCommon = [...commonElements]
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3 + Math.floor(Math.random() * 2))
-      .join(", ");
-    
-    // Product-specific details
-    let specificDetails = "";
-    switch (productType) {
-      case 'corset':
-        specificDetails = [
-          "dramatic waist cinching",
-          "structured boning channels",
-          "precision-cut panels",
-          "sleek steel busk closure",
-          "laced back detail",
-          "contoured bust cups",
-          "smooth transition from bust to hip",
-          "architectural seam lines"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'harness':
-        specificDetails = [
-          "body-contouring straps",
-          "geometric strap placement",
-          "silver o-ring connectors",
-          "adjustable buckle details",
-          "chest cage design",
-          "shoulder to waist connection",
-          "minimalist line work",
-          "sculptural body framing"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'bodysuit':
-        specificDetails = [
-          "second-skin fit",
-          "strategic cutout placement",
-          "seamless construction",
-          "hardware accent details",
-          "high-cut hip line",
-          "structured supportive cups",
-          "plunging neckline",
-          "smooth leather panels"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'dress':
-        specificDetails = [
-          "structured bodice",
-          "architectural silhouette",
-          "precision cut leather panels",
-          "minimalist hardware details",
-          "dramatic high neckline",
-          "sculpted waistline",
-          "floor-length design",
-          "modern cut with classical influences"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'mask':
-        specificDetails = [
-          "face-framing design",
-          "architectural structure",
-          "sleek contoured fit",
-          "precise eye openings",
-          "sculpted leather panels",
-          "minimalist strap detail",
-          "hardware accent points",
-          "ergonomic design"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-        
-      case 'skirt':
-        specificDetails = [
-          "high-waisted design",
-          "structured leather panels",
-          "architectural pleating",
-          "asymmetrical hemline",
-          "hardware accent details",
-          "body-contouring silhouette",
-          "precision-cut seam lines",
-          "minimalist back closure"
-        ].sort(() => 0.5 - Math.random()).slice(0, 4).join(", ");
-        break;
-    }
-    
-    // Photography and composition elements
-    const photographyElements = [
-      "studio lighting",
-      "high-end fashion photography",
-      "editorial composition",
-      "dramatic shadows",
-      "minimalist background",
-      "professional lighting setup",
-      "high contrast",
-      "clean lines"
-    ].sort(() => 0.5 - Math.random()).slice(0, 3).join(", ");
-    
-    // Designer influences
-    const designerInfluences = [
-      "inspired by Alexander McQueen",
-      "reminiscent of Rick Owens",
-      "taking cues from Gareth Pugh",
-      "with Iris van Herpen influences",
-      "in the tradition of Thierry Mugler",
-      "with nods to Yohji Yamamoto",
-      "influenced by Azzedine Alaïa",
-      "with Comme des Garçons sensibilities"
-    ].sort(() => 0.5 - Math.random()).slice(0, 1).join(", ");
-    
-    // Generate salt for uniqueness
-    const salt = generateSalt();
-    
-    // Construct the detailed prompt
-    const detailedPrompt = `A meticulously crafted MISS VOID ${productType} featuring ${specificDetails}. 
-The design incorporates ${selectedCommon}, showcasing the brand's signature brutalist aesthetic. 
-${designerInfluences}, this piece exemplifies high-end alternative fashion. 
-Photograph presents ${photographyElements}. ${salt}`;
-    
-    return detailedPrompt;
-  };
-
   // Craft optimized prompt for Stability AI
   const craftOptimizedPrompt = (userPrompt: string): string => {
     // Use the selected product type instead of detecting it
@@ -679,20 +531,9 @@ Photograph presents ${photographyElements}. ${salt}`;
               </div>
               
               <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="designPrompt" className="text-gray-300">
-                    Describe your MISS VOID design
-                  </label>
-                  <button 
-                    className="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 hover:bg-gray-600 transition text-sm flex items-center"
-                    onClick={() => setPromptText(generateDetailedPrompt())}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    Auto Generate Description
-                  </button>
-                </div>
+                <label htmlFor="designPrompt" className="block mb-2 text-gray-300">
+                  Describe your MISS VOID design
+                </label>
                 <textarea
                   id="designPrompt"
                   rows={4}
@@ -702,8 +543,8 @@ Photograph presents ${photographyElements}. ${salt}`;
                   onChange={(e) => setPromptText(e.target.value)}
                 />
                 <p className="mt-2 text-sm text-gray-400">
-                  Add specific details about design features, textures, and inspiration sources for best results.
-                  Each generated prompt includes a serial number (e.g., #001) that you can manually edit to create variations.
+                  Add specific details about the garment type (corset, harness, dress, etc.), 
+                  materials, and design features for best results.
                 </p>
               </div>
               
@@ -723,111 +564,111 @@ Photograph presents ${photographyElements}. ${salt}`;
               )}
             </div>
             
-            {/* Generated Design Section */}
-            {designImage && (
+            {designStage !== 'initial' && (
               <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-white">Generated Design</h2>
-                  <button
-                    className="bg-white text-black py-1 px-4 rounded hover:bg-gray-200 transition text-sm"
-                    onClick={handleSaveDesign}
-                  >
-                    Save Design
-                  </button>
-                </div>
+                <h2 className="text-xl font-semibold mb-4 text-white">Your Design</h2>
                 
-                <div className="mb-6">
-                  <div className="relative h-96 w-full">
-                    <Image 
-                      src={designImage}
-                      alt="Generated design"
-                      fill
-                      style={{ objectFit: 'contain' }}
-                      className="rounded"
-                    />
-                    
-                    {animateTransition && is3DConverting && (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-60">
-                        <div className="w-16 h-16 border-t-4 border-white rounded-full animate-spin"></div>
-                        <p className="mt-4 text-white font-semibold">Converting to 3D...</p>
-                        <p className="text-sm text-gray-400 mt-2">Generating mesh topology</p>
-                      </div>
-                    )}
-                  </div>
+                <div className="mb-6 flex justify-center">
+                  {designImage && designStage === '2d' && (
+                    <div className={`relative h-96 w-full transition-opacity duration-1000 ${animateTransition ? 'opacity-30' : 'opacity-100'}`}>
+                      <Image 
+                        src={designImage}
+                        alt="Generated design"
+                        fill
+                        style={{ objectFit: 'contain' }}
+                        className="rounded"
+                      />
+                      {is3DConverting && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                          <div className="w-16 h-16 border-t-4 border-white rounded-full animate-spin"></div>
+                          <p className="mt-4 text-white font-semibold">Converting to 3D...</p>
+                          <p className="text-sm text-gray-400 mt-2">Generating mesh topology</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {designStage === '3d' && (
+                    <div className="w-full">
+                      <h3 className="text-lg font-semibold mb-2 text-white">3D Model Preview</h3>
+                      <p className="text-sm text-gray-400 mb-4">
+                        Interactive 3D model of your {productType}. Drag to rotate, scroll to zoom.
+                      </p>
+                      <ThreeDModelViewer 
+                        productType={productType} 
+                        measurements={measurements}
+                        designImage={designImage}
+                      />
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <button
-                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                    onClick={handleProceedTo3D}
-                    disabled={isGenerating}
-                  >
-                    View in 3D
-                  </button>
-                  
-                  <button
-                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                    onClick={handleProceedToPattern}
-                  >
-                    Create Pattern
-                  </button>
-                  
-                  <button
-                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                    onClick={handleProceedToManufacturing}
-                  >
-                    Proceed to Manufacturing
-                  </button>
-                </div>
-              </div>
-            )}
-            
-            {/* Saved Designs Section */}
-            {savedDesigns.length > 0 && (
-              <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
-                <h2 className="text-xl font-semibold mb-4 text-white">Saved Designs</h2>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {savedDesigns.map((design, index) => (
-                    <div 
-                      key={index} 
-                      className={`border rounded p-2 cursor-pointer transition-all ${selectedDesignIndex === index ? 'border-white' : 'border-gray-700 hover:border-gray-500'}`}
-                      onClick={() => handleSelectDesign(index)}
-                    >
-                      <div className="relative h-40 w-full mb-2">
-                        <Image 
-                          src={design.imageUrl}
-                          alt={`Design ${index + 1}`}
-                          fill
-                          style={{ objectFit: 'cover' }}
-                          className="rounded"
-                        />
-                      </div>
-                      <div className="text-sm text-gray-300">
-                        <p className="font-semibold">{design.productType.charAt(0).toUpperCase() + design.productType.slice(1)}</p>
-                        <p className="truncate">{design.prompt.substring(0, 50)}{design.prompt.length > 50 ? '...' : ''}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                {selectedDesignIndex !== null && (
-                  <div className="flex justify-center mt-4 gap-4">
+                  {designStage === '2d' && (
                     <button
                       className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
                       onClick={handleProceedTo3D}
+                      disabled={isGenerating}
                     >
-                      View in 3D
+                      {isGenerating ? 'Processing...' : 'Convert to 3D Model'}
                     </button>
-                    
+                  )}
+                  
+                  {designStage === '3d' && (
+                    <>
+                      <button
+                        className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
+                        onClick={handleProceedToPattern}
+                      >
+                        Create Pattern
+                      </button>
+                      <button
+                        className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
+                        onClick={handleProceedToManufacturing}
+                      >
+                        Manufacture Directly
+                      </button>
+                    </>
+                  )}
+                  
+                  {designStage === 'pattern' && (
                     <button
                       className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                      onClick={handleProceedToPattern}
+                      onClick={handleProceedToManufacturing}
                     >
-                      Create Pattern
+                      Proceed to Manufacturing
                     </button>
-                  </div>
-                )}
+                  )}
+                  
+                  {designStage === 'manufacturing' && (
+                    <div className="w-full text-center text-white">
+                      <p className="mb-4">Your design is ready for manufacturing!</p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div className="border border-gray-600 p-4 rounded">
+                          <h3 className="font-semibold mb-2">Single Piece</h3>
+                          <p className="mb-2">Manufacturing and shipping for one custom piece</p>
+                          <p className="text-xl font-bold mb-4">$599</p>
+                          <button className="bg-white text-black py-2 px-4 rounded w-full">Order Now</button>
+                        </div>
+                        
+                        <div className="border border-gray-600 p-4 rounded bg-gray-900">
+                          <h3 className="font-semibold mb-2">Small Batch (10 pieces)</h3>
+                          <p className="mb-2">Perfect for boutique offerings</p>
+                          <p className="text-xl font-bold mb-4">$2,999</p>
+                          <button className="bg-white text-black py-2 px-4 rounded w-full">Order Now</button>
+                        </div>
+                        
+                        <div className="border border-gray-600 p-4 rounded">
+                          <h3 className="font-semibold mb-2">Production Run</h3>
+                          <p className="mb-2">100+ pieces with wholesale pricing</p>
+                          <p className="text-xl font-bold mb-4">Contact Sales</p>
+                          <button className="bg-white text-black py-2 px-4 rounded w-full">Get Quote</button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </>
@@ -840,52 +681,19 @@ Photograph presents ${photographyElements}. ${salt}`;
             {/* Display the generated design if available */}
             {designImage && designStage !== 'initial' ? (
               <div className="mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">Original Design</h3>
-                    <div className="bg-gray-900 p-2 rounded flex justify-center mb-4">
-                      <div className="relative h-80 w-full">
-                        <Image 
-                          src={designImage}
-                          alt="Generated design"
-                          fill
-                          style={{ objectFit: 'contain' }}
-                          className="rounded"
-                        />
-                      </div>
-                    </div>
-                    <p className="text-sm text-gray-400 mb-4">{productType} design</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">3D Model</h3>
-                    <div className="w-full">
-                      <ThreeDModelViewer 
-                        productType={productType} 
-                        measurements={measurements}
-                        designImage={designImage}
-                      />
-                    </div>
-                    <p className="text-sm text-gray-400 mt-2">
-                      Interactive 3D model. Drag to rotate, scroll to zoom.
-                    </p>
+                <h3 className="font-semibold text-white mb-2">Your Generated Design</h3>
+                <div className="bg-gray-900 p-2 rounded flex justify-center mb-4">
+                  <div className="relative h-48 w-48">
+                    <Image 
+                      src={designImage}
+                      alt="Generated design"
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      className="rounded"
+                    />
                   </div>
                 </div>
-                
-                <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                  <button
-                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                    onClick={handleProceedToPattern}
-                  >
-                    Create Pattern
-                  </button>
-                  <button
-                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
-                    onClick={handleProceedToManufacturing}
-                  >
-                    Proceed to Manufacturing
-                  </button>
-                </div>
+                <p className="text-sm text-gray-400 mb-4">Creating 3D visualization</p>
               </div>
             ) : (
               <div className="mb-6 p-4 bg-gray-900 rounded border border-gray-700">
@@ -900,6 +708,73 @@ Photograph presents ${photographyElements}. ${salt}`;
                 </p>
               </div>
             )}
+            
+            <div className="flex flex-wrap gap-4 justify-center">
+              {designStage === '2d' && (
+                <button
+                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
+                  onClick={handleProceedTo3D}
+                  disabled={isGenerating}
+                >
+                  {isGenerating ? 'Processing...' : 'Convert to 3D Model'}
+                </button>
+              )}
+              
+              {designStage === '3d' && (
+                <>
+                  <button
+                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
+                    onClick={handleProceedToPattern}
+                  >
+                    Create Pattern
+                  </button>
+                  <button
+                    className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
+                    onClick={handleProceedToManufacturing}
+                  >
+                    Manufacture Directly
+                  </button>
+                </>
+              )}
+              
+              {designStage === 'pattern' && (
+                <button
+                  className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition"
+                  onClick={handleProceedToManufacturing}
+                >
+                  Proceed to Manufacturing
+                </button>
+              )}
+              
+              {designStage === 'manufacturing' && (
+                <div className="w-full text-center text-white">
+                  <p className="mb-4">Your design is ready for manufacturing!</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div className="border border-gray-600 p-4 rounded">
+                      <h3 className="font-semibold mb-2">Single Piece</h3>
+                      <p className="mb-2">Manufacturing and shipping for one custom piece</p>
+                      <p className="text-xl font-bold mb-4">$599</p>
+                      <button className="bg-white text-black py-2 px-4 rounded w-full">Order Now</button>
+                    </div>
+                    
+                    <div className="border border-gray-600 p-4 rounded bg-gray-900">
+                      <h3 className="font-semibold mb-2">Small Batch (10 pieces)</h3>
+                      <p className="mb-2">Perfect for boutique offerings</p>
+                      <p className="text-xl font-bold mb-4">$2,999</p>
+                      <button className="bg-white text-black py-2 px-4 rounded w-full">Order Now</button>
+                    </div>
+                    
+                    <div className="border border-gray-600 p-4 rounded">
+                      <h3 className="font-semibold mb-2">Production Run</h3>
+                      <p className="mb-2">100+ pieces with wholesale pricing</p>
+                      <p className="text-xl font-bold mb-4">Contact Sales</p>
+                      <button className="bg-white text-black py-2 px-4 rounded w-full">Get Quote</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
         
@@ -1123,122 +998,31 @@ Photograph presents ${photographyElements}. ${salt}`;
         )}
         
         {activeTab === 'manufacturing' && (
-          <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
-            <h2 className="text-xl font-semibold mb-4 text-white">Manufacturing</h2>
+          <div className="bg-black p-6 rounded-lg border border-gray-800">
+            <h2 className="text-xl font-semibold mb-4 text-white">About MISS VOID Design Studio</h2>
             
-            {designImage ? (
-              <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">Your Design</h3>
-                    {designStage === '3d' ? (
-                      <div className="h-60">
-                        <ThreeDModelViewer 
-                          productType={productType} 
-                          measurements={measurements}
-                          designImage={designImage}
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative h-60 w-full">
-                        <Image 
-                          src={designImage}
-                          alt="Your design"
-                          fill
-                          style={{ objectFit: 'contain' }}
-                          className="rounded"
-                        />
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold text-white mb-2">Manufacturing Details</h3>
-                    <div className="bg-gray-900 p-4 rounded">
-                      <p className="mb-2 text-gray-300">Product: {productType.charAt(0).toUpperCase() + productType.slice(1)}</p>
-                      <p className="mb-2 text-gray-300">Estimated Production Time: 3-4 weeks</p>
-                      <p className="mb-2 text-gray-300">Materials: Premium leather, metal hardware</p>
-                      <p className="text-gray-300">Made in: China (Guangzhou)</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <h3 className="text-lg font-semibold mb-4 text-white">Manufacturing Options</h3>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                  <div className="border border-gray-600 p-4 rounded">
-                    <h3 className="font-semibold mb-2">Single Piece</h3>
-                    <p className="mb-2">Manufacturing and shipping for one custom piece</p>
-                    <p className="text-xl font-bold mb-4">$599</p>
-                    <button className="bg-white text-black py-2 px-4 rounded w-full">Order Now</button>
-                  </div>
-                  
-                  <div className="border border-gray-600 p-4 rounded bg-gray-900">
-                    <h3 className="font-semibold mb-2">Small Batch (10 pieces)</h3>
-                    <p className="mb-2">Perfect for boutique offerings</p>
-                    <p className="text-xl font-bold mb-4">$2,999</p>
-                    <button className="bg-white text-black py-2 px-4 rounded w-full">Order Now</button>
-                  </div>
-                  
-                  <div className="border border-gray-600 p-4 rounded">
-                    <h3 className="font-semibold mb-2">Production Run</h3>
-                    <p className="mb-2">100+ pieces with wholesale pricing</p>
-                    <p className="text-xl font-bold mb-4">Contact Sales</p>
-                    <button className="bg-white text-black py-2 px-4 rounded w-full">Get Quote</button>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-900 p-4 rounded mb-4">
-                  <h3 className="font-semibold mb-2">Shipping & Dropshipping</h3>
-                  <p className="mb-2 text-gray-300">
-                    We offer worldwide shipping and direct dropshipping to your customers or marketplace.
-                  </p>
-                  <p className="text-gray-300">
-                    All products are branded with MISS VOID and can be shipped with your custom package inserts.
-                  </p>
-                </div>
+            <div className="text-gray-300 space-y-4">
+              <p>
+                The MISS VOID Design Studio combines cutting-edge AI technology with our distinctive aesthetic to give you the power to create your own MISS VOID pieces.
+              </p>
+              
+              <p>
+                Each design is exclusively branded with the MISS VOID name, while you retain ownership of your unique creation. Our system seamlessly converts your design concept into a 3D model and precise cutting patterns, which are then manufactured to our exacting standards.
+              </p>
+              
+              <p>
+                From single pieces to large production runs, we offer flexible manufacturing options to meet your needs. All designs are manufactured by our trusted partners in China, with direct drop-shipping to your business or marketplace.
+              </p>
+              
+              <div className="mt-6 font-semibold">
+                <p>To access your existing designs or create an account, please sign in.</p>
+                <button className="mt-2 bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
+                  Sign In / Create Account
+                </button>
               </div>
-            ) : (
-              <div className="mb-6 p-4 bg-gray-900 rounded border border-gray-700">
-                <p className="text-gray-300">
-                  No design has been selected for manufacturing. Please 
-                  <button 
-                    onClick={() => setActiveTab('conceptDesign')} 
-                    className="text-white underline mx-1 hover:text-gray-300"
-                  >
-                    create a design
-                  </button> 
-                  first.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-        
-        <div className="bg-black p-6 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-semibold mb-4 text-white">About MISS VOID Design Studio</h2>
-          
-          <div className="text-gray-300 space-y-4">
-            <p>
-              The MISS VOID Design Studio combines cutting-edge AI technology with our distinctive aesthetic to give you the power to create your own MISS VOID pieces.
-            </p>
-            
-            <p>
-              Each design is exclusively branded with the MISS VOID name, while you retain ownership of your unique creation. Our system seamlessly converts your design concept into a 3D model and precise cutting patterns, which are then manufactured to our exacting standards.
-            </p>
-            
-            <p>
-              From single pieces to large production runs, we offer flexible manufacturing options to meet your needs. All designs are manufactured by our trusted partners in China, with direct drop-shipping to your business or marketplace.
-            </p>
-            
-            <div className="mt-6 font-semibold">
-              <p>To access your existing designs or create an account, please sign in.</p>
-              <button className="mt-2 bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition">
-                Sign In / Create Account
-              </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

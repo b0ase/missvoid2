@@ -96,7 +96,6 @@ export default function DesignPage() {
   const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [productType, setProductType] = useState('corset');
-  const [promptCounter, setPromptCounter] = useState(1); // Counter for the prompt serial number
   
   // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
@@ -321,12 +320,14 @@ export default function DesignPage() {
     setPatternCanvas(ctx.canvas.toDataURL());
   };
 
-  // Function to generate a serial number salt string
+  // Function to generate a random salt string
   const generateSalt = () => {
-    // Format the counter as a 3-digit number with leading zeros
-    const serialNumber = String(promptCounter).padStart(3, '0');
-    setPromptCounter(prevCounter => prevCounter + 1); // Increment counter for next use
-    return `#${serialNumber}`;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+    let salt = '#';
+    for (let i = 0; i < 4; i++) {
+      salt += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return salt;
   };
   
   // Generate a detailed MISS VOID prompt based on product type
@@ -679,31 +680,36 @@ Photograph presents ${photographyElements}. ${salt}`;
               </div>
               
               <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="designPrompt" className="text-gray-300">
-                    Describe your MISS VOID design
-                  </label>
-                  <button 
-                    className="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 hover:bg-gray-600 transition text-sm flex items-center"
+                <label htmlFor="designPrompt" className="block mb-2 text-gray-300">
+                  Describe your MISS VOID design
+                </label>
+                <div className="flex">
+                  <textarea
+                    id="designPrompt"
+                    rows={4}
+                    className="w-full p-3 border border-gray-600 rounded-l bg-gray-800 text-white"
+                    placeholder="E.g., A sculptural black leather corset with architectural elements, inspired by brutalist architecture"
+                    value={promptText}
+                    onChange={(e) => setPromptText(e.target.value)}
+                  />
+                  <button
+                    className="bg-gray-700 text-white p-2 rounded-r border-t border-r border-b border-gray-600 hover:bg-gray-600 transition"
                     onClick={() => setPromptText(generateDetailedPrompt())}
+                    title="Generate detailed MISS VOID style prompt"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    Auto Generate Description
                   </button>
                 </div>
-                <textarea
-                  id="designPrompt"
-                  rows={4}
-                  className="w-full p-3 border border-gray-600 rounded bg-gray-800 text-white"
-                  placeholder="E.g., A sculptural black leather corset with architectural elements, inspired by brutalist architecture"
-                  value={promptText}
-                  onChange={(e) => setPromptText(e.target.value)}
-                />
                 <p className="mt-2 text-sm text-gray-400">
                   Add specific details about design features, textures, and inspiration sources for best results.
-                  Each generated prompt includes a serial number (e.g., #001) that you can manually edit to create variations.
+                  <button 
+                    className="ml-2 text-white underline hover:text-gray-300"
+                    onClick={() => setPromptText(generateDetailedPrompt())}
+                  >
+                    Generate tailored prompt
+                  </button>
                 </p>
               </div>
               

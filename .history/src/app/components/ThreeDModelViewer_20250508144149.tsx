@@ -44,53 +44,11 @@ const CorsetModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> 
     }
   });
   
-  // If we have analysis data, use it to customize the model
-  const cinchRatio = analysisData?.cinchRatio || 0.8; // Waist cinching (lower = more dramatic)
-  const height = analysisData?.dimensions?.height || 2;
-  const width = analysisData?.dimensions?.width || 1;
-  
-  // Create silhouette points from contour data or use defaults
-  const generateSilhouette = () => {
-    if (analysisData?.contours && analysisData.contours.length > 0) {
-      // Use extracted contours for a custom silhouette
-      return analysisData.contours.map((point: [number, number]) => {
-        // Scale contour points to 3D space
-        return new THREE.Vector2(
-          (point[0] - 0.5) * width,
-          (point[1] - 0.5) * height
-        );
-      });
-    } else {
-      // Default hourglass silhouette
-      return [
-        new THREE.Vector2(-0.5, -1),    // Bottom left
-        new THREE.Vector2(0.5, -1),     // Bottom right
-        new THREE.Vector2(0.6, -0.5),   // Lower right curve
-        new THREE.Vector2(0.5 * cinchRatio, 0),   // Waist right
-        new THREE.Vector2(0.6, 0.5),    // Upper right curve
-        new THREE.Vector2(0.5, 1),      // Top right
-        new THREE.Vector2(-0.5, 1),     // Top left
-        new THREE.Vector2(-0.6, 0.5),   // Upper left curve
-        new THREE.Vector2(-0.5 * cinchRatio, 0),  // Waist left
-        new THREE.Vector2(-0.6, -0.5),  // Lower left curve
-      ];
-    }
-  };
-  
   return (
     <group>
-      {/* Main corset body - using custom silhouette */}
+      {/* Main corset body - using a more sculptural approach for better realism */}
       <mesh ref={mesh} position={[0, 0, 0]}>
-        {analysisData ? (
-          // Use LatheGeometry for a more accurate shape
-          <latheGeometry 
-            args={[generateSilhouette(), 32, 0, Math.PI * 2]}
-          />
-        ) : (
-          // Fallback to cylinder geometry
-          <cylinderGeometry args={[1, 0.7, 2, 32, 8, true]} />
-        )}
-        
+        <cylinderGeometry args={[1, 0.7, 2, 32, 8, true]} />
         {texture ? (
           <meshPhysicalMaterial 
             map={texture} 
@@ -137,7 +95,7 @@ const CorsetModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> 
         <meshStandardMaterial color="#888" roughness={0.3} metalness={0.8} />
       </mesh>
       
-      {/* Front panel with texture mapping */}
+      {/* Front and back panels with different texture mapping */}
       <mesh ref={frontPanel} position={[0, 0, -0.9]} rotation={[0, 0, 0]}>
         <planeGeometry args={[1.8, 1.8]} />
         {texture ? (

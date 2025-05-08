@@ -32,7 +32,7 @@ import * as THREE from 'three';
  */
 
 // Basic 3D models for different product types
-const CorsetModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = ({ texture, analysisData }) => {
+const CorsetModel: React.FC<{texture: THREE.Texture | null}> = ({ texture }) => {
   const mesh = useRef<THREE.Mesh>(null!);
   const frontPanel = useRef<THREE.Mesh>(null!);
   const backPanel = useRef<THREE.Mesh>(null!);
@@ -44,53 +44,11 @@ const CorsetModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> 
     }
   });
   
-  // If we have analysis data, use it to customize the model
-  const cinchRatio = analysisData?.cinchRatio || 0.8; // Waist cinching (lower = more dramatic)
-  const height = analysisData?.dimensions?.height || 2;
-  const width = analysisData?.dimensions?.width || 1;
-  
-  // Create silhouette points from contour data or use defaults
-  const generateSilhouette = () => {
-    if (analysisData?.contours && analysisData.contours.length > 0) {
-      // Use extracted contours for a custom silhouette
-      return analysisData.contours.map((point: [number, number]) => {
-        // Scale contour points to 3D space
-        return new THREE.Vector2(
-          (point[0] - 0.5) * width,
-          (point[1] - 0.5) * height
-        );
-      });
-    } else {
-      // Default hourglass silhouette
-      return [
-        new THREE.Vector2(-0.5, -1),    // Bottom left
-        new THREE.Vector2(0.5, -1),     // Bottom right
-        new THREE.Vector2(0.6, -0.5),   // Lower right curve
-        new THREE.Vector2(0.5 * cinchRatio, 0),   // Waist right
-        new THREE.Vector2(0.6, 0.5),    // Upper right curve
-        new THREE.Vector2(0.5, 1),      // Top right
-        new THREE.Vector2(-0.5, 1),     // Top left
-        new THREE.Vector2(-0.6, 0.5),   // Upper left curve
-        new THREE.Vector2(-0.5 * cinchRatio, 0),  // Waist left
-        new THREE.Vector2(-0.6, -0.5),  // Lower left curve
-      ];
-    }
-  };
-  
   return (
     <group>
-      {/* Main corset body - using custom silhouette */}
+      {/* Main corset body - using a more sculptural approach for better realism */}
       <mesh ref={mesh} position={[0, 0, 0]}>
-        {analysisData ? (
-          // Use LatheGeometry for a more accurate shape
-          <latheGeometry 
-            args={[generateSilhouette(), 32, 0, Math.PI * 2]}
-          />
-        ) : (
-          // Fallback to cylinder geometry
-          <cylinderGeometry args={[1, 0.7, 2, 32, 8, true]} />
-        )}
-        
+        <cylinderGeometry args={[1, 0.7, 2, 32, 8, true]} />
         {texture ? (
           <meshPhysicalMaterial 
             map={texture} 
@@ -137,7 +95,7 @@ const CorsetModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> 
         <meshStandardMaterial color="#888" roughness={0.3} metalness={0.8} />
       </mesh>
       
-      {/* Front panel with texture mapping */}
+      {/* Front and back panels with different texture mapping */}
       <mesh ref={frontPanel} position={[0, 0, -0.9]} rotation={[0, 0, 0]}>
         <planeGeometry args={[1.8, 1.8]} />
         {texture ? (
@@ -160,7 +118,7 @@ const CorsetModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> 
   );
 };
 
-const HarnessModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = ({ texture, analysisData }) => {
+const HarnessModel: React.FC<{texture: THREE.Texture | null}> = ({ texture }) => {
   const group = useRef<THREE.Group>(null!);
   
   useFrame((state) => {
@@ -257,7 +215,7 @@ const HarnessModel: React.FC<{texture: THREE.Texture | null, analysisData: any}>
   );
 };
 
-const BodysuitModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = ({ texture, analysisData }) => {
+const BodysuitModel: React.FC<{texture: THREE.Texture | null}> = ({ texture }) => {
   const mesh = useRef<THREE.Mesh>(null!);
   
   useFrame(() => {
@@ -281,7 +239,7 @@ const BodysuitModel: React.FC<{texture: THREE.Texture | null, analysisData: any}
   );
 };
 
-const DressModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = ({ texture, analysisData }) => {
+const DressModel: React.FC<{texture: THREE.Texture | null}> = ({ texture }) => {
   const mesh = useRef<THREE.Mesh>(null!);
   
   useFrame(() => {
@@ -315,7 +273,7 @@ const DressModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> =
   );
 };
 
-const MaskModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = ({ texture, analysisData }) => {
+const MaskModel: React.FC<{texture: THREE.Texture | null}> = ({ texture }) => {
   const mesh = useRef<THREE.Mesh>(null!);
   
   useFrame(() => {
@@ -336,7 +294,7 @@ const MaskModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = 
   );
 };
 
-const SkirtModel: React.FC<{texture: THREE.Texture | null, analysisData: any}> = ({ texture, analysisData }) => {
+const SkirtModel: React.FC<{texture: THREE.Texture | null}> = ({ texture }) => {
   const mesh = useRef<THREE.Mesh>(null!);
   
   useFrame(() => {
@@ -409,10 +367,7 @@ interface ThreeDModelViewerProps {
 const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({ productType, designImage, measurements }) => {
   const textureLoader = new THREE.TextureLoader();
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisData, setAnalysisData] = useState<any>(null);
   
-  // Load texture from image
   useEffect(() => {
     if (designImage) {
       textureLoader.load(designImage, (loadedTexture) => {
@@ -425,72 +380,31 @@ const ThreeDModelViewer: React.FC<ThreeDModelViewerProps> = ({ productType, desi
         loadedTexture.anisotropy = 16;
         setTexture(loadedTexture);
       });
-      
-      // Analyze the image to extract shape information
-      analyzeImage(designImage);
     }
   }, [designImage]);
-  
-  // Function to analyze the image and get shape data
-  const analyzeImage = async (imageUrl: string) => {
-    try {
-      setIsAnalyzing(true);
-      
-      const response = await fetch('/api/analyze-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          imageUrl,
-          productType
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to analyze image');
-      }
-      
-      const data = await response.json();
-      setAnalysisData(data.analysisData);
-      console.log('Image analysis data:', data.analysisData);
-      
-    } catch (error) {
-      console.error('Error analyzing image:', error);
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
 
   // Map product type to the corresponding model component
   const getModelComponent = () => {
     switch(productType) {
       case 'corset':
-        return <CorsetModel texture={texture} analysisData={analysisData} />;
+        return <CorsetModel texture={texture} />;
       case 'harness':
-        return <HarnessModel texture={texture} analysisData={analysisData} />;
+        return <HarnessModel texture={texture} />;
       case 'bodysuit':
-        return <BodysuitModel texture={texture} analysisData={analysisData} />;
+        return <BodysuitModel texture={texture} />;
       case 'dress':
-        return <DressModel texture={texture} analysisData={analysisData} />;
+        return <DressModel texture={texture} />;
       case 'mask':
-        return <MaskModel texture={texture} analysisData={analysisData} />;
+        return <MaskModel texture={texture} />;
       case 'skirt':
-        return <SkirtModel texture={texture} analysisData={analysisData} />;
+        return <SkirtModel texture={texture} />;
       default:
-        return <CorsetModel texture={texture} analysisData={analysisData} />;
+        return <CorsetModel texture={texture} />;
     }
   };
   
   return (
     <div className="w-full h-[400px] bg-gray-900 rounded">
-      {isAnalyzing && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-10 rounded">
-          <div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin"></div>
-          <p className="mt-4 text-white font-semibold">Analyzing image...</p>
-          <p className="text-sm text-gray-400 mt-2">Extracting garment shape</p>
-        </div>
-      )}
       <Canvas shadows>
         <SceneSetup />
         <PerspectiveCamera makeDefault />

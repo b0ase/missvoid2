@@ -222,19 +222,13 @@ export default function DesignPage() {
         ctx.lineTo(panel[i].x, panel[i].y);
       }
       ctx.closePath();
-      ctx.fillStyle = 'rgba(200, 200, 220, 0.3)';
       ctx.fill();
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 2;
       ctx.stroke();
       
       // Draw boning lines
       if (customizations.boning === 'standard' || customizations.boning === 'heavy') {
         const boningCount = customizations.boning === 'standard' ? 3 : 5;
         const spacing = waistWidth / (boningCount + 1);
-        
-        ctx.strokeStyle = '#555';
-        ctx.lineWidth = 1;
         
         for (let i = 1; i <= boningCount; i++) {
           const x = centerX - waistWidth/2 + spacing * i;
@@ -826,12 +820,12 @@ export default function DesignPage() {
               <div className="md:col-span-2 bg-white p-4 rounded">
                 <h3 className="font-semibold text-black mb-4">Pattern Preview</h3>
                 
-                <div className="bg-gray-100 rounded flex justify-center items-center p-2 min-h-[500px] relative">
+                <div className="bg-gray-100 rounded flex justify-center items-center p-2">
                   <canvas 
                     ref={canvasRef} 
                     width={800} 
                     height={600} 
-                    className="border border-gray-300 bg-white shadow-sm"
+                    className="border border-gray-300"
                   ></canvas>
                 </div>
                 

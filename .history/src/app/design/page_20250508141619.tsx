@@ -826,12 +826,12 @@ export default function DesignPage() {
               <div className="md:col-span-2 bg-white p-4 rounded">
                 <h3 className="font-semibold text-black mb-4">Pattern Preview</h3>
                 
-                <div className="bg-gray-100 rounded flex justify-center items-center p-2 min-h-[500px] relative">
+                <div className="bg-gray-100 rounded flex justify-center items-center p-2">
                   <canvas 
                     ref={canvasRef} 
                     width={800} 
                     height={600} 
-                    className="border border-gray-300 bg-white shadow-sm"
+                    className="border border-gray-300"
                   ></canvas>
                 </div>
                 

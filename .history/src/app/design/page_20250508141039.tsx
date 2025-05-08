@@ -146,20 +146,6 @@ export default function DesignPage() {
     }
   }, [designStage, patternType, measurements, patternCustomizations]);
   
-  // Add a new useEffect specifically for when the activeTab changes to patternCutter
-  useEffect(() => {
-    if (activeTab === 'patternCutter' && canvasRef.current) {
-      const ctx = canvasRef.current.getContext('2d');
-      if (ctx) {
-        // Clear canvas
-        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        
-        // Draw pattern based on patternType and measurements
-        drawPattern(ctx, patternType, measurements, patternCustomizations);
-      }
-    }
-  }, [activeTab, patternType, measurements, patternCustomizations]);
-  
   // Draw pattern based on type and measurements
   const drawPattern = (
     ctx: CanvasRenderingContext2D, 
@@ -168,17 +154,6 @@ export default function DesignPage() {
     customizations: any
   ) => {
     const { width, height } = ctx.canvas;
-    
-    console.log("Drawing pattern:", type, measurements, customizations);
-    
-    // Add a light background to show the canvas is active
-    ctx.fillStyle = '#f8f8f8';
-    ctx.fillRect(0, 0, width, height);
-    
-    // Add a border to see canvas boundaries
-    ctx.strokeStyle = '#ddd';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(1, 1, width-2, height-2);
     
     // Set up drawing styles
     ctx.strokeStyle = 'black';
@@ -191,12 +166,6 @@ export default function DesignPage() {
     
     // Scale factor to convert cm to pixels
     const scale = 4;
-    
-    // Draw title text
-    ctx.fillStyle = 'black';
-    ctx.font = 'bold 16px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText(`${type.toUpperCase()} PATTERN`, centerX, 30);
     
     if (type === 'corset') {
       // Draw front panel
@@ -222,19 +191,13 @@ export default function DesignPage() {
         ctx.lineTo(panel[i].x, panel[i].y);
       }
       ctx.closePath();
-      ctx.fillStyle = 'rgba(200, 200, 220, 0.3)';
       ctx.fill();
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 2;
       ctx.stroke();
       
       // Draw boning lines
       if (customizations.boning === 'standard' || customizations.boning === 'heavy') {
         const boningCount = customizations.boning === 'standard' ? 3 : 5;
         const spacing = waistWidth / (boningCount + 1);
-        
-        ctx.strokeStyle = '#555';
-        ctx.lineWidth = 1;
         
         for (let i = 1; i <= boningCount; i++) {
           const x = centerX - waistWidth/2 + spacing * i;
@@ -314,10 +277,25 @@ export default function DesignPage() {
     setPatternCanvas(ctx.canvas.toDataURL());
   };
 
+  // Detect product type from the prompt
+  const detectProductType = (prompt: string): string => {
+    const lowerPrompt = prompt.toLowerCase();
+    
+    for (const type of Object.keys(PRODUCT_DESCRIPTORS)) {
+      if (lowerPrompt.includes(type)) {
+        return type;
+      }
+    }
+    
+    // Default to corset if no specific type detected
+    return 'corset';
+  };
+  
   // Craft optimized prompt for Stability AI
   const craftOptimizedPrompt = (userPrompt: string): string => {
-    // Use the selected product type instead of detecting it
-    // (We keep the productType as is since it's already set by the dropdown)
+    // Extract the detected product type
+    const detectedType = detectProductType(userPrompt);
+    setProductType(detectedType);
     
     // Get random style elements (3-5)
     const styleCount = Math.floor(Math.random() * 3) + 3;
@@ -328,7 +306,7 @@ export default function DesignPage() {
     const selectedAesthetics = [...AESTHETIC_DESCRIPTORS].sort(() => 0.5 - Math.random()).slice(0, aestheticCount);
     
     // Get product-specific descriptors (2-3)
-    const productDescriptors = PRODUCT_DESCRIPTORS[productType] || [];
+    const productDescriptors = PRODUCT_DESCRIPTORS[detectedType] || [];
     const descriptorCount = Math.min(Math.floor(Math.random() * 2) + 2, productDescriptors.length);
     const selectedDescriptors = [...productDescriptors].sort(() => 0.5 - Math.random()).slice(0, descriptorCount);
     
@@ -338,7 +316,7 @@ export default function DesignPage() {
       userPrompt,
       
       // Product-specific details
-      `${productType} design`,
+      `${detectedType} design`,
       ...selectedDescriptors,
       
       // MISS VOID aesthetics
@@ -481,28 +459,6 @@ export default function DesignPage() {
               <h2 className="text-xl font-semibold mb-4 text-white">Design Generator</h2>
               
               <div className="mb-4">
-                <label htmlFor="productTypeSelect" className="block mb-2 text-gray-300">
-                  Product Type
-                </label>
-                <select
-                  id="productTypeSelect"
-                  className="w-full p-3 border border-gray-600 rounded bg-gray-800 text-white"
-                  value={productType}
-                  onChange={(e) => setProductType(e.target.value)}
-                >
-                  <option value="corset">Corset</option>
-                  <option value="harness">Harness</option>
-                  <option value="bodysuit">Bodysuit</option>
-                  <option value="dress">Dress</option>
-                  <option value="mask">Mask</option>
-                  <option value="skirt">Skirt</option>
-                </select>
-                <p className="mt-2 text-sm text-gray-400">
-                  Select the type of product you want to generate. This will optimize your design and ensure accurate pattern creation.
-                </p>
-              </div>
-              
-              <div className="mb-4">
                 <label htmlFor="designPrompt" className="block mb-2 text-gray-300">
                   Describe your MISS VOID design
                 </label>
@@ -630,7 +586,7 @@ export default function DesignPage() {
             <h2 className="text-xl font-semibold mb-4 text-white">Pattern Cutter Studio</h2>
             
             {/* Display the generated design if available */}
-            {designImage && designStage !== 'initial' ? (
+            {designImage && designStage !== 'initial' && (
               <div className="mb-6">
                 <h3 className="font-semibold text-white mb-2">Your Generated Design</h3>
                 <div className="bg-gray-900 p-2 rounded flex justify-center mb-4">
@@ -645,18 +601,6 @@ export default function DesignPage() {
                   </div>
                 </div>
                 <p className="text-sm text-gray-400 mb-4">Creating pattern for {productType} design</p>
-              </div>
-            ) : (
-              <div className="mb-6 p-4 bg-gray-900 rounded border border-gray-700">
-                <p className="text-gray-300">
-                  No design has been generated yet. For best results, 
-                  <button 
-                    onClick={() => setActiveTab('generator')} 
-                    className="text-white underline ml-1 hover:text-gray-300"
-                  >
-                    create a design
-                  </button> first to get a pattern matched to your specific design.
-                </p>
               </div>
             )}
             
@@ -826,12 +770,12 @@ export default function DesignPage() {
               <div className="md:col-span-2 bg-white p-4 rounded">
                 <h3 className="font-semibold text-black mb-4">Pattern Preview</h3>
                 
-                <div className="bg-gray-100 rounded flex justify-center items-center p-2 min-h-[500px] relative">
+                <div className="bg-gray-100 rounded flex justify-center items-center p-2">
                   <canvas 
                     ref={canvasRef} 
                     width={800} 
                     height={600} 
-                    className="border border-gray-300 bg-white shadow-sm"
+                    className="border border-gray-300"
                   ></canvas>
                 </div>
                 

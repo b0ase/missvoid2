@@ -4,47 +4,13 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import ThreeDModelViewer from '../components/ThreeDModelViewer';
 import Link from 'next/link';
-// import { useAuth } from '../context/AuthContext'; // Appwrite Auth commented out
-import { useSimpleAuth } from '../context/SimpleAuthContext'; // Using SimpleAuth
-import SimpleAuthForm from './SimpleAuthForm'; // This will be created next
+// import { useAuth } from '../context/AuthContext'; // Comment out Appwrite Auth
+import { useSimpleAuth } from '../context/SimpleAuthContext'; // Import SimpleAuth
+import SimpleAuthForm from './SimpleAuthForm'; // Updated import for the new form
 
-// Placeholder constants and functions - ensure these match your actual full definitions
-const PRODUCT_DESCRIPTORS: Record<string, string[]> = {
-    "corset": ["structured boning"], "harness": ["adjustable straps"], "dress": ["flowing silhouette"], 
-    "bodysuit": ["second-skin fit"], "mask": ["face-framing"], "skirt": ["structured panels"], 
-    "jacket": ["structured shoulders"], "blazer": ["tailored fit"], "gloves": ["form-fitting design"], 
-    "leggings": ["second-skin fit"], "top": ["architectural cutting"], "bustier": ["structured design"], 
-    "collar": ["high-neck design"], "choker": ["architectural hardware"], "boots": ["knee-high silhouette"], 
-    "belt": ["wide silhouette"], "cape": ["dramatic draping"], "catsuit": ["second-skin fit"], 
-    "gown": ["floor-length silhouette"], "jumpsuit": ["tailored silhouette"], "shorts": ["high-waisted design"], 
-    "coat": ["dramatic silhouette"], "lingerie": ["architectural strapping"], "bra": ["structured cups"], 
-    "suspenders": ["body-framing straps"], "headpiece": ["sculptural design"]
-};
-const STYLE_ELEMENTS: string[] = ["architectural silhouette", "dark minimal aesthetic"];
-const AESTHETIC_DESCRIPTORS: string[] = ["Miss Void signature style", "high-end fashion design"];
-const PRODUCT_NAME_ADJECTIVES: string[] = ["Void", "Shadow"];
-const PRODUCT_NAME_NOUNS: string[] = ["Silhouette", "Archetype"];
-const PRODUCT_NAME_MODIFIERS: string[] = ["I", "II"];
-const DESIGN_CONCEPTS: string[] = ["architectural brutalism translated into wearable form"];
-const MATERIAL_DESCRIPTIONS: string[] = ["premium black leather with a subtle matte finish"];
-const CONSTRUCTION_METHODS: string[] = ["architectural darting and structured panels"];
-const HARDWARE_DETAILS: string[] = ["matte black custom hardware with a signature tooth-edge detail"];
-const UNIQUE_FEATURES: string[] = ["signature asymmetrical collar detail"];
-const STYLING_CONTEXTS: string[] = ["destined for high-concept editorial shoots"];
-const PHILOSOPHICAL_CONTEXTS: string[] = ["embodying MISS VOID's ongoing exploration of absence as presence"];
-const STABILITY_API_ENDPOINT = ""; // Placeholder
+// Stability AI API endpoint
+const STABILITY_API_ENDPOINT = "https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image";
 
-const generateProductName = (productType: string): string => `Sample ${productType}`;
-const generateTechnicalDescription = (productType: string): string => `Tech specs for ${productType}`;
-const generateCreativeDescription = (productType: string): string => `Creative description for ${productType}`;
-const extractStructuredData = (description: string, productType: string): any => ({ 
-    primaryMaterial: "mock leather", hardware: "mock buckles", silhouette: "mock arch", tailoring: "mock tailored" 
-});
-// End placeholder definitions
-
-export default function DesignPage() {
-  const { mockUser, isLoading: authIsLoading, mockLogin, mockLogout } = useSimpleAuth();
-  
 // MISS VOID style elements for prompt enhancement
 const STYLE_ELEMENTS = [
   "architectural silhouette",
@@ -698,8 +664,8 @@ const extractStructuredData = (description: string, productType: string): any =>
 };
 
 export default function DesignPage() {
-  const { mockUser, isLoading: authIsLoading, mockLogin, mockLogout } = useSimpleAuth();
-  
+  // const { currentUser, userProfile, isLoading: authIsLoading, login, signup, logout } = useAuth(); // Comment out Appwrite Auth
+  const { mockUser, isLoading: authIsLoading, mockLogin, mockLogout } = useSimpleAuth(); // Use SimpleAuth
   const [promptText, setPromptText] = useState('');
   const [structuredPrompt, setStructuredPrompt] = useState({
     name: '',
@@ -718,16 +684,17 @@ export default function DesignPage() {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [designImage, setDesignImage] = useState('');
-  const [designStage, setDesignStage] = useState('initial'); 
-  const [activeTab, setActiveTab] = useState('conceptDesign'); 
+  const [designStage, setDesignStage] = useState('initial'); // initial, 2d, 3d, pattern, manufacturing
+  const [activeTab, setActiveTab] = useState('conceptDesign'); // conceptDesign, 3dVisualization, patternCutter, manufacturing, distribution, payment
   const [savedDesigns, setSavedDesigns] = useState<Array<{imageUrl: string, productType: string, prompt: string}>>([]);
   const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [productType, setProductType] = useState('corset');
-  const [promptCounter, setPromptCounter] = useState(1); 
+  const [promptCounter, setPromptCounter] = useState(1); // Counter for prompt serial number
   const [showStructuredForm, setShowStructuredForm] = useState(false);
-  const [saltCounter, setSaltCounter] = useState(1); 
+  const [saltCounter, setSaltCounter] = useState(1); // Counter for incremental salt
   
+  // Manufacturing state
   const [manufacturingDetails, setManufacturingDetails] = useState({
     quantity: "1",
     sizeRange: "single",
@@ -737,6 +704,7 @@ export default function DesignPage() {
   });
   const [orderTotal, setOrderTotal] = useState(175.00);
   
+  // Pattern cutter state
   const [patternType, setPatternType] = useState('corset');
   const [measurements, setMeasurements] = useState({
     bust: 90,
@@ -760,1014 +728,488 @@ export default function DesignPage() {
   
   const [is3DConverting, setIs3DConverting] = useState(false);
   const [animateTransition, setAnimateTransition] = useState(false);
-
+  
+  // Update measurements
   const handleMeasurementChange = (measurement: string, value: number) => {
-    setMeasurements(prev => ({ ...prev, [measurement]: value }));
+    setMeasurements(prev => ({
+      ...prev,
+      [measurement]: value
+    }));
   };
-  const handleCustomizationChange = (customization: string, value: string | number) => {
-    setPatternCustomizations(prev => ({ ...prev, [customization]: value }));
+  
+  // Update pattern customizations
+  const handleCustomizationChange = (customization: string, value: string) => {
+    setPatternCustomizations(prev => ({
+      ...prev,
+      [customization]: value
+    }));
   };
-
-  const drawPattern = (ctx: CanvasRenderingContext2D, type: string, meas: any, cust: any) => { /* ... your pattern drawing logic ... */ }; 
+  
+  // Pattern canvas drawing function
+  useEffect(() => {
+    if (designStage === 'pattern' && canvasRef.current) {
+      const ctx = canvasRef.current.getContext('2d');
+      if (ctx) {
+        // Clear canvas
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        
+        // Draw pattern based on patternType and measurements
+        drawPattern(ctx, patternType, measurements, patternCustomizations);
+      }
+    }
+  }, [designStage, patternType, measurements, patternCustomizations]);
+  
+  // Add a new useEffect specifically for when the activeTab changes to patternCutter
   useEffect(() => {
     if (activeTab === 'patternCutter' && canvasRef.current) {
-        const ctx = canvasRef.current.getContext('2d');
-        if (ctx) drawPattern(ctx, patternType, measurements, patternCustomizations);
+      const ctx = canvasRef.current.getContext('2d');
+      if (ctx) {
+        // Clear canvas
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        
+        // Draw pattern based on patternType and measurements
+        drawPattern(ctx, patternType, measurements, patternCustomizations);
+      }
     }
   }, [activeTab, patternType, measurements, patternCustomizations]);
-
-  const handleGeneratePrompt = () => { /* ... your existing logic ... */ };
-  const craftOptimizedPrompt = (userPrompt: string): string => userPrompt; // Simplified for brevity
-  const handleGenerate = async () => { /* ... your existing logic, ensure it does not rely on Appwrite auth ... */ };
-  const handleSaveDesign = () => { /* ... */ };
-  const handleSelectDesign = (index: number) => { /* ... */ };
-  const handleProceedTo3D = () => { setActiveTab('3dVisualization'); };
-  const handleProceedToPattern = () => { setActiveTab('patternCutter'); };
-  const handleProceedToManufacturing = () => { setActiveTab('manufacturing'); };
-  const calculateOrderTotal = (details: any) => { /* ... */ }; 
-  const handleManufacturingChange = (field: string, value: string) => { /* ... */ };
-
-  return (
-    <div className="container mx-auto px-4 py-8 text-white">
-      <h1 className="text-3xl font-bold mb-6 text-center">MISS VOID DESIGN STUDIO</h1>
+  
+  // Draw pattern based on type and measurements
+  const drawPattern = (
+    ctx: CanvasRenderingContext2D, 
+    type: string, 
+    measurements: any, 
+    customizations: any
+  ) => {
+    const { width, height } = ctx.canvas;
+    
+    console.log("Drawing pattern:", type, measurements, customizations);
+    
+    // Add a light background to show the canvas is active
+    ctx.fillStyle = '#f8f8f8';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Add a border to see canvas boundaries
+    ctx.strokeStyle = '#ddd';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(1, 1, width-2, height-2);
+    
+    // Set up drawing styles
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    
+    // Center coordinates
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // Scale factor to convert cm to pixels
+    const scale = 4;
+    
+    // Draw title text
+    ctx.fillStyle = 'black';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${type.toUpperCase()} PATTERN`, centerX, 30);
+    
+    if (type === 'corset') {
+      // Draw front panel
+      const waistWidth = measurements.waist / (customizations.panelCount * 2) * scale;
+      const bustWidth = measurements.bust / (customizations.panelCount * 2) * scale;
+      const hipWidth = measurements.hips / (customizations.panelCount * 2) * scale;
+      const panelHeight = measurements.centerFrontLength * scale;
       
-      <div className="max-w-6xl mx-auto">
-        <p className="text-lg mb-8 text-center">
-          Create your own MISS VOID designs using our AI-powered design system. Generate unique pieces, visualize them in 3D,
-          customize cutting patterns, and bring them to life with our manufacturing partners.
-        </p>
-        
-        {apiError && (
-          <div className="bg-red-900 border border-red-700 text-white p-4 mb-6 rounded">
-            <p className="font-bold">Error generating image:</p>
-            <p>{apiError}</p>
-          </div>
-        )}
-        
-        {/* Main Navigation Tabs */}
-        <div className="mb-6 border-b border-gray-700 overflow-x-auto pb-1">
-          {/* Mobile Tab Selector (visible on small screens only) */}
-          <div className="block sm:hidden px-2 py-2">
-            <select 
-              className="w-full p-2 bg-gray-800 border border-gray-700 rounded text-white"
-              value={activeTab}
-              onChange={(e) => setActiveTab(e.target.value)}
-            >
-              <option value="about">About</option>
-              <option value="profile">Profile</option>
-              <option value="portfolio">Portfolio</option>
-              <option value="conceptDesign">Concept Design</option>
-              <option value="3dVisualization">3D Visualization</option>
-              <option value="patternCutter">Pattern Cutter</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="distribution">Distribution</option>
-              <option value="payment">Payment</option>
-            </select>
-          </div>
-          
-          {/* Standard Tabs (hidden on very small screens) */}
-          <ul className="hidden sm:flex whitespace-nowrap space-x-2 min-w-full">
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'about' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('about')}
-              >
-                About
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'profile' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('profile')}
-              >
-                Profile
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'portfolio' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('portfolio')}
-              >
-                Portfolio
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'conceptDesign' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('conceptDesign')}
-              >
-                Concept Design
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === '3dVisualization' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('3dVisualization')}
-              >
-                3D Visualization
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'patternCutter' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('patternCutter')}
-              >
-                Pattern Cutter
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'manufacturing' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('manufacturing')}
-              >
-                Manufacturing
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'distribution' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('distribution')}
-              >
-                Distribution
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`inline-block p-3 sm:p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'payment' 
-                    ? 'text-white border-white font-medium' 
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                }`}
-                onClick={() => setActiveTab('payment')}
-              >
-                Payment
-              </button>
-            </li>
-          </ul>
-        </div>
-        
-        {/* Profile Tab - Corrected for SimpleAuth */}
-        {activeTab === 'profile' && (
-          <div className="bg-black p-6 rounded-lg border border-gray-800 min-h-[600px]">
-            <h2 className="text-2xl font-semibold mb-6 text-white text-center">Your Profile</h2>
-            
-            {authIsLoading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            ) : mockUser ? (
-              // User is logged in - display profile information
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="md:col-span-1 bg-gray-900 p-6 rounded-lg border border-gray-700 text-center">
-                  <div className="w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center mb-4 border-2 border-purple-500 mx-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-medium text-white">{mockUser.fullName || 'MISS VOID Designer'}</h3>
-                  <p className="text-sm text-purple-400 mt-1">{mockUser.email}</p>
-                  <p className="text-xs text-gray-500 mt-1">User ID: {mockUser.userId}</p>
-                  
-                  <button 
-                    onClick={mockLogout} // Use mockLogout
-                    className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md transition"
-                  >
-                    Logout
-                  </button>
-                </div>
-                
-                <div className="md:col-span-2 bg-gray-900 p-6 rounded-lg border border-gray-700">
-                  <h3 className="text-lg font-medium text-white mb-4">Account Settings (Mock Data)</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm text-gray-400 mb-1">Full Name</label>
-                      <input 
-                        type="text" 
-                        className="w-full p-2 border border-gray-700 rounded bg-gray-800 text-white cursor-not-allowed"
-                        value={mockUser.fullName || ''} // Use mockUser
-                        readOnly
-                      />
-                    </div>
-"use client";
-
-import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import ThreeDModelViewer from '../components/ThreeDModelViewer';
-import Link from 'next/link';
-// import { useAuth } from '../context/AuthContext'; // Appwrite Auth commented out
-import { useSimpleAuth } from '../context/SimpleAuthContext'; // Using SimpleAuth
-import SimpleAuthForm from './SimpleAuthForm'; // This will be created next
-
-// Placeholder constants and functions - ensure these match your actual full definitions
-const PRODUCT_DESCRIPTORS: Record<string, string[]> = {
-    "corset": ["structured boning"], "harness": ["adjustable straps"], "dress": ["flowing silhouette"], 
-    "bodysuit": ["second-skin fit"], "mask": ["face-framing"], "skirt": ["structured panels"], 
-    "jacket": ["structured shoulders"], "blazer": ["tailored fit"], "gloves": ["form-fitting design"], 
-    "leggings": ["second-skin fit"], "top": ["architectural cutting"], "bustier": ["structured design"], 
-    "collar": ["high-neck design"], "choker": ["architectural hardware"], "boots": ["knee-high silhouette"], 
-    "belt": ["wide silhouette"], "cape": ["dramatic draping"], "catsuit": ["second-skin fit"], 
-    "gown": ["floor-length silhouette"], "jumpsuit": ["tailored silhouette"], "shorts": ["high-waisted design"], 
-    "coat": ["dramatic silhouette"], "lingerie": ["architectural strapping"], "bra": ["structured cups"], 
-    "suspenders": ["body-framing straps"], "headpiece": ["sculptural design"]
-};
-const STYLE_ELEMENTS: string[] = ["architectural silhouette", "dark minimal aesthetic"];
-const AESTHETIC_DESCRIPTORS: string[] = ["Miss Void signature style", "high-end fashion design"];
-const PRODUCT_NAME_ADJECTIVES: string[] = ["Void", "Shadow"];
-const PRODUCT_NAME_NOUNS: string[] = ["Silhouette", "Archetype"];
-const PRODUCT_NAME_MODIFIERS: string[] = ["I", "II"];
-const DESIGN_CONCEPTS: string[] = ["architectural brutalism translated into wearable form"];
-const MATERIAL_DESCRIPTIONS: string[] = ["premium black leather with a subtle matte finish"];
-const CONSTRUCTION_METHODS: string[] = ["architectural darting and structured panels"];
-const HARDWARE_DETAILS: string[] = ["matte black custom hardware with a signature tooth-edge detail"];
-const UNIQUE_FEATURES: string[] = ["signature asymmetrical collar detail"];
-const STYLING_CONTEXTS: string[] = ["destined for high-concept editorial shoots"];
-const PHILOSOPHICAL_CONTEXTS: string[] = ["embodying MISS VOID's ongoing exploration of absence as presence"];
-const STABILITY_API_ENDPOINT = ""; // Placeholder
-
-const generateProductName = (productType: string): string => `Sample ${productType}`;
-const generateTechnicalDescription = (productType: string): string => `Tech specs for ${productType}`;
-const generateCreativeDescription = (productType: string): string => `Creative description for ${productType}`;
-const extractStructuredData = (description: string, productType: string): any => ({ 
-    primaryMaterial: "mock leather", hardware: "mock buckles", silhouette: "mock arch", tailoring: "mock tailored" 
-});
-// End placeholder definitions
-
-export default function DesignPage() {
-  const { mockUser, isLoading: authIsLoading, mockLogin, mockLogout } = useSimpleAuth();
-  
-// MISS VOID style elements for prompt enhancement
-const STYLE_ELEMENTS = [
-  "architectural silhouette",
-  "dark minimal aesthetic",
-  "sleek black leather",
-  "brutalist design",
-  "sharp contrasting lines",
-  "industrial hardware accents",
-  "sculptural form",
-  "geometric patterns",
-  "dramatic shadows",
-  "high fashion couture",
-  "avant-garde",
-  "structured tailoring",
-  "gothic elements",
-  "monochromatic palette",
-  "striking black textures"
-];
-
-// Miss Void aesthetic descriptions
-const AESTHETIC_DESCRIPTORS = [
-  "Miss Void signature style",
-  "high-end fashion design",
-  "luxury avant-garde piece",
-  "architectural fashion",
-  "premium quality craftsmanship",
-  "bold statement piece",
-  "structured silhouette",
-  "dramatic dark aesthetic",
-  "elegant yet edgy design",
-  "sculptural silhouette"
-];
-
-// Product types and their specific descriptors
-const PRODUCT_DESCRIPTORS: Record<string, string[]> = {
-  "corset": [
-    "structured boning", 
-    "waist cinching", 
-    "laced back closure", 
-    "precision tailoring", 
-    "fitted panels"
-  ],
-  "harness": [
-    "adjustable straps", 
-    "body-contouring", 
-    "hardware accents", 
-    "leather strapping", 
-    "architectural design"
-  ],
-  "dress": [
-    "flowing silhouette", 
-    "structured bodice", 
-    "dramatic draping", 
-    "architectural cut", 
-    "statement piece"
-  ],
-  "bodysuit": [
-    "second-skin fit", 
-    "sleek silhouette", 
-    "precise tailoring", 
-    "hardware details", 
-    "sculptural cutouts"
-  ],
-  "mask": [
-    "face-framing", 
-    "architectural design", 
-    "striking silhouette", 
-    "avant-garde accessory", 
-    "sculptural form"
-  ],
-  "skirt": [
-    "structured panels", 
-    "architectural pleating", 
-    "dramatic silhouette", 
-    "geometric design", 
-    "precision tailoring"
-  ],
-  "jacket": [
-    "structured shoulders",
-    "architectural silhouette",
-    "precision cut panels",
-    "hardware closures",
-    "leather craftsmanship"
-  ],
-  "blazer": [
-    "tailored fit",
-    "sharp lapels",
-    "structured shoulders",
-    "minimalist design",
-    "architectural shape"
-  ],
-  "gloves": [
-    "form-fitting design",
-    "wrist hardware details",
-    "textured leather",
-    "precision seaming",
-    "elegant elongation"
-  ],
-  "leggings": [
-    "second-skin fit",
-    "high-waisted design",
-    "seam details",
-    "ankle zippers",
-    "textured panels"
-  ],
-  "top": [
-    "architectural cutting",
-    "hardware accents",
-    "structured silhouette",
-    "minimalist design",
-    "leather panel details"
-  ],
-  "bustier": [
-    "structured design",
-    "shaped cups",
-    "precision boning",
-    "architectural shaping",
-    "contouring fit"
-  ],
-  "collar": [
-    "high-neck design",
-    "hardware detailing",
-    "structural silhouette",
-    "architectural shape",
-    "boned structure"
-  ],
-  "choker": [
-    "architectural hardware",
-    "structured design",
-    "neck-framing",
-    "leather craftsmanship",
-    "minimalist accent"
-  ],
-  "boots": [
-    "knee-high silhouette",
-    "structured shaft",
-    "architectural heel",
-    "hardware detailing",
-    "precision craftsmanship"
-  ],
-  "belt": [
-    "wide silhouette",
-    "hardware closure",
-    "waist defining",
-    "architectural buckle",
-    "structured shape"
-  ],
-  "cape": [
-    "dramatic draping",
-    "architectural silhouette",
-    "hardware closures",
-    "structured shoulders",
-    "flowing movement"
-  ],
-  "catsuit": [
-    "second-skin fit",
-    "full-body silhouette",
-    "zipper details",
-    "paneled construction",
-    "architectural seaming"
-  ],
-  "gown": [
-    "floor-length silhouette",
-    "architectural structure",
-    "dramatic design",
-    "sculpted bodice",
-    "statement presence"
-  ],
-  "jumpsuit": [
-    "tailored silhouette",
-    "structured bodice",
-    "hardware details",
-    "precision fit",
-    "architectural cut"
-  ],
-  "shorts": [
-    "high-waisted design",
-    "structured panels",
-    "hardware details",
-    "precision tailoring",
-    "architectural shape"
-  ],
-  "coat": [
-    "dramatic silhouette",
-    "structured shoulders",
-    "architectural lapels",
-    "minimalist closure",
-    "tailored precision"
-  ],
-  "lingerie": [
-    "architectural strapping",
-    "minimal coverage",
-    "hardware details",
-    "structured design",
-    "body framing"
-  ],
-  "bra": [
-    "structured cups",
-    "architectural strapping",
-    "minimalist design",
-    "hardware accents",
-    "precision fit"
-  ],
-  "suspenders": [
-    "body-framing straps",
-    "hardware attachments",
-    "geometric design",
-    "architectural layout",
-    "minimalist aesthetic"
-  ],
-  "headpiece": [
-    "sculptural design",
-    "face-framing structure",
-    "architectural elements",
-    "statement presence",
-    "avant-garde silhouette"
-  ]
-};
-
-// Add product name generators
-const PRODUCT_NAME_ADJECTIVES = [
-  "Void", "Shadow", "Eclipse", "Raven", "Obsidian", "Onyx", "Midnight", "Noir", 
-  "Chimera", "Phantom", "Specter", "Gothic", "Slate", "Ebony", "Wraith", "Tenebrous",
-  "Abyssal", "Eternal", "Sublime", "Arcane", "Ethereal", "Enigma", "Vortex", "Silhouette"
-];
-
-const PRODUCT_NAME_NOUNS = [
-  "Silhouette", "Archetype", "Vector", "Construct", "Apex", "Eclipse", "Monolith", 
-  "Horizon", "Lineage", "Fissure", "Relic", "Genesis", "Stratum", "Oracle", "Valkyrie",
-  "Chamber", "Cipher", "Vertex", "Axiom", "Nexus", "Meridian", "Rift", "Labyrinth", "Ascension"
-];
-
-const PRODUCT_NAME_MODIFIERS = [
-  "I", "II", "III", "IV", "V", "X", "Zero", "Prime", "Alpha", "Omega", "Ultra", 
-  "Noir", "Zero", "Infinite", "Apex", "Core", "1.0", "2.0", "Flux", "Neo", "Shadow"
-];
-
-// Generate a creative product name
-const generateProductName = (productType: string): string => {
-  const adjective = PRODUCT_NAME_ADJECTIVES[Math.floor(Math.random() * PRODUCT_NAME_ADJECTIVES.length)];
-  const noun = PRODUCT_NAME_NOUNS[Math.floor(Math.random() * PRODUCT_NAME_NOUNS.length)];
-  const modifier = PRODUCT_NAME_MODIFIERS[Math.floor(Math.random() * PRODUCT_NAME_MODIFIERS.length)];
-  
-  // Different name patterns
-  const patterns = [
-    `${adjective} ${modifier}`,
-    `${noun} ${modifier}`,
-    `${adjective} ${noun}`,
-    `${productType.charAt(0).toUpperCase() + productType.slice(1)} ${modifier}`,
-    `${adjective} ${productType.charAt(0).toUpperCase() + productType.slice(1)}`,
-    `${noun} ${productType.charAt(0).toUpperCase() + productType.slice(1)}`
-  ];
-  
-  const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-  return pattern;
-};
-
-// Enhanced descriptive elements for more creative generation
-const DESIGN_CONCEPTS = [
-  "architectural brutalism translated into wearable form",
-  "post-apocalyptic elegance with industrial undertones",
-  "techno-gothic sensibilities merged with high fashion",
-  "biomechanical structures adapted for the human form",
-  "deconstructed classicism with avant-garde sensibility",
-  "neo-noir aesthetic with cyberpunk influences",
-  "dystopian luxury reimagined for modern rebels",
-  "sculptural minimalism with aggressive detailing",
-  "engineered silhouettes that challenge conventional form",
-  "mathematical precision meeting raw emotional expression",
-  "brutal romanticism through structured materiality",
-  "anti-fashion statements elevated to couture status",
-  "monolithic shapes that redefine the body's architecture",
-  "fetishistic utility transformed into high concept design",
-  "analog futurism expressed through tactical elegance"
-];
-
-const MATERIAL_DESCRIPTIONS = [
-  "premium black leather with a subtle matte finish that absorbs light like a void",
-  "specially treated leather with a slight grain that catches light along its edges",
-  "high-grade leather with architectural paneling and precision stitching",
-  "smooth obsidian leather contrasted with textured matte sections",
-  "ethically sourced leather treated for extreme durability and suppleness",
-  "technical leather composite with reinforced stress points and seamless joins",
-  "leather sections heat-bonded rather than stitched for a monolithic appearance",
-  "shadow-toned leather panels with varying degrees of reflectivity",
-  "military-grade leather with resilient yet flexible properties",
-  "museum-quality leatherwork with painstaking attention to detail",
-  "leather engineered to hold its form while adapting to movement",
-  "hand-selected leather with natural variations preserved for depth",
-  "custom-developed leather with unique tension and structural properties",
-  "laser-cut leather pieces assembled with mathematical precision",
-  "proprietary leather treatment creating an almost liquid appearance in motion"
-];
-
-const CONSTRUCTION_METHODS = [
-  "architectural darting and structured panels create a form that both honors and challenges the body beneath",
-  "geometric precision in the cutting speaks to architectural influences while maintaining wearability",
-  "engineered with multiple layers of reinforcement at stress points for a lifetime of structural integrity",
-  "built using proprietary construction methods that eliminate traditional seaming for a cleaner silhouette",
-  "constructed with a hidden internal structure that maintains its form independent of the wearer",
-  "made with a modular approach allowing for subtle adjustments to achieve a perfect anatomical fit",
-  "features tensioned panels that create compression in specific areas to enhance the silhouette",
-  "crafted using ancient leatherworking techniques combined with modern architectural principles",
-  "incorporates technical zoning for mobility while maintaining its sculptural intention",
-  "utilizes military-inspired construction adapted for maximum visual impact and durability",
-  "assembled with a mathematical approach to pattern cutting for precise body contouring",
-  "created through vacuum forming techniques typically reserved for industrial applications",
-  "constructed without visible hardware, using hidden tensioning systems for a cleaner aesthetic",
-  "designed around a geometric mapping of the body's movement patterns for ergonomic comfort",
-  "built with integrated structural elements that echo architectural load-bearing principles"
-];
-
-const HARDWARE_DETAILS = [
-  "matte black custom hardware cast in solid metal with a signature tooth-edge detail",
-  "architectural hardware elements that serve as both functional components and visual anchors",
-  "industrial-grade matte black fixings that reference mechanical engineering",
-  "precision-milled metal components that rotate smoothly with satisfying mechanical feedback",
-  "custom-developed fastening systems that disappear into the design when engaged",
-  "technical hardware with subtle branding elements visible only at certain angles",
-  "overbuilt metalwork with a heft and presence that speaks to quality engineering",
-  "bespoke hardware developed exclusively for MISS VOID with proprietary locking mechanisms",
-  "military-specification fixings adapted for aesthetic purposes without compromising function",
-  "intersecting metal components that create geometric shadows across the leather surface",
-  "articulated joint systems inspired by industrial robotics and high-end watchmaking",
-  "hardware elements with purposeful asymmetry that draws the eye across the design",
-  "technical findings with a satisfying acoustic signature when manipulated",
-  "specially coated metal elements resistant to wear that maintain their matte appearance",
-  "structural hardware components that distribute tension evenly across the garment"
-];
-
-const UNIQUE_FEATURES = [
-  "signature asymmetrical collar detail that frames the neck in a display of structured elegance",
-  "unexpected cutout details that reveal glimpses of skin through architectural negative spaces",
-  "adjustable paneling that allows the wearer to modify the silhouette for different styling options",
-  "geometric harness elements that overlay the main structure for added visual complexity",
-  "integrated pocket systems that maintain the clean lines without disrupting the form",
-  "articulated joint sections that move with the body while maintaining structural integrity",
-  "stepped hem detail creating a cascading effect that plays with proportion and shadow",
-  "precision-cut ventilation channels that serve both functional and aesthetic purposes",
-  "hidden closure systems that maintain the clean visual silhouette when fully secured",
-  "angular shoulder construction that elongates the torso and commands attention",
-  "sculptural collar elements that frame the face with architectural intention",
-  "technical cuff details with adjustable tensioning for a personalized fit",
-  "strategic paneling that creates optical illusions of shadow and depth",
-  "interlocking systems allowing for modular attachment of additional MISS VOID pieces",
-  "weighted hem construction that creates perpetual movement and dramatic drape"
-];
-
-const STYLING_CONTEXTS = [
-  "destined for high-concept editorial shoots where its architectural qualities can be dramatically lit",
-  "designed for movement, creating dramatic silhouettes that transform with the wearer's motion",
-  "perfect for avant-garde performances where striking visuals amplify emotional impact",
-  "equally suited to gallery openings and underground techno spaces where distinction matters",
-  "created for those who approach personal aesthetics as a form of living sculpture",
-  "ideal for juxtaposition against raw urban environments where its refined darkness stands in relief",
-  "conceived for nocturnal contexts where strategic lighting reveals its complex detailing",
-  "developed for individuals who use clothing as a means of nonverbal communication",
-  "suitable for those special occasions demanding a statement of uncompromising aesthetic values",
-  "designed to photograph dramatically from multiple angles, revealing new details with each perspective",
-  "made for those who appreciate the psychological impact of architecturally considered clothing",
-  "perfect for creating memorable silhouettes against both industrial and minimalist backdrops",
-  "created to command space, physically and psychologically, in any environment",
-  "built for longevity, destined to become an archival piece in a carefully curated wardrobe",
-  "intended for those who understand that true luxury lies in conceptual integrity, not conspicuous branding"
-];
-
-const PHILOSOPHICAL_CONTEXTS = [
-  "embodying MISS VOID's ongoing exploration of absence as presence, of shadow as substance",
-  "continuing the brand's meditation on brutalist principles applied to the intimacy of worn objects",
-  "part of the atelier's investigation into post-human silhouettes and future archeology",
-  "representing the confluence of architectural theory and the poetry of adorned bodies",
-  "manifesting the studio's interest in the psychological impact of structured garments",
-  "exemplifying the brand's commitment to creating modern artifacts of material significance",
-  "expressing the tension between protection and vulnerability that underpins the MISS VOID ethos",
-  "furthering the designer's examination of power dynamics through sculptural wearables",
-  "reflecting on notions of containment and release central to the label's conceptual foundation",
-  "negotiating the boundary between fashion object and functional sculpture with intellectual rigor",
-  "questioning conventional notions of luxury through material research and technical innovation",
-  "exploring the relationship between the technological sublime and corporeal limitation",
-  "considering clothing as a form of embodied architecture with philosophical implications",
-  "engaging with ideas of permanence and impermanence through objects of enduring design",
-  "challenging the disposability of contemporary fashion with pieces worthy of archival consideration"
-];
-
-// Function to generate a detailed technical description with factual information
-const generateTechnicalDescription = (productType: string): string => {
-  // Get random element from array
-  const getRandomElement = (array: string[]) => array[Math.floor(Math.random() * array.length)];
-  
-  // Get product-specific descriptors
-  const specificDescriptors = PRODUCT_DESCRIPTORS[productType] || [
-    "architectural design",
-    "premium materials",
-    "structural elements",
-    "minimalist aesthetic",
-    "hardware detailing"
-  ];
-  
-  // Technical construction details
-  const materialDetails = [
-    "Full-grain black leather with 1.5mm thickness",
-    "Premium cowhide with matte finish",
-    "Heavy-duty 2mm leather with water-resistant treatment",
-    "Italian calfskin leather with reinforced seams",
-    "Military-grade leather with heat-sealed edges"
-  ];
-  
-  const constructionSpecs = [
-    "Double-stitched seams with nylon thread, 5 stitches per cm",
-    "Reinforced stress points using rivets and bar tacks",
-    "Bound edges with 1cm leather binding",
-    "French seam construction, fully enclosed edges",
-    "Machine-stitched with #69 nylon thread in a 3mm stitch pattern"
-  ];
-  
-  const hardwareSpecs = [
-    "Solid brass hardware with black oxide finish",
-    "Marine-grade stainless steel hardware with matte black PVD coating",
-    "Nickel-free zinc alloy buckles and D-rings",
-    "Aircraft-grade aluminum hardware elements, anodized black",
-    "Solid brass fittings with 2mm thickness, scratch-resistant coating"
-  ];
-  
-  const measurements = [
-    "Standard adjustable fit for sizes S-XL",
-    "Panels constructed to fit waist circumference 60-85cm",
-    "Panel dimensions: 15cm width × 30cm height",
-    "Adjustable straps with 5cm width, 15-30cm length range",
-    "Total garment weight: approximately 450-700g"
-  ];
-  
-  // Product-specific technical sections
-  const technicalSections: {[key: string]: string[]} = {
-    "corset": [
-      `${specificDescriptors.length > 0 ? specificDescriptors[0] : "Structured boning"} with ${getRandomElement(["12", "16", "8"])} steel bones`,
-      `${getRandomElement(["5", "6", "7"])}-panel construction with ${getRandomElement(["front busk", "back lacing", "side zip"])} closure`,
-      `Waist reduction capability: ${getRandomElement(["2-4", "3-5", "4-6"])}cm`,
-      `${getRandomElement(["Cotton", "Silk", "Mesh"])} lining for comfort and durability`
-    ],
-    "harness": [
-      `${getRandomElement(["O-ring", "D-ring", "Square"])} hardware connectors at junction points`,
-      `Strap width: ${getRandomElement(["2cm", "2.5cm", "3cm"])}`,
-      `${getRandomElement(["5", "7", "9"])} adjustable points for custom fit`,
-      `Weight-bearing capacity: up to ${getRandomElement(["10kg", "15kg", "8kg"])}`
-    ],
-    "dress": [
-      `Hem length: ${getRandomElement(["midi (75cm)", "maxi (120cm)", "knee-length (60cm)"])}`,
-      `${getRandomElement(["Princess", "Empire", "A-line"])} seam construction`,
-      `${getRandomElement(["Invisible", "Exposed", "Decorative"])} zipper closure`,
-      `${getRandomElement(["Unlined", "Fully lined", "Partially lined"])} interior construction`
-    ]
-  };
-  
-  // Get product-specific technical details
-  const productTechDetails = technicalSections[productType] || [];
-  
-  // Compose technical specification
-  const technicalParts = [
-    `PRODUCT TYPE: ${productType.toUpperCase()}`,
-    `MATERIALS: ${getRandomElement(materialDetails)}`,
-    `CONSTRUCTION: ${getRandomElement(constructionSpecs)}`,
-    `HARDWARE: ${getRandomElement(hardwareSpecs)}`,
-    `DIMENSIONS: ${getRandomElement(measurements)}`
-  ];
-  
-  // Add product-specific technical details if available
-  if (productTechDetails.length > 0) {
-    technicalParts.push(`PRODUCT-SPECIFIC DETAILS:`);
-    productTechDetails.forEach(detail => {
-      technicalParts.push(`- ${detail}`);
-    });
-  }
-  
-  // Add care instructions
-  technicalParts.push(
-    "CARE INSTRUCTIONS:",
-    "- Spot clean with damp cloth and leather cleaner",
-    "- Condition with leather balm every 3-6 months",
-    "- Store in dust bag away from direct sunlight",
-    "- Avoid prolonged exposure to moisture"
-  );
-  
-  return technicalParts.join("\n");
-};
-
-// Function to generate a genuinely creative description with variation
-const generateCreativeDescription = (productType: string): string => {
-  // Randomly select elements from each descriptive category
-  const getRandomElement = (array: string[]) => array[Math.floor(Math.random() * array.length)];
-  
-  // Get product-specific descriptors
-  const specificDescriptors = PRODUCT_DESCRIPTORS[productType] || [
-    "architectural design",
-    "premium materials",
-    "structural elements",
-    "minimalist aesthetic",
-    "hardware detailing"
-  ];
-  
-  // Randomly select 2-3 product-specific descriptors
-  const selectedSpecificDescriptors = [...specificDescriptors]
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 2 + Math.floor(Math.random() * 2));
-  
-  // Create a more varied and detailed product opening
-  const openings = [
-    `This ${productType} represents a paradigm shift in ${getRandomElement(DESIGN_CONCEPTS)}.`,
-    `A revolutionary take on the classic ${productType}, reimagined through the lens of ${getRandomElement(DESIGN_CONCEPTS)}.`,
-    `Presenting a visionary ${productType} that embodies ${getRandomElement(DESIGN_CONCEPTS)}.`,
-    `An exceptional exploration of form and function, this ${productType} demonstrates ${getRandomElement(DESIGN_CONCEPTS)}.`,
-    `Defying conventional categorization, this boundary-pushing ${productType} manifests ${getRandomElement(DESIGN_CONCEPTS)}.`
-  ];
-  
-  // Create detailed material descriptions
-  const materialDescriptions = [
-    `Crafted from ${getRandomElement(MATERIAL_DESCRIPTIONS)}, this piece honors materiality as a core design element.`,
-    `The foundation of this design is ${getRandomElement(MATERIAL_DESCRIPTIONS)}, allowing for structural integrity without compromise.`,
-    `Utilizing ${getRandomElement(MATERIAL_DESCRIPTIONS)} as its primary medium, the piece achieves both visual and tactile sophistication.`,
-    `The material story begins with ${getRandomElement(MATERIAL_DESCRIPTIONS)}, setting the stage for a complex sensory experience.`,
-    `At its core, ${getRandomElement(MATERIAL_DESCRIPTIONS)} provides both the conceptual and physical backbone of this creation.`
-  ];
-  
-  // Create construction narratives
-  const constructionNarratives = [
-    `The construction methodology is uncompromising: ${getRandomElement(CONSTRUCTION_METHODS)}.`,
-    `In terms of execution, ${getRandomElement(CONSTRUCTION_METHODS)}, showcasing the atelier's technical prowess.`,
-    `What distinguishes this piece is how ${getRandomElement(CONSTRUCTION_METHODS)}, challenging production conventions.`,
-    `The technical narrative revolves around how ${getRandomElement(CONSTRUCTION_METHODS)}, merging form with intention.`,
-    `Structurally speaking, ${getRandomElement(CONSTRUCTION_METHODS)}, resulting in a garment that holds its own architectural presence.`
-  ];
-  
-  // Create hardware descriptions
-  const hardwareDescriptions = [
-    `The hardware elements deserve special mention: ${getRandomElement(HARDWARE_DETAILS)}.`,
-    `Functional components become design features through ${getRandomElement(HARDWARE_DETAILS)}.`,
-    `The tactile experience is enhanced by ${getRandomElement(HARDWARE_DETAILS)}.`,
-    `Interaction points are considered with equal care: ${getRandomElement(HARDWARE_DETAILS)}.`,
-    `The conversation between body and garment is mediated by ${getRandomElement(HARDWARE_DETAILS)}.`
-  ];
-  
-  // Create unique feature highlights
-  const featureHighlights = [
-    `Among its notable features is ${getRandomElement(UNIQUE_FEATURES)}.`,
-    `Particularly worthy of attention is ${getRandomElement(UNIQUE_FEATURES)}.`,
-    `The design is distinguished by ${getRandomElement(UNIQUE_FEATURES)}.`,
-    `A signature element emerges in ${getRandomElement(UNIQUE_FEATURES)}.`,
-    `The eye is drawn to ${getRandomElement(UNIQUE_FEATURES)}.`
-  ];
-  
-  // Create contextual placement
-  const contextualPlacements = [
-    `This piece is ${getRandomElement(STYLING_CONTEXTS)}.`,
-    `Consider this ${productType} ${getRandomElement(STYLING_CONTEXTS)}.`,
-    `The designer envisions this ${getRandomElement(STYLING_CONTEXTS)}.`,
-    `Contextually, this creation is ${getRandomElement(STYLING_CONTEXTS)}.`,
-    `The intended environment for this piece is one where ${getRandomElement(STYLING_CONTEXTS)}.`
-  ];
-  
-  // Create philosophical framings
-  const philosophicalFramings = [
-    `Conceptually, this piece is ${getRandomElement(PHILOSOPHICAL_CONTEXTS)}.`,
-    `The intellectual framework of this design is rooted in ${getRandomElement(PHILOSOPHICAL_CONTEXTS)}.`,
-    `More than mere clothing, this object ${getRandomElement(PHILOSOPHICAL_CONTEXTS)}.`,
-    `In the broader MISS VOID narrative, this ${productType} ${getRandomElement(PHILOSOPHICAL_CONTEXTS)}.`,
-    `This creation exists at the intersection of wearability and concept, ${getRandomElement(PHILOSOPHICAL_CONTEXTS)}.`
-  ];
-  
-  // Mix and match all these elements to create a truely unique, verbose description
-  const sections = [
-    getRandomElement(openings),
-    getRandomElement(materialDescriptions),
-    getRandomElement(constructionNarratives),
-    Math.random() > 0.3 ? getRandomElement(hardwareDescriptions) : "",
-    getRandomElement(featureHighlights),
-    Math.random() > 0.4 ? getRandomElement(contextualPlacements) : "",
-    Math.random() > 0.5 ? getRandomElement(philosophicalFramings) : ""
-  ].filter(Boolean); // Remove any empty strings
-  
-  return sections.join(" ");
-};
-
-// Function to extract key details from a verbose description for structured data
-const extractStructuredData = (description: string, productType: string): any => {
-  // Default structured data with some fallbacks
-  const structuredData = {
-    primaryMaterial: "premium black leather",
-    secondaryMaterial: "",
-    hardware: "hardware details",
-    silhouette: "architectural silhouette",
-    tailoring: "structured tailoring",
-    photography: "studio lighting, high contrast"
-  };
-  
-  // Extract material information
-  if (description.includes("leather")) {
-    // Find sentences containing leather descriptions
-    const materialSentences = description.split(/\.|\,/).filter(s => 
-      s.toLowerCase().includes("leather") || 
-      s.toLowerCase().includes("material")
-    );
-    
-    if (materialSentences.length > 0) {
-      structuredData.primaryMaterial = materialSentences[0].trim().replace(/^[a-z]/, c => c.toUpperCase());
-      if (materialSentences.length > 1) {
-        structuredData.secondaryMaterial = materialSentences[1].trim().replace(/^[a-z]/, c => c.toUpperCase());
+      // Panel shape coordinates
+      const panel = [
+        { x: centerX - bustWidth/2, y: centerY - panelHeight/2 }, // Top left
+        { x: centerX + bustWidth/2, y: centerY - panelHeight/2 }, // Top right
+        { x: centerX + waistWidth/2, y: centerY }, // Waist right
+        { x: centerX + hipWidth/2, y: centerY + panelHeight/2 }, // Bottom right
+        { x: centerX - hipWidth/2, y: centerY + panelHeight/2 }, // Bottom left
+        { x: centerX - waistWidth/2, y: centerY }, // Waist left
+      ];
+      
+      // Draw panel
+      ctx.beginPath();
+      ctx.moveTo(panel[0].x, panel[0].y);
+      for (let i = 1; i < panel.length; i++) {
+        ctx.lineTo(panel[i].x, panel[i].y);
       }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(200, 200, 220, 0.3)';
+      ctx.fill();
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      
+      // Draw boning lines
+      if (customizations.boning === 'standard' || customizations.boning === 'heavy') {
+        const boningCount = customizations.boning === 'standard' ? 3 : 5;
+        const spacing = waistWidth / (boningCount + 1);
+        
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 1;
+        
+        for (let i = 1; i <= boningCount; i++) {
+          const x = centerX - waistWidth/2 + spacing * i;
+          ctx.beginPath();
+          ctx.moveTo(x, centerY - panelHeight/2 + 10);
+          ctx.lineTo(x, centerY + panelHeight/2 - 10);
+          ctx.stroke();
+        }
+      }
+      
+      // Draw seam allowance (dashed lines)
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(panel[0].x - 10, panel[0].y - 10);
+      ctx.lineTo(panel[1].x + 10, panel[1].y - 10);
+      ctx.lineTo(panel[2].x + 10, panel[2].y);
+      ctx.lineTo(panel[3].x + 10, panel[3].y + 10);
+      ctx.lineTo(panel[4].x - 10, panel[4].y + 10);
+      ctx.lineTo(panel[5].x - 10, panel[5].y);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.setLineDash([]);
+      
+      // Draw measurements
+      ctx.font = '12px Arial';
+      ctx.fillStyle = 'black';
+      ctx.fillText(`Bust: ${measurements.bust}cm`, 10, 20);
+      ctx.fillText(`Waist: ${measurements.waist}cm`, 10, 40);
+      ctx.fillText(`Hips: ${measurements.hips}cm`, 10, 60);
+      ctx.fillText(`Panel Count: ${customizations.panelCount}`, 10, 80);
+      ctx.fillText(`Boning: ${customizations.boning}`, 10, 100);
+      
+    } else if (type === 'harness') {
+      // Draw harness pattern with similar approach but different shape
+      const shoulderWidth = measurements.shoulderWidth * scale;
+      const bustWidth = measurements.bust / 2 * scale;
+      
+      // Draw main chest strap
+      ctx.beginPath();
+      ctx.ellipse(centerX, centerY, bustWidth/2, bustWidth/4, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      
+      // Draw shoulder straps
+      ctx.beginPath();
+      ctx.moveTo(centerX - bustWidth/2, centerY);
+      ctx.lineTo(centerX - shoulderWidth/2, centerY - bustWidth/2);
+      ctx.lineTo(centerX + shoulderWidth/2, centerY - bustWidth/2);
+      ctx.lineTo(centerX + bustWidth/2, centerY);
+      ctx.stroke();
+      
+      // Draw under-bust strap
+      ctx.beginPath();
+      ctx.moveTo(centerX - bustWidth/2, centerY + 20);
+      ctx.lineTo(centerX + bustWidth/2, centerY + 20);
+      ctx.stroke();
+    } else if (type === 'bodysuit') {
+      // Draw bodysuit pattern (simplified)
+      const torsoWidth = measurements.waist * scale / 6;
+      const torsoHeight = measurements.centerBackLength * scale;
+      
+      // Torso
+      ctx.beginPath();
+      ctx.rect(centerX - torsoWidth, centerY - torsoHeight/2, torsoWidth * 2, torsoHeight);
+      ctx.stroke();
+      
+      // Leg openings
+      ctx.beginPath();
+      ctx.arc(centerX - torsoWidth/2, centerY + torsoHeight/2, torsoWidth/2, 0, Math.PI);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.arc(centerX + torsoWidth/2, centerY + torsoHeight/2, torsoWidth/2, 0, Math.PI);
+      ctx.stroke();
     }
-  }
-  
-  // Extract hardware details
-  if (description.includes("hardware")) {
-    const hardwareSentences = description.split(/\.|\,/).filter(s => 
-      s.toLowerCase().includes("hardware") || 
-      s.toLowerCase().includes("metal") ||
-      s.toLowerCase().includes("component")
-    );
     
-    if (hardwareSentences.length > 0) {
-      structuredData.hardware = hardwareSentences[0].trim().replace(/^[a-z]/, c => c.toUpperCase());
-    }
-  }
-  
-  // Extract silhouette information
-  if (description.includes("silhouette")) {
-    const silhouetteSentences = description.split(/\.|\,/).filter(s => 
-      s.toLowerCase().includes("silhouette") || 
-      s.toLowerCase().includes("shape") ||
-      s.toLowerCase().includes("form")
-    );
-    
-    if (silhouetteSentences.length > 0) {
-      structuredData.silhouette = silhouetteSentences[0].trim().replace(/^[a-z]/, c => c.toUpperCase());
-    }
-  }
-  
-  // Extract tailoring information
-  if (description.includes("constru") || description.includes("craft")) {
-    const tailoringSentences = description.split(/\.|\,/).filter(s => 
-      s.toLowerCase().includes("constru") || 
-      s.toLowerCase().includes("craft") || 
-      s.toLowerCase().includes("tailor") || 
-      s.toLowerCase().includes("assembl")
-    );
-    
-    if (tailoringSentences.length > 0) {
-      structuredData.tailoring = tailoringSentences[0].trim().replace(/^[a-z]/, c => c.toUpperCase());
-    }
-  }
-  
-  return structuredData;
-};
-
-export default function DesignPage() {
-  const { mockUser, isLoading: authIsLoading, mockLogin, mockLogout } = useSimpleAuth();
-  
-  const [promptText, setPromptText] = useState('');
-  const [structuredPrompt, setStructuredPrompt] = useState({
-    name: '',
-    brand: 'MISS VOID',
-    description: '',
-    technicalSpecs: '',
-    primaryMaterial: 'premium black leather',
-    secondaryMaterial: '',
-    influence: 'high-end alternative fashion',
-    hardware: 'hardware details',
-    silhouette: 'architectural silhouette',
-    tailoring: 'structured tailoring',
-    photography: 'studio lighting, high contrast',
-    serialNumber: 'MV001',
-    salt: '#001'
-  });
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [designImage, setDesignImage] = useState('');
-  const [designStage, setDesignStage] = useState('initial'); 
-  const [activeTab, setActiveTab] = useState('conceptDesign'); 
-  const [savedDesigns, setSavedDesigns] = useState<Array<{imageUrl: string, productType: string, prompt: string}>>([]);
-  const [selectedDesignIndex, setSelectedDesignIndex] = useState<number | null>(null);
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [productType, setProductType] = useState('corset');
-  const [promptCounter, setPromptCounter] = useState(1); 
-  const [showStructuredForm, setShowStructuredForm] = useState(false);
-  const [saltCounter, setSaltCounter] = useState(1); 
-  
-  const [manufacturingDetails, setManufacturingDetails] = useState({
-    quantity: "1",
-    sizeRange: "single",
-    productionSpeed: "standard",
-    shippingMethod: "standard",
-    marketplaceIntegration: "none"
-  });
-  const [orderTotal, setOrderTotal] = useState(175.00);
-  
-  const [patternType, setPatternType] = useState('corset');
-  const [measurements, setMeasurements] = useState({
-    bust: 90,
-    waist: 70,
-    hips: 95,
-    shoulderWidth: 38,
-    centerBackLength: 40,
-    centerFrontLength: 42,
-    armLength: 58,
-    thighCircumference: 55,
-  });
-  const [patternCanvas, setPatternCanvas] = useState('');
-  const [patternCustomizations, setPatternCustomizations] = useState({
-    boning: 'standard',
-    cutStyle: 'classic',
-    panelCount: 6,
-    closureType: 'back',
-    sweepWidth: 'standard',
-  });
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  const [is3DConverting, setIs3DConverting] = useState(false);
-  const [animateTransition, setAnimateTransition] = useState(false);
-
-  const handleMeasurementChange = (measurement: string, value: number) => {
-    setMeasurements(prev => ({ ...prev, [measurement]: value }));
+    // Save pattern image
+    setPatternCanvas(ctx.canvas.toDataURL());
   };
-  const handleCustomizationChange = (customization: string, value: string | number) => {
-    setPatternCustomizations(prev => ({ ...prev, [customization]: value }));
+  
+  // Function to handle generating a structured prompt
+  const handleGeneratePrompt = () => {
+    // Generate a creative name
+    const creativeProductName = generateProductName(productType);
+    
+    // Generate a serial number for this product
+    const serialNumber = `MV${String(promptCounter).padStart(3, '0')}`;
+    setPromptCounter(prev => prev + 1);
+    
+    // Generate a salt for this specific variation
+    const salt = `#${String(saltCounter).padStart(3, '0')}`;
+    setSaltCounter(prev => prev + 1);
+    
+    // Generate technical specs and marketing description
+    const technicalSpecs = generateTechnicalDescription(productType);
+    const marketingDescription = generateCreativeDescription(productType);
+    
+    // Set the creative description as the prompt text
+    setPromptText(`MISS VOID ${productType} "${creativeProductName}"\n\nTECHNICAL SPECIFICATIONS:\n${technicalSpecs}\n\nMARKETING DESCRIPTION:\n${marketingDescription}\n\n${serialNumber} ${salt}`);
+    
+    // Update structured prompt fields
+    const extractedData = extractStructuredData(marketingDescription, productType);
+    setStructuredPrompt({
+      name: creativeProductName,
+      brand: 'MISS VOID',
+      description: marketingDescription,
+      technicalSpecs: technicalSpecs,
+      primaryMaterial: extractedData.primaryMaterial,
+      secondaryMaterial: extractedData.secondaryMaterial || '',
+      influence: 'high-end alternative fashion',
+      hardware: extractedData.hardware,
+      silhouette: extractedData.silhouette,
+      tailoring: extractedData.tailoring,
+      photography: 'studio lighting, high contrast',
+      serialNumber: serialNumber,
+      salt: salt
+    });
   };
 
-  const drawPattern = (ctx: CanvasRenderingContext2D, type: string, meas: any, cust: any) => { /* ... your pattern drawing logic ... */ }; 
-  useEffect(() => {
-    if (activeTab === 'patternCutter' && canvasRef.current) {
-        const ctx = canvasRef.current.getContext('2d');
-        if (ctx) drawPattern(ctx, patternType, measurements, patternCustomizations);
-    }
-  }, [activeTab, patternType, measurements, patternCustomizations]);
+  // Craft optimized prompt for Stability AI
+  const craftOptimizedPrompt = (userPrompt: string): string => {
+    // Use the selected product type instead of detecting it
+    // (We keep the productType as is since it's already set by the dropdown)
+    
+    // Get random style elements (3-5)
+    const styleCount = Math.floor(Math.random() * 3) + 3;
+    const selectedStyles = [...STYLE_ELEMENTS].sort(() => 0.5 - Math.random()).slice(0, styleCount);
+    
+    // Get random aesthetic descriptors (2-3)
+    const aestheticCount = Math.floor(Math.random() * 2) + 2;
+    const selectedAesthetics = [...AESTHETIC_DESCRIPTORS].sort(() => 0.5 - Math.random()).slice(0, aestheticCount);
+    
+    // Get product-specific descriptors (2-3)
+    const productDescriptors = PRODUCT_DESCRIPTORS[productType] || [];
+    const descriptorCount = Math.min(Math.floor(Math.random() * 2) + 2, productDescriptors.length);
+    const selectedDescriptors = [...productDescriptors].sort(() => 0.5 - Math.random()).slice(0, descriptorCount);
+    
+    // Combine everything into an optimized prompt
+    const enhancedPrompt = [
+      // Core user prompt
+      userPrompt,
+      
+      // Product-specific details
+      `${productType} design`,
+      ...selectedDescriptors,
+      
+      // MISS VOID aesthetics
+      ...selectedAesthetics,
+      
+      // Style elements
+      ...selectedStyles,
+      
+      // Photography style for better image generation
+      "studio photography, professional lighting, fashion editorial, high-end fashion photography",
+      
+      // Negative prompts to avoid
+      "NOT colorful, NOT bright colors, NOT casual wear"
+    ].join(", ");
+    
+    return enhancedPrompt;
+  };
+  
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    setApiError(null);
+    
+    try {
+      // Craft an optimized prompt for the API
+      const enhancedPrompt = craftOptimizedPrompt(promptText);
+      console.log("Enhanced prompt:", enhancedPrompt);
+      
+      // Make the API call to Stability
+      console.log("Making API call to generate design...");
+      
+      // Use a more resilient fetch with timeout and retry logic
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      
+      try {
+        const response = await fetch('/api/generate-design', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: enhancedPrompt,
+            productType
+          }),
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        
+        console.log("API response status:", response.status);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: `HTTP error ${response.status}` }));
+          console.error("API error response:", errorData);
+          throw new Error(errorData.error || "Failed to generate image");
+        }
+        
+        const data = await response.json();
+        console.log("API success response:", data);
+        
+        // Set the generated image
+        if (data.imageUrl) {
+          console.log("Setting image URL:", data.imageUrl);
+          setDesignImage(data.imageUrl);
+          setDesignStage('2d');
+          
+          // For testing, let's add a mock design to populate the tabs
+          if (!data.imageUrl.startsWith('data:') && !data.imageUrl.startsWith('/')) {
+            // If we got a weird URL, use a fallback for testing
+            setDesignImage("https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=1287&auto=format&fit=crop");
+          }
+        } else {
+          throw new Error("No image URL in response");
+        }
+      } catch (fetchError: unknown) {
+        if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+          // Handle timeout specifically
+          console.error("Request timed out");
+          throw new Error("API request timed out. Please try again.");
+        }
+        throw fetchError;
+      }
+    } catch (error) {
+      console.error("Error generating design:", error);
+      setApiError(error instanceof Error ? error.message : "An unknown error occurred");
 
-  const handleGeneratePrompt = () => { /* ... your existing logic ... */ };
-  const craftOptimizedPrompt = (userPrompt: string): string => userPrompt; // Simplified for brevity
-  const handleGenerate = async () => { /* ... your existing logic, ensure it does not rely on Appwrite auth ... */ };
-  const handleSaveDesign = () => { /* ... */ };
-  const handleSelectDesign = (index: number) => { /* ... */ };
-  const handleProceedTo3D = () => { setActiveTab('3dVisualization'); };
-  const handleProceedToPattern = () => { setActiveTab('patternCutter'); };
-  const handleProceedToManufacturing = () => { setActiveTab('manufacturing'); };
-  const calculateOrderTotal = (details: any) => { /* ... */ }; 
-  const handleManufacturingChange = (field: string, value: string) => { /* ... */ };
+      // For development purposes, add a mock design so we can still test the rest of the workflow
+      const mockImage = "https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=1287&auto=format&fit=crop";
+      setDesignImage(mockImage);
+      setDesignStage('2d');
+      
+      // Add a mock design to the portfolio for testing
+      if (savedDesigns && Array.isArray(savedDesigns)) {
+        setSavedDesigns([
+          ...savedDesigns,
+          {
+            imageUrl: mockImage,
+            productType,
+            prompt: promptText
+          }
+        ]);
+      }
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+  
+  const handleSaveDesign = () => {
+    // Save current design to the saved designs array
+    if (designImage) {
+      setSavedDesigns([
+        ...savedDesigns, 
+        { 
+          imageUrl: designImage, 
+          productType, 
+          prompt: promptText 
+        }
+      ]);
+      setSelectedDesignIndex(savedDesigns.length);
+    }
+  };
+  
+  const handleSelectDesign = (index: number) => {
+    setSelectedDesignIndex(index);
+    setDesignImage(savedDesigns[index].imageUrl);
+    setProductType(savedDesigns[index].productType);
+  };
+  
+  const handleProceedTo3D = () => {
+    console.log("Proceed to 3D button clicked");
+    console.log("Current designImage:", designImage);
+    console.log("Current selectedDesignIndex:", selectedDesignIndex);
+    
+    // Set a brief loading state for visual feedback
+    setIs3DConverting(true);
+    setTimeout(() => setIs3DConverting(false), 1500);
+    
+    // Always proceed to 3D tab when button is clicked
+    setDesignStage('3d');
+    setActiveTab('3dVisualization');
+  };
+  
+  const handleProceedToPattern = () => {
+    setActiveTab('patternCutter');
+    setPatternType(productType);
+  };
+  
+  const handleProceedToManufacturing = () => {
+    setActiveTab('manufacturing');
+    // Reset calculation when entering manufacturing tab
+    calculateOrderTotal(manufacturingDetails);
+  };
+  
+  const handleProceedToDistribution = () => {
+    setActiveTab('distribution');
+  };
+  
+  const handleProceedToPayment = () => {
+    setActiveTab('payment');
+  };
+  
+  // Calculate order total based on selections
+  const calculateOrderTotal = (details: any) => {
+    // Base prices by quantity
+    const pricesByQuantity: {[key: string]: number} = {
+      "1": 150.00,
+      "5": 120.00,
+      "10": 90.00,
+      "50": 70.00,
+      "100": 55.00,
+      "500": 45.00
+    };
+    
+    // Get base price per unit
+    const basePrice = pricesByQuantity[details.quantity] || 150.00;
+    
+    // Calculate quantity total (using actual quantity minimum for tier)
+    const quantityMap: {[key: string]: number} = {
+      "1": 1,
+      "5": 5,
+      "10": 10,
+      "50": 50,
+      "100": 100,
+      "500": 500
+    };
+    const quantity = quantityMap[details.quantity] || 1;
+    const subtotal = basePrice * quantity;
+    
+    // Apply production speed multiplier
+    const productionMultiplier = details.productionSpeed === "express" ? 1.25 :
+                                details.productionSpeed === "rush" ? 1.5 : 1;
+    
+    // Calculate shipping cost (simplified)
+    const shippingCost = details.shippingMethod === "express" ? 45.00 :
+                        details.shippingMethod === "priority" ? 75.00 : 25.00;
+    
+    // Calculate final total
+    const calculatedTotal = (subtotal * productionMultiplier) + shippingCost;
+    setOrderTotal(calculatedTotal);
+    
+    return calculatedTotal;
+  };
+  
+  // Handle manufacturing detail changes
+  const handleManufacturingChange = (field: string, value: string) => {
+    const updatedDetails = { ...manufacturingDetails, [field]: value };
+    setManufacturingDetails(updatedDetails);
+    calculateOrderTotal(updatedDetails);
+  };
+  
+  // Helper function to determine if a stage should be visible
+  const isStageVisible = (stage: string) => {
+    // Logic based on designStage to show/hide sections
+    if (stage === '2d') return designStage !== 'initial';
+    if (stage === '3d') return designStage === '3d' || designStage === 'pattern' || designStage === 'manufacturing';
+    if (stage === 'pattern') return designStage === 'pattern' || designStage === 'manufacturing';
+    if (stage === 'manufacturing') return designStage === 'manufacturing';
+    return true; // For initial stage and other general visibility
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 text-white">
@@ -1930,6 +1372,7 @@ export default function DesignPage() {
                 <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
               </div>
             ) : mockUser ? (
+              // User is logged in - display profile information
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-1 bg-gray-900 p-6 rounded-lg border border-gray-700 text-center">
                   <div className="w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center mb-4 border-2 border-purple-500 mx-auto">
@@ -1942,7 +1385,7 @@ export default function DesignPage() {
                   <p className="text-xs text-gray-500 mt-1">User ID: {mockUser.userId}</p>
                   
                   <button 
-                    onClick={mockLogout}
+                    onClick={mockLogout} // Use mockLogout
                     className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md transition"
                   >
                     Logout
@@ -1992,6 +1435,7 @@ export default function DesignPage() {
                 </div>
               </div>
             ) : (
+              // User is not logged in - display SimpleAuthForm
               <SimpleAuthForm /> 
             )}
           </div>

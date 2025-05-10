@@ -128,7 +128,7 @@ export default function Gallery() {
       
       <div className="mb-12 max-w-3xl mx-auto bg-gray-900 p-4 rounded-lg border border-gray-800 text-gray-300 text-center">
         <p>
-          Step into MISS VOID, the revolutionary AI-first fashion house. Design unique MISS VOID branded pieces using our AI-powered tools, bring them to life through our manufacturing network, and launch your creations to the world. Earn from your designs and become a part of the new fashion paradigm: where creativity meets enterprise, and every designer has a voice.
+          Step into MISS VOID, the revolutionary AI-first fashion house. Here, you don't just consume fashion—you create it. Design unique MISS VOID branded pieces using our AI-powered tools, bring them to life through our manufacturing network, and launch your creations to the world. Earn from your designs and become a part of the new fashion paradigm: where creativity meets enterprise, and every designer has a voice.
         </p>
       </div>
       

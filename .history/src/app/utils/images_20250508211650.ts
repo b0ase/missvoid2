@@ -219,15 +219,6 @@ export function getImagesForCategory(category: GalleryName): string[] {
     }).filter(path => path); // Filter out any undefined paths
   }
 
-  // VOID BOOTS II uses the same folder but different image range
-  if (category === 'VOID BOOTS II') {
-    // Use a different range of boot images (higher numbers)
-    return Array.from({ length: gallery.imageCount }, (_, i) => {
-      const imgNum = 8010 + i; // Start from a higher number
-      return `/images/void-boots/IMG_${imgNum}.JPG`;
-    });
-  }
-
   // Create an array of actual image paths based on the files we found
   return Array.from({ length: gallery.imageCount }, (_, i) => {
     // Special case for void-noire which uses a different naming convention

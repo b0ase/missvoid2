@@ -27,7 +27,7 @@ export default function AboutPage() {
             </p>
             <p className="mb-4">
               Conceived as a digital-first fashion ecosystem, MISS VOID enables franchise designers to create and 
-              manufacture items that embrace both the dark elegance of contemporary fashion and the precision of architectural design.
+              manufacture items that embrace both the dark elegance of fetish culture and the precision of architectural design.
             </p>
             <p>
               Each franchise designer maintains creative control over their specific MISS VOID designs while benefiting 

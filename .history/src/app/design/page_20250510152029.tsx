@@ -1569,61 +1569,52 @@ export default function DesignPage() {
             <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
               <h2 className="text-xl font-semibold mb-4 text-white">Concept Design</h2>
               
-              <div className="mb-6">
-                <label htmlFor="productTypeSelect" className="block mb-2 text-gray-300 font-medium text-lg">
-                  1. Select Your Base Product Type:
+              <div className="mb-4">
+                <label htmlFor="productTypeSelect" className="block mb-2 text-gray-300">
+                  Product Type
                 </label>
-                <div className="relative">
-                  <select
-                    id="productTypeSelect"
-                    className="w-full p-3 pr-10 border border-gray-600 rounded bg-gray-800 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                    value={productType}
-                    onChange={(e) => setProductType(e.target.value)}
-                  >
-                    <option value="corset">Corset</option>
-                    <option value="harness">Harness</option>
-                    <option value="bodysuit">Bodysuit</option>
-                    <option value="dress">Dress</option>
-                    <option value="mask">Mask</option>
-                    <option value="skirt">Skirt</option>
-                    <option value="jacket">Jacket</option>
-                    <option value="blazer">Blazer</option>
-                    <option value="gloves">Gloves</option>
-                    <option value="leggings">Leggings</option>
-                    <option value="top">Top</option>
-                    <option value="bustier">Bustier</option>
-                    <option value="collar">Collar</option>
-                    <option value="choker">Choker</option>
-                    <option value="boots">Boots</option>
-                    <option value="belt">Belt</option>
-                    <option value="cape">Cape</option>
-                    <option value="catsuit">Catsuit</option>
-                    <option value="gown">Gown</option>
-                    <option value="jumpsuit">Jumpsuit</option>
-                    <option value="shorts">Shorts</option>
-                    <option value="coat">Coat</option>
-                    <option value="lingerie">Lingerie</option>
-                    <option value="bra">Bra</option>
-                    <option value="suspenders">Suspenders</option>
-                    <option value="headpiece">Headpiece</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
-                    <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                  </div>
-                </div>
+                <select
+                  id="productTypeSelect"
+                  className="w-full p-3 border border-gray-600 rounded bg-gray-800 text-white"
+                  value={productType}
+                  onChange={(e) => setProductType(e.target.value)}
+                >
+                  <option value="corset">Corset</option>
+                  <option value="harness">Harness</option>
+                  <option value="bodysuit">Bodysuit</option>
+                  <option value="dress">Dress</option>
+                  <option value="mask">Mask</option>
+                  <option value="skirt">Skirt</option>
+                  <option value="jacket">Jacket</option>
+                  <option value="blazer">Blazer</option>
+                  <option value="gloves">Gloves</option>
+                  <option value="leggings">Leggings</option>
+                  <option value="top">Top</option>
+                  <option value="bustier">Bustier</option>
+                  <option value="collar">Collar</option>
+                  <option value="choker">Choker</option>
+                  <option value="boots">Boots</option>
+                  <option value="belt">Belt</option>
+                  <option value="cape">Cape</option>
+                  <option value="catsuit">Catsuit</option>
+                  <option value="gown">Gown</option>
+                  <option value="jumpsuit">Jumpsuit</option>
+                  <option value="shorts">Shorts</option>
+                  <option value="coat">Coat</option>
+                  <option value="lingerie">Lingerie</option>
+                  <option value="bra">Bra</option>
+                  <option value="suspenders">Suspenders</option>
+                  <option value="headpiece">Headpiece</option>
+                </select>
                 <p className="mt-2 text-sm text-gray-400">
-                  Choose the foundational garment. This guides the AI for tailored design generation and ensures compatibility with our pattern system.
+                  Select the type of product you want to generate. This will optimize your design and ensure accurate pattern creation.
                 </p>
               </div>
               
               <div className="mb-4">
-                <p className="text-gray-300 mb-1 font-medium text-lg">
-                  2. Generate & Refine Description:
-                </p>
-                <p className="text-gray-400 text-sm mb-3">
-                  Start by auto-generating a rich, detailed design description. You can then refine it below to perfectly match your vision.
+                <p className="text-gray-300 mb-3">
+                  Start by auto-generating a rich, detailed design description with technical and marketing insights. 
+                  You can then refine it below to perfectly match your vision.
                 </p>
                 <button 
                   className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2.5 rounded-md border border-purple-500 shadow-md hover:shadow-lg transition text-base flex items-center w-full md:w-auto justify-center mb-6"

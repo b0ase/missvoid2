@@ -1569,134 +1569,123 @@ export default function DesignPage() {
             <div className="bg-black p-6 rounded-lg mb-8 border border-gray-800">
               <h2 className="text-xl font-semibold mb-4 text-white">Concept Design</h2>
               
-              <div className="mb-6">
-                <label htmlFor="productTypeSelect" className="block mb-2 text-gray-300 font-medium text-lg">
-                  1. Select Your Base Product Type:
+              <div className="mb-4">
+                <label htmlFor="productTypeSelect" className="block mb-2 text-gray-300">
+                  Product Type
                 </label>
-                <div className="relative">
-                  <select
-                    id="productTypeSelect"
-                    className="w-full p-3 pr-10 border border-gray-600 rounded bg-gray-800 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                    value={productType}
-                    onChange={(e) => setProductType(e.target.value)}
-                  >
-                    <option value="corset">Corset</option>
-                    <option value="harness">Harness</option>
-                    <option value="bodysuit">Bodysuit</option>
-                    <option value="dress">Dress</option>
-                    <option value="mask">Mask</option>
-                    <option value="skirt">Skirt</option>
-                    <option value="jacket">Jacket</option>
-                    <option value="blazer">Blazer</option>
-                    <option value="gloves">Gloves</option>
-                    <option value="leggings">Leggings</option>
-                    <option value="top">Top</option>
-                    <option value="bustier">Bustier</option>
-                    <option value="collar">Collar</option>
-                    <option value="choker">Choker</option>
-                    <option value="boots">Boots</option>
-                    <option value="belt">Belt</option>
-                    <option value="cape">Cape</option>
-                    <option value="catsuit">Catsuit</option>
-                    <option value="gown">Gown</option>
-                    <option value="jumpsuit">Jumpsuit</option>
-                    <option value="shorts">Shorts</option>
-                    <option value="coat">Coat</option>
-                    <option value="lingerie">Lingerie</option>
-                    <option value="bra">Bra</option>
-                    <option value="suspenders">Suspenders</option>
-                    <option value="headpiece">Headpiece</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
-                    <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                  </div>
-                </div>
+                <select
+                  id="productTypeSelect"
+                  className="w-full p-3 border border-gray-600 rounded bg-gray-800 text-white"
+                  value={productType}
+                  onChange={(e) => setProductType(e.target.value)}
+                >
+                  <option value="corset">Corset</option>
+                  <option value="harness">Harness</option>
+                  <option value="bodysuit">Bodysuit</option>
+                  <option value="dress">Dress</option>
+                  <option value="mask">Mask</option>
+                  <option value="skirt">Skirt</option>
+                  <option value="jacket">Jacket</option>
+                  <option value="blazer">Blazer</option>
+                  <option value="gloves">Gloves</option>
+                  <option value="leggings">Leggings</option>
+                  <option value="top">Top</option>
+                  <option value="bustier">Bustier</option>
+                  <option value="collar">Collar</option>
+                  <option value="choker">Choker</option>
+                  <option value="boots">Boots</option>
+                  <option value="belt">Belt</option>
+                  <option value="cape">Cape</option>
+                  <option value="catsuit">Catsuit</option>
+                  <option value="gown">Gown</option>
+                  <option value="jumpsuit">Jumpsuit</option>
+                  <option value="shorts">Shorts</option>
+                  <option value="coat">Coat</option>
+                  <option value="lingerie">Lingerie</option>
+                  <option value="bra">Bra</option>
+                  <option value="suspenders">Suspenders</option>
+                  <option value="headpiece">Headpiece</option>
+                </select>
                 <p className="mt-2 text-sm text-gray-400">
-                  Choose the foundational garment. This guides the AI for tailored design generation and ensures compatibility with our pattern system.
+                  Select the type of product you want to generate. This will optimize your design and ensure accurate pattern creation.
                 </p>
               </div>
               
               <div className="mb-4">
-                <p className="text-gray-300 mb-1 font-medium text-lg">
-                  2. Generate & Refine Description:
-                </p>
-                <p className="text-gray-400 text-sm mb-3">
-                  Start by auto-generating a rich, detailed design description. You can then refine it below to perfectly match your vision.
-                </p>
-                <button 
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2.5 rounded-md border border-purple-500 shadow-md hover:shadow-lg transition text-base flex items-center w-full md:w-auto justify-center mb-6"
-                  onClick={() => {
-                    // Generate a creative name
-                    const creativeProductName = generateProductName(productType);
-                    
-                    // Generate a serial number for this product
-                    const serialNumber = `MV${String(promptCounter).padStart(3, '0')}`;
-                    setPromptCounter(prev => prev + 1);
-                    
-                    // Generate a salt for this specific variation
-                    const salt = `#${String(saltCounter).padStart(3, '0')}`;
-                    setSaltCounter(prev => prev + 1);
-                    
-                    // Generate a technical and marketing descriptions
-                    const technicalSpecs = generateTechnicalDescription(productType);
-                    const marketingDescription = generateCreativeDescription(productType);
-                    
-                    // Extract structured data from the marketing description
-                    const extractedData = extractStructuredData(marketingDescription, productType);
-                    
-                    // Create a structured prompt
-                    const generatedPrompt = `MISS VOID ${productType} "${creativeProductName}"\n\nTECHNICAL SPECIFICATIONS:\n${technicalSpecs}\n\nMARKETING DESCRIPTION:\n${marketingDescription}\n\n${serialNumber} ${salt}`;
-                    
-                    setPromptText(generatedPrompt);
-                    
-                    // Update structured prompt fields with extracted data
-                    setStructuredPrompt({
-                      name: creativeProductName,
-                      brand: 'MISS VOID',
-                      description: marketingDescription,
-                      technicalSpecs: technicalSpecs,
-                      primaryMaterial: extractedData.primaryMaterial,
-                      secondaryMaterial: extractedData.secondaryMaterial || '',
-                      influence: 'high-end alternative fashion',
-                      hardware: extractedData.hardware,
-                      silhouette: extractedData.silhouette,
-                      tailoring: extractedData.tailoring,
-                      photography: 'studio lighting, high contrast',
-                      serialNumber: serialNumber,
-                      salt: salt
-                    });
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                  Auto-Generate Full Design Description
-                </button>
-
-                <label htmlFor="designPrompt" className="block text-gray-300 mb-2">
-                  Edit Generated Description / Or Write Your Own:
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label htmlFor="designPrompt" className="text-gray-300">
+                    Describe your MISS VOID design
+                  </label>
+                  <button 
+                    className="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 hover:bg-gray-600 transition text-sm flex items-center"
+                    onClick={() => {
+                      // Generate a creative name
+                      const creativeProductName = generateProductName(productType);
+                      
+                      // Generate a serial number for this product
+                      const serialNumber = `MV${String(promptCounter).padStart(3, '0')}`;
+                      setPromptCounter(prev => prev + 1);
+                      
+                      // Generate a salt for this specific variation
+                      const salt = `#${String(saltCounter).padStart(3, '0')}`;
+                      setSaltCounter(prev => prev + 1);
+                      
+                      // Generate a technical and marketing descriptions
+                      const technicalSpecs = generateTechnicalDescription(productType);
+                      const marketingDescription = generateCreativeDescription(productType);
+                      
+                      // Extract structured data from the marketing description
+                      const extractedData = extractStructuredData(marketingDescription, productType);
+                      
+                      // Create a structured prompt
+                      const generatedPrompt = `MISS VOID ${productType} "${creativeProductName}"\n\nTECHNICAL SPECIFICATIONS:\n${technicalSpecs}\n\nMARKETING DESCRIPTION:\n${marketingDescription}\n\n${serialNumber} ${salt}`;
+                      
+                      setPromptText(generatedPrompt);
+                      
+                      // Update structured prompt fields with extracted data
+                      setStructuredPrompt({
+                        name: creativeProductName,
+                        brand: 'MISS VOID',
+                        description: marketingDescription,
+                        technicalSpecs: technicalSpecs,
+                        primaryMaterial: extractedData.primaryMaterial,
+                        secondaryMaterial: extractedData.secondaryMaterial || '',
+                        influence: 'high-end alternative fashion',
+                        hardware: extractedData.hardware,
+                        silhouette: extractedData.silhouette,
+                        tailoring: extractedData.tailoring,
+                        photography: 'studio lighting, high contrast',
+                        serialNumber: serialNumber,
+                        salt: salt
+                      });
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    Auto Generate Description
+                  </button>
+                </div>
+                
                 <textarea
                   id="designPrompt"
-                  rows={8}
+                  rows={4}
                   className="w-full p-3 border border-gray-600 rounded bg-gray-800 text-white"
-                  placeholder="A detailed description will appear here after auto-generation, or you can type your own concept..."
+                  placeholder="E.g., A sculptural black leather corset with architectural elements, inspired by brutalist architecture"
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
                 />
                 
-                <div className="mt-3 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div className="mt-2 flex justify-between items-center">
+                  <p className="text-sm text-gray-400">
+                    Add specific details and use the salt (e.g., #001) to create variations of the same design with tiny tweaks.
+                  </p>
                   <button 
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md border border-purple-500 shadow-sm hover:shadow-md transition text-sm mb-2 md:mb-0 md:mr-4 order-1 md:order-1"
+                    className="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600 hover:bg-gray-600 transition text-sm"
                     onClick={() => setShowStructuredForm(!showStructuredForm)}
                   >
-                    {showStructuredForm ? 'Hide Detailed Specs' : 'Show Detailed Specs'}
+                    {showStructuredForm ? 'Hide Specs' : 'Show Detailed Specs'}
                   </button>
-                  <p className="text-sm text-gray-400 order-2 md:order-2 flex-1">
-                    Fine-tune the details using the form above. Use the salt (e.g., #001) for subtle variations of the same core design.
-                  </p>
                 </div>
                 
                 {/* Structured Specifications Form */}
@@ -1854,23 +1843,11 @@ export default function DesignPage() {
               </div>
               
               <button
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition w-full mb-2 mt-6 flex items-center justify-center text-base"
+                className="bg-white text-black py-2 px-6 rounded hover:bg-gray-200 transition w-full mb-2"
                 onClick={handleGenerate}
                 disabled={isGenerating || !promptText}
               >
-                {isGenerating ? (
-                  <><svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>Processing...</>
-                ) : (
-                  <>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Generate Design Image
-                  </>
-                )}
+                {isGenerating ? 'Generating...' : 'Generate Design Image'}
               </button>
               
               {designImage && (
